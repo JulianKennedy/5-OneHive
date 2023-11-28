@@ -1,0 +1,169 @@
+.about-us-page {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .about-us-page .div {
+    background-color: #ffffff;
+    width: 1440px;
+    height: 3200px;
+    position: relative;
+  }
+  
+  .about-us-page .overlap-group {
+    position: absolute;
+    width: 1440px;
+    height: 550px;
+    top: 86px;
+    left: 0;
+    background-image: url(./img/about.png);
+    background-size: 100% 100%;
+  }
+  
+  .about-us-page .text-wrapper {
+    position: absolute;
+    width: 578px;
+    height: 72px;
+    top: 202px;
+    left: 732px;
+    font-family: "Newsreader-SemiBold", Helvetica;
+    font-weight: 600;
+    color: #ffffff;
+    font-size: 72px;
+    text-align: right;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .about-us-page .rectangle {
+    position: absolute;
+    width: 1440px;
+    height: 222px;
+    top: 2978px;
+    left: 0;
+    background-color: #d9d9d9;
+  }
+  
+  .about-us-page .img {
+    position: absolute;
+    width: 550px;
+    height: 450px;
+    top: 801px;
+    left: 130px;
+    object-fit: cover;
+  }
+  
+  .about-us-page .one-hive {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    position: absolute;
+    top: 883px;
+    left: 730px;
+  }
+  
+  .about-us-page .one-hive-2 {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .about-us-page .heading {
+    position: relative;
+    width: 580px;
+    height: 110px;
+    margin-top: -1px;
+    font-family: "Newsreader-SemiBold", Helvetica;
+    font-weight: 600;
+    color: #000000;
+    font-size: 45px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .about-us-page .body {
+    position: relative;
+    width: 580px;
+    height: 175px;
+    font-family: "Newsreader-Regular", Helvetica;
+    font-weight: 400;
+    color: var(--collection-1-dark-grey);
+    font-size: 25px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: 35px;
+  }
+  
+  .about-us-page .header {
+    display: inline-flex;
+    align-items: center;
+    gap: 153px;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background-color: transparent;
+  }
+  
+  .about-us-page .FEC-logo {
+    position: relative;
+    width: 139px;
+    height: 55px;
+  }
+  
+  .about-us-page .navbar {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 40px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .about-us-page .text-wrapper-2 {
+    position: relative;
+    width: fit-content;
+    margin-top: -1px;
+    font-family: "Newsreader-SemiBold", Helvetica;
+    font-weight: 600;
+    color: #000000;
+    font-size: 26px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .about-us-page .login-button {
+    display: flex;
+    width: 140px;
+    height: 55px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    position: relative;
+    background-color: #e5bcff;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  .about-us-page .text-wrapper-3 {
+    position: relative;
+    width: fit-content;
+    font-family: "Newsreader-SemiBold", Helvetica;
+    font-weight: 600;
+    color: #000000;
+    font-size: 26px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
