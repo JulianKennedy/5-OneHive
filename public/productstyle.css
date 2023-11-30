@@ -91,20 +91,7 @@
     line-height: normal;
     white-space: nowrap;
   }
-  
-  .product-page-desktop .login-button {
-    display: flex;
-    width: 140px;
-    height: 55px;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 10px;
-    position: relative;
-    background-color: #e5bcff;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
+
   
   .product-page-desktop .text-wrapper-2 {
     position: relative;
@@ -170,18 +157,57 @@
     line-height: 35px;
   }
   
-  .product-page-desktop .adopt-now-button {
+  .product-page-desktop .adopt-now-button button{
     display: flex;
     width: 280px;
     height: 72px;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    padding: 10px;
     position: absolute;
     top: 1144px;
     left: 830px;
     background-color: #e5bcff;
-    border-radius: 4px;
+    border: none;
+    font-size: 25px;
+    font-weight: bold;
+  }
+
+  .product-page-desktop .adopt-now-button button:hover{
+    cursor: pointer;
+    background-color: #e5e5;
+  }
+
+  .product-page-desktop .header .navbar button {
+    background-color: white;
+    border: none;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+
+  .product-page-desktop .header .login-button button {
+    display: flex;
+    width: 150px;
+    height: 55px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-weight: bold;
+    padding: 10px;
+    position: relative;
+    font-family: "Newsreader-SemiBold";
+    background-color: #e5bcff;
+    border: none;
+    font-size: 25px;
+  }
+
+  .product-page-desktop .header .login-button button:hover {
+    cursor: pointer;
+    background-color: #e5e5;
   }
   

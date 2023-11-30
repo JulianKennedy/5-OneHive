@@ -86,20 +86,6 @@
     white-space: nowrap;
   }
   
-  .adopt-a-beehive-page .login-button {
-    display: flex;
-    width: 140px;
-    height: 55px;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 10px;
-    position: relative;
-    background-color: #e5bcff;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-  
   .adopt-a-beehive-page .text-wrapper-3 {
     position: relative;
     width: fit-content;
@@ -111,5 +97,39 @@
     letter-spacing: 0;
     line-height: normal;
     white-space: nowrap;
+  }
+
+  .adopt-a-beehive-page .header .login-button button {
+    display: flex;
+    width: 150px;
+    height: 55px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-weight: bold;
+    padding: 10px;
+    position: relative;
+    font-family: "Newsreader-SemiBold";
+    background-color: #e5bcff;
+    border: none;
+    font-size: 25px;
+  }
+
+  .adopt-a-beehive-page .header .login-button button:hover {
+    cursor: pointer;
+    background-color: #e5e5;
+  }
+
+  .adopt-a-beehive-page .header .navbar button {
+    background-color: white;
+    border: none;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: bold;
+    font-size: 20px;
+    margin: 4px 2px;
+    cursor: pointer;
   }
   
