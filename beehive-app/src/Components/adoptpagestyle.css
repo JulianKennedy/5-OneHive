@@ -1,0 +1,266 @@
+.adopt-a-beehive-page {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .adopt-a-beehive-page .div {
+    background-color: #ffffff;
+    width: 1440px;
+    height: 3200px;
+    position: relative;
+  }
+  
+  .adopt-a-beehive-page .overlap-group {
+    position: absolute;
+    width: 1440px;
+    height: 550px;
+    top: 86px;
+    left: 0;
+    background-image: url(./img/learn_beekeeping.png);
+    background-size: 100% 100%;
+  }
+  
+  .adopt-a-beehive-page .text-wrapper {
+    position: absolute;
+    width: 578px;
+    height: 72px;
+    top: 202px;
+    left: 130px;
+    font-family: "Newsreader-SemiBold", Helvetica;
+    font-weight: 600;
+    color: #ffffff;
+    font-size: 72px;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .adopt-a-beehive-page .text-wrapper-2 {
+    position: absolute;
+    width: 578px;
+    top: 274px;
+    left: 130px;
+    font-family: "Newsreader-Regular", Helvetica;
+    font-weight: 400;
+    color: #ffffff;
+    font-size: 35px;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .adopt-a-beehive-page .rectangle {
+    position: absolute;
+    width: 1440px;
+    height: 222px;
+    top: 2978px;
+    left: 0;
+    background-color: #d9d9d9;
+  }
+  
+  .adopt-a-beehive-page .img {
+    position: absolute;
+    width: 550px;
+    height: 450px;
+    top: 801px;
+    left: 130px;
+  }
+
+  .adopt-a-beehive-page .rectangle {
+    position: absolute;
+    width: 550px;
+    height: 450px;
+    top: 801px;
+    left: 130px;
+  }
+  
+  .adopt-a-beehive-page .rectangle-2 {
+    position: absolute;
+    width: 550px;
+    height: 450px;
+    top: 1521px;
+    left: 760px;
+  }
+  
+  .adopt-a-beehive-page .rectangle-3 {
+    position: absolute;
+    width: 550px;
+    height: 450px;
+    top: 2241px;
+    left: 130px;
+    object-fit: cover;
+  }
+  
+  .adopt-a-beehive-page .frame {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    position: absolute;
+    top: 832px;
+    left: 730px;
+  }
+  
+  .adopt-a-beehive-page .one-hive {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .adopt-a-beehive-page .div-2 {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .adopt-a-beehive-page .heading {
+    position: relative;
+    width: 580px;
+    height: 110px;
+    margin-top: -1px;
+    font-family: "Newsreader-SemiBold", Helvetica;
+    font-weight: 600;
+    color: #000000;
+    font-size: 45px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: normal;
+  }
+  
+  .adopt-a-beehive-page .body {
+    position: relative;
+    width: 580px;
+    height: 175px;
+    font-family: "Newsreader-Regular", Helvetica;
+    font-weight: 400;
+    color: var(--collection-1-dark-grey);
+    font-size: 25px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: 35px;
+  }
+  
+  .adopt-a-beehive-page .frame-2 {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 50px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+
+  .adopt-a-beehive-page .frame-3 {
+    position:absolute;
+    left: 180px;
+    margin-top: 250px;
+  }
+  
+  .adopt-a-beehive-page .div-wrapper {
+    display: flex;
+    width: 250px;
+    height: 72px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: #e5bcff;
+  }
+  
+  .adopt-a-beehive-page .text-wrapper-3 {
+    position: relative;
+    width: fit-content;
+    font-family: "Newsreader-SemiBold", Helvetica;
+    font-weight: 600;
+    color: #000000;
+    font-size: 26px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+  
+  .adopt-a-beehive-page .div-wrapper a {
+    display: flex;
+    width: 250px;
+    height: 72px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: #e5bcff;
+    border: none;
+    font-size: 25px;
+    font-weight: bold;
+    text-decoration: none;
+    color:black;
+    }
+  
+    .adopt-a-beehive-page .div-wrapper a:hover {
+      cursor: pointer;
+      background-color: #e5e5;
+    }
+  
+  .adopt-a-beehive-page .our-community {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    position: absolute;
+    top: 1600px;
+    left: 130px;
+  }
+  
+  .adopt-a-beehive-page .p {
+    position: relative;
+    width: 580px;
+    height: 175px;
+    font-family: "Newsreader-Regular", Helvetica;
+    font-weight: 400;
+    color: #3b3b3b;
+    font-size: 25px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: 35px;
+  }
+  
+  .adopt-a-beehive-page .header {
+    display: inline-flex;
+    align-items: center;
+    gap: 153px;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background-color: transparent;
+  }
+  
+  .adopt-a-beehive-page .FEC-logo {
+    position: relative;
+    width: 139px;
+    height: 55px;
+  }
+  
+  .adopt-a-beehive-page .navbar {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 40px;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  
+  .adopt-a-beehive-page .text-wrapper-4 {
+    position: relative;
+    width: fit-content;
+    margin-top: -1px;
+    font-family: "Newsreader-SemiBold", Helvetica;
+    font-weight: 600;
+    color: #000000;
+    font-size: 26px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
