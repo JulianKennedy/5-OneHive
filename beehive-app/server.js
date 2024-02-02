@@ -55,6 +55,36 @@ app.post('/login', async (req, res) => {
     }
     res.send({status: false});
 });
+
+app.post('/dashboard', async (req, res) => {
+
+    //find the hives of a specific user then return the data of a specific hive
+
+    const user = req.body.User;
+    const hive = req.body.Hive;
+    console.log(user, hive);
+    const ret=await db.getHiveDataOfSpecificUser(user);
+
+    console.log(ret);
+
+    //loop through the hives and find the hive that matches the name
+    //then return the data of that hive
+
+    for (let i = 0; i < ret.length; i++) {
+        const element = ret[i];
+        console.log(element);
+        const ret2=await db.getHiveDataOfSpecificHive(hive);
+        res.send(ret2);
+        return;
+    }
+    res.send("No hives found");
+});
+
+app.get('/dashboard', async (req, res) => {
+    const retu=await db.getHiveDataWithOwnerAndHiveName();
+    console.log(retu);
+    res.send(retu);
+});
   
 
 // app.get('/home', (req, res) => {
@@ -99,15 +129,15 @@ app.get('/', (req, res) => {
 
 
  function addTables(){
-    let data =  (db.createHiveTable());
     let data2 = (db.createHiveDataTable());
+    let data =  (db.createHiveTable());
     let data3 = (db.createUserTable());
 }
 
 function insertHive(){
-    db.addHive("Hive1", "Owner1", "Location1", 1);
-    (db.addHive("Hive2", "Owner2", "Location2", 0));
-    db.addHive("Hive3", "Owner3", "Location3", 1);
+    db.addHive("Hive1", "Email1", "Location1", 1);
+    (db.addHive("Hive2", "Email2", "Location2", 0));
+    db.addHive("Hive3", "Email3", "Location3", 1);
 }
 
 function insertHiveData(){
@@ -161,14 +191,22 @@ async function getHiveDataOfSpecificHive2(){
     console.log(data);
 }
 
+async function getHivesOfSpecificUser(email){
+    let data = await db.getHivesOfSpecificUser(email, function(result){
+        console.log(result);
+    });
+    console.log(data);
+}
+
 
 
 addTables();
+// insertUsers();
 // insertHive();
 // insertHiveData();
-// insertUsers();
 getHives();
 getHiveData();
 getUsers();
+getHivesOfSpecificUser("User1");
 getHiveDataOfSpecificHive1();
 getHiveDataOfSpecificHive2();

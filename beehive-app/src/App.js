@@ -9,6 +9,7 @@ import AboutUsPage from './Components/AboutUsPage';
 import ProductPage from './Components/ProductPage';
 import LoginPage from './Components/LoginPage';
 import React from "react";
+import Dashboard from './Components/Dashboard';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       <Route path="/product" element={<ProductPage/>} />
       <Route path="/about" element={<AboutUsPage/>} />
       <Route path="/login" element={<LoginPage/>} />
+      <Route path="/dashboard" element={<Dashboard/>} />
       {/* <Route path="/add-on" element={<AddOnPage/>} />
       <Route path="/stats" element={<StatsPage/>} />
       <Route path="/payment" element={<PaymentPage/>} />

@@ -1,0 +1,50 @@
+.root{
+  --temp: '℃';
+  --hum: '%';
+  --tempnum: 0%;
+  --humnum: 0%;
+}
+
+.progress-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: 
+      radial-gradient(closest-side, white 79%, transparent 80% 100%),
+      conic-gradient(hotpink var(--tempnum), pink 0);    
+  }
+  
+  .progress-bar::before {
+    content: var(--temp) "℃";
+    color: 'black';
+     font-size: 48px;
+      font-family: 'Newsreader';
+       font-weight: '700';
+        word-wrap: 'break-word';
+  }
+
+  .progress-bar2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: 
+      radial-gradient(closest-side, white 79%, transparent 80% 100%),
+      conic-gradient(hotpink var(--humnum), pink 0);    
+  }
+  
+  .progress-bar2::before {
+    content: var(--hum) "%";
+    color: 'black';
+     font-size: 48px;
+      font-family: 'Newsreader';
+       font-weight: '700';
+        word-wrap: 'break-word';
+  }
