@@ -1,12 +1,21 @@
 import React from "react";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
+import { MemberHeader } from "./MemberHeader";
 import "./homepagestyle.css";
 
 export const HomePage = () => {
+  // document.getElementById("head").createElement("header-instance");
+  // if(localStorage) {
+  //   document.getElementsByClassName("header-instance").createElement(MemberHeader);
+  // }
+  // else {
+  //   document.getElementsByClassName("header-instance").createElement(Header);
+  // }
+
   return (
     <div class="home-page-desktop" id="home">
-      <div class="div">
+      <div class="div" id="head">
         <div class="overlap-group">
           <div class="text-wrapper">Save The Bees</div>
           <div class="text-wrapper-2">or else</div>
@@ -54,7 +63,8 @@ export const HomePage = () => {
           </div>
           <div class="div-wrapper"><div class="text-wrapper-3"><a href="product">Learn More</a></div></div>
         </div>
-        <Header className="header-instance" />
+        {/* {localStorage.get("jwt") && (<MemberHeader className="header-instance"></MemberHeader>)} */}
+       <Header className="header-instance"></Header>
       </div>
     </div>
   );

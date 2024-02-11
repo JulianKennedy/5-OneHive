@@ -1,3 +1,7 @@
+#dash{
+  z-index: 0;
+}
+
 .root{
   --temp: '℃';
   --hum: '%';
@@ -47,4 +51,12 @@
       font-family: 'Newsreader';
        font-weight: '700';
         word-wrap: 'break-word';
+  }
+
+  .button-plus:hover{
+    cursor: pointer;
+  }
+
+  .edit-button:hover{
+    cursor: pointer;
   }

@@ -10,6 +10,8 @@ import ProductPage from './Components/ProductPage';
 import LoginPage from './Components/LoginPage';
 import React from "react";
 import Dashboard from './Components/Dashboard';
+import AddHive from './Components/AddHive';
+import RegisterPage from './Components/RegisterPage';
 
 function App() {
   return (
@@ -24,10 +26,10 @@ function App() {
       <Route path="/about" element={<AboutUsPage/>} />
       <Route path="/login" element={<LoginPage/>} />
       <Route path="/dashboard" element={<Dashboard/>} />
+      <Route path="/register" element={<RegisterPage/>} />
       {/* <Route path="/add-on" element={<AddOnPage/>} />
       <Route path="/stats" element={<StatsPage/>} />
       <Route path="/payment" element={<PaymentPage/>} />
-      <Route path="/register" element={<RegisterPage/>} />
       <Route path="/forgotpassword" element={<ForgotPasswordPage/>} />
       <Route path="/fecinfo" element={<FECInfoPage/>} />  */}
       </Routes> 

@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const fs = require('fs');
 const express = require('express');
 const bodyParser = require("body-parser");
+require('dotenv').config();
 
 const app = express();
 
@@ -18,8 +19,31 @@ app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
 });
 
+// access config var
+process.env.TOKEN_SECRET;
 
 var db = new sql();
+
+// function generateAccessToken(username) {
+//     return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: '1d' });
+//   }
+
+//   function authenticateToken(req, res, next) {
+//     const authHeader = req.headers['authorization']
+//     const token = authHeader && authHeader.split(' ')[1]
+  
+//     if (token == null) return res.sendStatus(401)
+
+//     jwt.verify(token, String(process.env.TOKEN_SECRET), (err, user) => {
+//         console.log(err)
+
+//         if (err) return res.sendStatus(403)
+
+//         req.user = user
+
+//         next()
+//     })
+//   }
 
 app.post('/login', async (req, res) => {
 
@@ -49,7 +73,9 @@ app.post('/login', async (req, res) => {
     for (let i = 0; i < ret.length; i++) {
         const element = ret[i];
         if (element.Email == email && await bcrypt.compare(password, element.Password)) {
-            res.send({status: true});
+            res.send({status: true
+            //, token:
+            });
             return;
         }
     }
@@ -60,31 +86,117 @@ app.post('/dashboard', async (req, res) => {
 
     //find the hives of a specific user then return the data of a specific hive
 
-    const user = req.body.User;
-    const hive = req.body.Hive;
-    console.log(user, hive);
-    const ret=await db.getHiveDataOfSpecificUser(user);
+    const type = req.body.Type;
+
+    if (type == "getUserHives") {
+        const user = req.body.User;
+        const ret=await db.getHivesOfSpecificUser(user);
+        console.log(ret);
+        res.send(ret);
+    }
+    else if (type == "getUsername") {
+        const user = req.body.User;
+        const ret=await db.getUserName(user);
+        console.log(ret);
+        res.send(ret);
+    }
+    else{
+        const hive = req.body.Hive;
+        const ret=await db.getHiveDataOfSpecificHive(hive);
+        console.log(ret);
+        res.send(ret);
+    }
+
+    // //loop through the hives and find the hive that matches the name
+    // //then return the data of that hive
+
+    // for (let i = 0; i < ret.length; i++) {
+    //     const element = ret[i];
+    //     console.log(element);
+    //     const ret2=await db.getHiveDataOfSpecificHive(hive);
+    //     res.send(ret2);
+    //     return;
+    // }
+    // res.send("No hives found");
+});
+
+// app.get('/dashboard', async (req, res) => {
+//     const retu=await db.getHiveDataWithOwnerAndHiveName();
+//     console.log(retu);
+//     res.send(retu);
+// });
+
+app.put('/dashboard', async (req, res) => {
+    const hive = req.body.Hive_Name;
+    const location = req.body.Location;
+    const anonymous = req.body.Anonymous;
+    const email = req.body.Email;
+
+    console.log(hive, location, anonymous, email);
+    await db.addHive(hive, email, location, anonymous);
+
+    const ret=await db.getHivesOfSpecificUser(email);
+    console.log(ret);
+    res.send(ret);   
+});
+
+app.patch('/dashboard', async (req, res) => {
+    const old_hive_name = req.body.Old_Hive_Name;
+    const hive = req.body.Hive_Name;
+    const location = req.body.Location;
+    const anonymous = req.body.Anonymous;
+    const email = req.body.Email;
+
+
+    console.log(hive, location, anonymous, email);
+    await db.updateHive(old_hive_name, hive, location, anonymous, email);
+
+    const ret=await db.getHivesOfSpecificUser(email);
+    console.log(ret);
+    res.send(ret); 
+});
+
+app.delete('/dashboard', async (req, res) => {
+    const hive = req.body.Hive_Name;
+    const email = req.body.Email;
+
+    console.log(hive, email);
+    db.deleteHive(hive, email);
+    
+    const ret=await db.getHivesOfSpecificUser(email);
+    console.log(ret);
+    res.send(ret);
+});
+
+app.post('/register', async (req, res) => {
+    const email = req.body.Email;
+
+    console.log(email);
+
+    const ret=await db.getUsersWithEmail(email);
 
     console.log(ret);
-
-    //loop through the hives and find the hive that matches the name
-    //then return the data of that hive
-
-    for (let i = 0; i < ret.length; i++) {
-        const element = ret[i];
-        console.log(element);
-        const ret2=await db.getHiveDataOfSpecificHive(hive);
-        res.send(ret2);
-        return;
-    }
-    res.send("No hives found");
+    res.send(ret);
 });
 
-app.get('/dashboard', async (req, res) => {
-    const retu=await db.getHiveDataWithOwnerAndHiveName();
-    console.log(retu);
-    res.send(retu);
+app.put('/register', async (req, res) => {
+    const name = req.body.Username;
+    const email = req.body.Email;
+    const password = req.body.Password;
+    const location = req.body.Location;
+
+    console.log(name, email, password, location);
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    await db.addUser(name, email, hashedPassword, location);
+    
+    const ret=await db.getUsers(email);
+    console.log(ret);
+    res.send(ret);
 });
+    
+
   
 
 // app.get('/home', (req, res) => {
@@ -129,9 +241,10 @@ app.get('/', (req, res) => {
 
 
  function addTables(){
-    let data2 = (db.createHiveDataTable());
-    let data =  (db.createHiveTable());
     let data3 = (db.createUserTable());
+    let data =  (db.createHiveTable());
+    let data2 = (db.createHiveDataTable());
+    
 }
 
 function insertHive(){
@@ -141,9 +254,9 @@ function insertHive(){
 }
 
 function insertHiveData(){
-    (db.addHiveData("Hive1",70, 55, 12, 150, "File1"));
-    (db.addHiveData("Hive1",60, 50, 11, 100, "File2"));
-    (db.addHiveData("Hive1",50, 45, 10, 50, "File3"));
+    (db.addHiveData("Hive1",70, 55, 12, 150, "File1", '2023-08-01'));
+    (db.addHiveData("Hive1",60, 50, 11, 100, "File2", '2023-08-02'));
+    (db.addHiveData("Hive2",50, 45, 10, 50, "File3", '2023-08-03'));
 }
 
 async function insertUsers(){
@@ -156,57 +269,57 @@ async function insertUsers(){
 
 }
 
-async function getHives(){
-    let data = await db.getHives(function(result){
-        console.log(result);
-    });
-    console.log(data);
-}
+// async function getHives(){
+//     let data = await db.getHives(function(result){
+//         console.log(result);
+//     });
+//     console.log(data);
+// }
 
-async function getHiveData(){
-    let data = await db.getHiveData(function(result){
-        console.log(result);
-    });
-    console.log(data);
-}
+// async function getHiveData(){
+//     let data = await db.getHiveData(function(result){
+//         console.log(result);
+//     });
+//     console.log(data);
+// }
 
-async function getUsers(){
-    let data = await db.getUsers(function(result){
-        console.log(result);
-    });
-    console.log(data);
-}
+// async function getUsers(){
+//     let data = await db.getUsers(function(result){
+//         console.log(result);
+//     });
+//     console.log(data);
+// }
 
-async function getHiveDataOfSpecificHive1(){
-    let data = await db.getHiveDataOfSpecificHive("Hive1", function(result){
-        console.log(result);
-    });
-    console.log(data);
-}
+// async function getHiveDataOfSpecificHive1(){
+//     let data = await db.getHiveDataOfSpecificHive("Hive1", function(result){
+//         console.log(result);
+//     });
+//     console.log(data);
+// }
 
-async function getHiveDataOfSpecificHive2(){
-    let data = await db.getHiveDataOfSpecificHive("Hive2", function(result){
-        console.log(result);
-    });
-    console.log(data);
-}
+// async function getHiveDataOfSpecificHive2(){
+//     let data = await db.getHiveDataOfSpecificHive("Hive2", function(result){
+//         console.log(result);
+//     });
+//     console.log(data);
+// }
 
-async function getHivesOfSpecificUser(email){
-    let data = await db.getHivesOfSpecificUser(email, function(result){
-        console.log(result);
-    });
-    console.log(data);
-}
+// async function getHivesOfSpecificUser(email){
+//     let data = await db.getHivesOfSpecificUser(email, function(result){
+//         console.log(result);
+//     });
+//     console.log(data);
+// }
 
 
 
 addTables();
-// insertUsers();
-// insertHive();
-// insertHiveData();
-getHives();
-getHiveData();
-getUsers();
-getHivesOfSpecificUser("User1");
-getHiveDataOfSpecificHive1();
-getHiveDataOfSpecificHive2();
+//  insertUsers();
+//  insertHive();
+//  insertHiveData();
+// getHives();
+// getHiveData();
+// getUsers();
+// getHivesOfSpecificUser("User1");
+// getHiveDataOfSpecificHive1();
+// getHiveDataOfSpecificHive2();

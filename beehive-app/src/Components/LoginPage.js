@@ -50,21 +50,17 @@ function LoginPage() {
                 <div className="Password" style={{width: 113, height: 41, textAlign: 'center', color: 'black', fontSize: 24, fontFamily: 'Newsreader', fontWeight: '200', wordWrap: 'break-word'}}>Password</div>
                 <input type="password" name="password" value={password} style={{width: 463, height: 60}} onInput={handlePasswordChange} />
                 <div className="Frame6" style={{justifyContent: 'flex-start', alignItems: 'flex-start'}}>
-                    <div className="ForgotYourPassword" style={{width: 161, height: 0, textAlign: 'left', color: '#0047FF', fontSize: 15, fontFamily: 'Newsreader', fontWeight: '400', wordWrap: 'break-word', marginLeft: "60px"}}>
-                        <a href="/forgotpassword" style={{width: 161, height: 0, textAlign: 'left', color: '#0047FF', fontSize: 15, fontFamily: 'Newsreader', fontWeight: '400', wordWrap: 'break-word', textDecoration: "none"}}>Forgot your Password?</a>
+                    <div className="ForgotYourPassword" style={{textAlign: 'left', color: '#0047FF', fontSize: 15, fontFamily: 'Newsreader', fontWeight: '400', wordWrap: 'break-word', textDecoration:"none"}}>
+                        <a href="forgotpassword" color= "#0047FF" style={{fontSize: 15, fontFamily: 'Newsreader', fontWeight: '400', wordWrap: 'break-word', textDecoration: "none", marginLeft: '10px'}}> Forgot your Password? </a>
                     </div>
-                    <input type="checkbox" className="KeepMeSignedIn" value="Keep me signed in" style={{width: 30, textAlign: 'left', color: 'black', fontSize: 15, fontFamily: 'Newsreader', fontWeight: '400', wordWrap: 'break-word', marginTop: "60px"}} />
+                    <input type="checkbox" className="KeepMeSignedIn" value="Keep me signed in" style={{width: 30, textAlign: 'left', color: 'black', fontSize: 15, fontFamily: 'Newsreader', fontWeight: '400', wordWrap: 'break-word', marginTop: '20px'}} />
                     <label htmlFor="Keep me signed in" style={{width: 32, textAlign: 'center', color: 'black', fontSize: 15, fontFamily: 'Newsreader', fontWeight: '400', wordWrap: 'break-word'}}>Keep me signed in</label><br />
                 </div>
-            </div>
-            <div className="Frame3" style={{left: 900, top: 932, position: 'absolute', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 50, display: 'flow', marginTop: '120px'}}>
                 <div className="Frame8" style={{justifyContent: 'center', alignItems: 'center', gap: 10, display: 'flex-start'}}>
-                    <div className="Login" style={{textAlign: 'center', color: 'black', fontSize: 26, fontFamily: 'Newsreader', fontWeight: '600', wordWrap: 'break-word', marginLeft: "40px"}}><a href="dashboard" className="login-button" type="button" color="#e5bcff" textDecoration="none" onClick={handleSubmit}>Login</a></div>
+                    <div className="Login" style={{textAlign: 'center', color: 'black', fontSize: 26, fontFamily: 'Newsreader', fontWeight: '600', wordWrap: 'break-word', marginLeft: '150px', marginTop: '30px' }}><a href="dashboard" className="login-button" type="button" color="#e5bcff" textDecoration="none" onClick={handleSubmit}>Login</a></div>
+                    <div className="Register" style={{textAlign: 'left', color: 'black', fontSize: 20, fontFamily: 'Newsreader', fontWeight: '600', wordWrap: 'break-word', marginLeft: '20px', textDecoration: 'none', marginTop: '30px'}}>If you don't have an account, <a href="register" className="register-button" type="button" color="#e5bcff" textDecoration="none">Register</a> for one now</div>
                 </div>
-                <div className="Register" style={{textAlign: 'left', color: 'black', fontSize: 20, fontFamily: 'Newsreader', fontWeight: '600', wordWrap: 'break-word', marginLeft: "-90px", textDecoration:"none", marginTop:"30px"}}>If you don't have an account, <a href="register" className="register-button" type="button" color="#e5bcff" textDecoration="none">Register </a> for one now</div>
             </div>
-            <div className="Frame4" style={{left: 900, top: 932, position: 'absolute', justifyContent: 'flex-start', alignItems: 'flex-start', gap: 50, display: 'inline-flex', marginTop: '500px'}}>
-                </div>
             <img className="Image1" style={{width: 378, height: 151, left: 210, top: 678, position: 'absolute'}} src={require('./img/fec.png')} />
         </div>
     );
