@@ -7,10 +7,11 @@ const express = require('express');
 const bodyParser = require("body-parser");
 const { WebSocketServer } = require('ws');
 require('dotenv').config();
+const https = require('https');
+const pem = require('pem')
 
 const app = express();
 
-app.use(bodyParser.json());
 app.use(cors());
 app.use(express.json()) 						// to parse application/json
 app.use(express.urlencoded({ extended: true })) // to parse application/x-www-form-urlencoded
@@ -21,7 +22,34 @@ app.listen(port, () => {
 });
 
 
-const sockserver = new WebSocketServer({ port: 443});
+// potential future solution??
+// pem.createCertificate({ days: 1, selfSigned: true }, (err, keys) => {
+//     if (err) {
+//       throw err
+//     }
+//     const app = express()
+  
+//     app.get('/', (req, res) => {
+//       res.send('o hai!')
+//     })
+  
+//     const server = https.createServer({ key: keys.clientKey, cert: keys.certificate }, app).listen(443)
+//   const sockserver = new WebSocketServer({ server });
+// sockserver.on('connection', ws => {
+// console.log('New client connected!')
+// ws.send('connection established')
+// ws.on('close', () => console.log('Client has disconnected!'))
+// ws.on('message', data => {
+//     data=data.toString()
+//     console.log(data);
+// })
+// ws.onerror = function () {
+//     console.log('websocket error')
+// }
+// });
+// });
+
+const sockserver = new WebSocketServer({ port: 443 });
 sockserver.on('connection', ws => {
 console.log('New client connected!')
 ws.send('connection established')
@@ -29,6 +57,11 @@ ws.on('close', () => console.log('Client has disconnected!'))
 ws.on('message', data => {
     data=data.toString()
     console.log(data);
+
+    //parse data and add it to hive
+    const hiveData = JSON.parse(data);
+    console.log(hiveData);
+    db.addHiveData("Andi", hiveData.Temperature, hiveData.Humidity, hiveData.Weight, hiveData.Frequency, "youtube.com", new Date().toISOString().slice(0, 19).replace('T', ' '));
 })
 ws.onerror = function () {
     console.log('websocket error')
