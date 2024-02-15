@@ -29,6 +29,7 @@ useEffect(() => {
     console.log(data);
     setHives(data);
     if (data.length > 0) {
+      console.log(data[0].Hive_Name);
       await fetchHiveData(data[0].Hive_Name);
     }
     const data2 = await getUserHivesOrGetHiveData("getUsername", "");

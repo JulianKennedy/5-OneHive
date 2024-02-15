@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const fs = require('fs');
 const express = require('express');
 const bodyParser = require("body-parser");
+const { WebSocketServer } = require('ws');
 require('dotenv').config();
 
 const app = express();
@@ -18,6 +19,22 @@ app.use(express.urlencoded({ extended: true })) // to parse application/x-www-fo
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
 });
+
+
+const sockserver = new WebSocketServer({ port: 443});
+sockserver.on('connection', ws => {
+console.log('New client connected!')
+ws.send('connection established')
+ws.on('close', () => console.log('Client has disconnected!'))
+ws.on('message', data => {
+    data=data.toString()
+    console.log(data);
+})
+ws.onerror = function () {
+    console.log('websocket error')
+}
+});
+
 
 // access config var
 process.env.TOKEN_SECRET;
@@ -87,6 +104,7 @@ app.post('/dashboard', async (req, res) => {
     //find the hives of a specific user then return the data of a specific hive
 
     const type = req.body.Type;
+    console.log(req.body);
 
     if (type == "getUserHives") {
         const user = req.body.User;
@@ -106,25 +124,7 @@ app.post('/dashboard', async (req, res) => {
         console.log(ret);
         res.send(ret);
     }
-
-    // //loop through the hives and find the hive that matches the name
-    // //then return the data of that hive
-
-    // for (let i = 0; i < ret.length; i++) {
-    //     const element = ret[i];
-    //     console.log(element);
-    //     const ret2=await db.getHiveDataOfSpecificHive(hive);
-    //     res.send(ret2);
-    //     return;
-    // }
-    // res.send("No hives found");
 });
-
-// app.get('/dashboard', async (req, res) => {
-//     const retu=await db.getHiveDataWithOwnerAndHiveName();
-//     console.log(retu);
-//     res.send(retu);
-// });
 
 app.put('/dashboard', async (req, res) => {
     const hive = req.body.Hive_Name;
@@ -195,48 +195,13 @@ app.put('/register', async (req, res) => {
     console.log(ret);
     res.send(ret);
 });
-    
-
-  
-
-// app.get('/home', (req, res) => {
-//     // res.sendFile(__dirname + '/public/index.html');
-//     const promises = [
-//         db.getHives(),
-//         db.getHiveData()
-//     ]
-    
-//     Promise.all(promises).then((data) => {
-//         res.send(data);
-//     });
-// });
-
-// app.post('/register', async (req, res) => {
-//     const { name, email, password, location } = req.body;
-  
-//     try {
-//       const hashedPassword = await bcrypt.hash(password, 10); // 10 is the salt rounds
-  
-//       const query = `INSERT INTO users (email, password) VALUES (?, ?)`;
-//       db.query(query, [name, email, hashedPassword, location], (err, result) => {
-//         if (err) {
-//           res.status(500).send('Error');
-//           return;
-//         }
-//         res.send('User registered successfully');
-//       });
-//     } catch (error) {
-//       console.error('Error registering user:', error);
-//       res.status(500).send('Error');
-//     }
-//   });
   
 
 // Define a route for the homepage
 app.get('/', (req, res) => {
     res.send('Hello World');
-    res.sendFile(__dirname + '/public/index.html');
-    req.sendFile(__dirname + '/public/LoginPage.js');
+    // res.sendFile(__dirname + '/public/index.html');
+    // req.sendFile(__dirname + '/public/LoginPage.js');
 });
 
 
@@ -269,57 +234,4 @@ async function insertUsers(){
 
 }
 
-// async function getHives(){
-//     let data = await db.getHives(function(result){
-//         console.log(result);
-//     });
-//     console.log(data);
-// }
-
-// async function getHiveData(){
-//     let data = await db.getHiveData(function(result){
-//         console.log(result);
-//     });
-//     console.log(data);
-// }
-
-// async function getUsers(){
-//     let data = await db.getUsers(function(result){
-//         console.log(result);
-//     });
-//     console.log(data);
-// }
-
-// async function getHiveDataOfSpecificHive1(){
-//     let data = await db.getHiveDataOfSpecificHive("Hive1", function(result){
-//         console.log(result);
-//     });
-//     console.log(data);
-// }
-
-// async function getHiveDataOfSpecificHive2(){
-//     let data = await db.getHiveDataOfSpecificHive("Hive2", function(result){
-//         console.log(result);
-//     });
-//     console.log(data);
-// }
-
-// async function getHivesOfSpecificUser(email){
-//     let data = await db.getHivesOfSpecificUser(email, function(result){
-//         console.log(result);
-//     });
-//     console.log(data);
-// }
-
-
-
 addTables();
-//  insertUsers();
-//  insertHive();
-//  insertHiveData();
-// getHives();
-// getHiveData();
-// getUsers();
-// getHivesOfSpecificUser("User1");
-// getHiveDataOfSpecificHive1();
-// getHiveDataOfSpecificHive2();

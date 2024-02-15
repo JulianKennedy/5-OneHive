@@ -8,7 +8,7 @@ export const AdoptPage = () => {
     return (
         <div class="adopt-a-beehive-page" id="adopt">
             <div class="div">
-                <div class="overlap-group"><div class="text-wrapper">Learn the Basics</div></div>
+                <div class="overlap-group"><div class="text-wrapper">Save the Bees</div></div>
                 <div class="rectangle"></div>
                 <img class="rectangle-2" src={require('./img/adoptpic1.jpg')} />
                 <img class="rectangle" src={require('./img/adoptpic2.jpg')} />
