@@ -1,0 +1,35 @@
+.container .modal {
+    z-index: 1;
+    width: 1000px;
+    height: 600px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    position: relative;
+    animation: animate 0.3s;
+  }
+
+  .modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+  }
+
+  .close-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-family: "Newsreader-SemiBold";
+      background-color: #e5bcff;
+      border: none;
+      text-decoration: none;
+  }
+  
+  .close-btn:hover {
+      cursor: pointer;
+      background-color: #e5e5;
+    }

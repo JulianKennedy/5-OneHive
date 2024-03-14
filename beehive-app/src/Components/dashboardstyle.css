@@ -24,11 +24,12 @@
   
   .progress-bar::before {
     content: var(--temp) "℃";
-    color: 'black';
      font-size: 48px;
       font-family: 'Newsreader';
        font-weight: '700';
         word-wrap: 'break-word';
+color: black;
+text-decoration: none;
   }
 
   .progress-bar2 {
@@ -58,5 +59,21 @@
   }
 
   .edit-button:hover{
+    cursor: pointer;
+  }
+
+  .temp-trend-button:hover {
+    cursor: pointer;
+  }
+
+  .hum-trend-button:hover {
+    cursor: pointer;
+  }
+
+  .freq-trend-button:hover {
+    cursor: pointer;
+  }
+
+  .weigh-trend-button:hover {
     cursor: pointer;
   }

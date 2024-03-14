@@ -13,7 +13,7 @@ export const MemberHeader = () => {
             <div class="text-wrapper-4"><Link to="/learn" className="learn">Learn</Link></div>
             <div class="text-wrapper-4"><Link to="/dashboard" className="dashboard">Dashboard</Link></div>
             </div>
-            <div className="profile"><img src={require('./img/beeprofile.png')}></img></div>
+            <div className="profile"><Link to="/profile" className="profile"><img src={require('./img/beeprofile.png')}></img></Link></div>
         </header>
     );
 };

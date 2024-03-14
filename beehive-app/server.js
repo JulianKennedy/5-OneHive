@@ -9,6 +9,7 @@ const { WebSocketServer } = require('ws');
 require('dotenv').config();
 const https = require('https');
 const pem = require('pem')
+const jwt = require('jsonwebtoken');
 
 const app = express();
 
@@ -49,6 +50,15 @@ app.listen(port, () => {
 // });
 // });
 
+function toISOLocal(d) {
+    const z = n => ('0' + n).slice(-2);
+    let off = d.getTimezoneOffset();
+    const sign = off < 0 ? '+' : '-';
+    off = Math.abs(off);
+    return new Date(d.getTime() - (d.getTimezoneOffset() * 60000)).toISOString().slice(0, -1) + sign + z(off / 60 | 0) + ':' + z(off % 60);
+  }
+  console.log(toISOLocal(new Date()));
+
 const sockserver = new WebSocketServer({ port: 443 });
 sockserver.on('connection', ws => {
 console.log('New client connected!')
@@ -59,9 +69,11 @@ ws.on('message', data => {
     console.log(data);
 
     //parse data and add it to hive
+    if( data !== "Hello, server!"){
     const hiveData = JSON.parse(data);
     console.log(hiveData);
-    db.addHiveData("Andi", hiveData.Temperature, hiveData.Humidity, hiveData.Weight, hiveData.Frequency, "youtube.com", new Date().toISOString().slice(0, 19).replace('T', ' '));
+    db.addHiveData("Andi", hiveData.Temperature, hiveData.Humidity, hiveData.Weight, hiveData.Frequency, "youtube.com", toISOLocal(new Date()).slice(0, 19).replace('T', ' '));
+    }
 })
 ws.onerror = function () {
     console.log('websocket error')
@@ -151,6 +163,30 @@ app.post('/dashboard', async (req, res) => {
         console.log(ret);
         res.send(ret);
     }
+    else if(type == "temptrend") {
+        const hive = req.body.Hive;
+        const ret=await db.getTemperatures(hive);
+        console.log(ret);
+        res.send(ret);
+    }
+    else if(type == "humtrend") {
+        const hive = req.body.Hive;
+        const ret=await db.getHumidities(hive);
+        console.log(ret);
+        res.send(ret);
+    }
+    else if(type == "weighttrend") {
+        const hive = req.body.Hive;
+        const ret=await db.getWeights(hive);
+        console.log(ret);
+        res.send(ret);
+    }
+    else if(type == "frequencytrend") {
+        const hive = req.body.Hive;
+        const ret=await db.getFrequencies(hive);
+        console.log(ret);
+        res.send(ret);
+    }
     else{
         const hive = req.body.Hive;
         const ret=await db.getHiveDataOfSpecificHive(hive);
@@ -228,7 +264,6 @@ app.put('/register', async (req, res) => {
     console.log(ret);
     res.send(ret);
 });
-  
 
 // Define a route for the homepage
 app.get('/', (req, res) => {
@@ -242,6 +277,8 @@ app.get('/', (req, res) => {
     let data3 = (db.createUserTable());
     let data =  (db.createHiveTable());
     let data2 = (db.createHiveDataTable());
+    let data4 = (db.createProductTable());
+    let data5 = (db.createOrderTable());
     
 }
 
@@ -252,9 +289,9 @@ function insertHive(){
 }
 
 function insertHiveData(){
-    (db.addHiveData("Hive1",70, 55, 12, 150, "File1", '2023-08-01'));
-    (db.addHiveData("Hive1",60, 50, 11, 100, "File2", '2023-08-02'));
-    (db.addHiveData("Hive2",50, 45, 10, 50, "File3", '2023-08-03'));
+    // (db.addHiveData("Hive1",70, 55, 12, 150, "File1", toISOLocal(new Date()).slice(0, 19).replace('T', ' ')));
+    // (db.addHiveData("Hive1",60, 50, 11, 100, "File2", '2023-08-02'));
+    // (db.addHiveData("Hive2",50, 45, 10, 50, "File3", '2023-08-03'));
 }
 
 async function insertUsers(){
@@ -268,3 +305,9 @@ async function insertUsers(){
 }
 
 addTables();
+// db.addOrder("Email1", "Product1", '2021-05-01');
+// db.addOrder("Email2", "Product2", '2021-05-02');
+// db.addProduct("Product1", "Description1", 10.0);
+// db.addProduct("Product2", "Description2", 20.0);
+// insertHiveData();
+db.deleteOldData();

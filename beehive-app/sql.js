@@ -41,6 +41,20 @@ sql.prototype.createHiveDataTable = function() {
     });
   }
 
+  sql.prototype.createProductTable = function() {
+    var sql = "CREATE TABLE IF NOT EXISTS Product (Product_ID INT NOT NULL AUTO_INCREMENT, Product_Name VARCHAR(255) NOT NULL, Product_Description VARCHAR(255), Product_Price Double, PRIMARY KEY (Product_ID))";
+    con.query(sql, function (err, result) {
+      if (err) throw err;
+    });
+  }
+
+  sql.prototype.createOrderTable = function() {
+    var sql = "CREATE TABLE IF NOT EXISTS Orders (Order_ID INT NOT NULL AUTO_INCREMENT, User_ID INT NOT NULL, Product_ID INT NOT NULL, Order_Date Date, PRIMARY KEY (Order_ID), FOREIGN KEY (User_ID) REFERENCES User(User_ID) ON DELETE CASCADE, FOREIGN KEY (Product_ID) REFERENCES Product(Product_ID) ON DELETE CASCADE)";
+    con.query(sql, function (err, result) {
+      if (err) throw err;
+    });
+  }
+
 
 // insert data into tables
 
@@ -66,6 +80,18 @@ sql.prototype.addHiveData = function(name,temperature, humidity, weight, frequen
   });
 }
 
+sql.prototype.addProduct = function(name, description, price) {
+  var sql = "INSERT INTO Product (Product_Name, Product_Description, Product_Price) VALUES ('"+name+"', '"+description+"', "+price+")";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+  });
+}
+
+sql.prototype.addOrder = function(email, product_name, order_date) {
+  var sql = "INSERT INTO Orders (User_ID, Product_ID, Order_Date) VALUES ((SELECT User_ID FROM User WHERE Email='"+email+"'), (SELECT Product_ID FROM Product WHERE Product_Name='"+product_name+"'), '"+order_date+"')";  con.query(sql, function (err, result) {
+    if (err) throw err;
+  });
+}
 
 // get data from tables
 
@@ -92,7 +118,7 @@ sql.prototype.getUsersWithPasswordAndEmail = function(email, password){
       }
 
       sql.prototype.getHiveDataOfSpecificHive = function(hive_name){
-        var sql = "SELECT * FROM HiveData WHERE Hive_ID=(SELECT Hive_ID FROM Hive WHERE Hive_Name='"+hive_name+"') ORDER BY Timestamp DESC LIMIT 1"; 
+        var sql = "SELECT * FROM HiveData WHERE Hive_ID=(SELECT Hive_ID FROM Hive WHERE Hive_Name='"+hive_name+"') ORDER BY Timestamp"; 
         return new Promise(
             (resolve, reject) => {
               con.query(sql, function (err, rows) {
@@ -154,6 +180,82 @@ sql.prototype.getUsersWithPasswordAndEmail = function(email, password){
               resolve(rows.map(row => row));
             });
           });
+    }
+
+    //get the temperature and timestamp of a specific hive
+    sql.prototype.getTemperatures = function(hive_name){
+      var sql = "SELECT Temperature, Timestamp FROM HiveData WHERE Hive_ID=(SELECT Hive_ID FROM Hive WHERE Hive_Name='"+hive_name+"') ORDER BY Timestamp";
+      return new Promise(
+          (resolve, reject) => {
+            con.query(sql, function (err, rows) {
+              console.log(rows);
+              if (err) reject(err);
+              resolve(rows.map(row => row));
+            });
+          });
+    }
+
+    sql.prototype.getHumidities = function(hive_name){
+      var sql = "SELECT Humidity, Timestamp FROM HiveData WHERE Hive_ID=(SELECT Hive_ID FROM Hive WHERE Hive_Name='"+hive_name+"') ORDER BY Timestamp";
+      return new Promise(
+          (resolve, reject) => {
+            con.query(sql, function (err, rows) {
+              if (err) reject(err);
+              resolve(rows.map(row => row));
+            });
+          });
+    }
+
+    sql.prototype.getWeights = function(hive_name){
+      var sql = "SELECT Weight, Timestamp FROM HiveData WHERE Hive_ID=(SELECT Hive_ID FROM Hive WHERE Hive_Name='"+hive_name+"') ORDER BY Timestamp";
+      return new Promise(
+          (resolve, reject) => {
+            con.query(sql, function (err, rows) {
+              if (err) reject(err);
+              resolve(rows.map(row => row));
+            });
+          });
+    }
+
+    sql.prototype.getFrequencies = function(hive_name){
+      var sql = "SELECT Frequency, Timestamp FROM HiveData WHERE Hive_ID=(SELECT Hive_ID FROM Hive WHERE Hive_Name='"+hive_name+"') ORDER BY Timestamp";
+      return new Promise(
+          (resolve, reject) => {
+            con.query(sql, function (err, rows) {
+              if (err) reject(err);
+              resolve(rows.map(row => row));
+            });
+          });
+    }
+
+    //if the temperature is over 1 year old 
+    // - keep the average value of all temperatures recorded that day
+    // - delete the rest
+    sql.prototype.deleteOldData = function(){
+      //get the average temp, weight, humidity, frequency, timestamp of each day for each hive if the date is over 1 year old
+      var sql = "SELECT Hive_ID, DATE(Timestamp) as Date, AVG(Temperature) as Avg_Temperature, AVG(Weight) as Avg_Weight, AVG(Humidity) as Avg_Humidity, AVG(Frequency) as Avg_Frequency, MAX(Timestamp) as Timestamp FROM HiveData WHERE Timestamp < DATE_SUB(NOW(), INTERVAL 1 YEAR) GROUP BY Hive_ID, DATE(Timestamp)";
+      con.query(sql, function (err, result) {
+        if (err) throw err;
+        else
+        {
+          //delete all temperature data that is over 1 year old
+          var sql = "DELETE FROM HiveData WHERE Timestamp < DATE_SUB(NOW(), INTERVAL 1 YEAR)";
+          con.query(sql, function (err, result) {
+            if (err) throw err;
+          });
+
+          //console.log(result);
+          //insert the average data back into the table from the result of the previous query
+          var sql = "INSERT INTO HiveData (Hive_ID, Temperature, Humidity, Weight, Frequency, Timestamp) VALUES ?";
+          var values = [];
+          for (var i = 0; i < result.length; i++) {
+            values.push([result[i].Hive_ID, result[i].Avg_Temperature, result[i].Avg_Humidity, result[i].Avg_Weight, result[i].Avg_Frequency, result[i].Timestamp]);
+          }
+          con.query(sql, [values], function (err, result) {
+            if (err) throw err;
+          });
+        }
+      });
     }
 
 module.exports = sql;
