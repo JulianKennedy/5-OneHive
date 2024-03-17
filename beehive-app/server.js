@@ -265,6 +265,13 @@ app.put('/register', async (req, res) => {
     res.send(ret);
 });
 
+app.post('/map', async (req, res) => {
+    const email = req.body.Email;
+    const ret=await db.getLocations(email);
+    console.log(ret);
+    res.send(ret);
+});
+
 // Define a route for the homepage
 app.get('/', (req, res) => {
     res.send('Hello World');

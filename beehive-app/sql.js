@@ -228,6 +228,17 @@ sql.prototype.getUsersWithPasswordAndEmail = function(email, password){
           });
     }
 
+    sql.prototype.getLocations = function(email){
+      var sql = "SELECT Hive_Location FROM Hive WHERE User_ID=(SELECT User_ID FROM User WHERE Email='"+email+"')";
+      return new Promise(
+          (resolve, reject) => {
+            con.query(sql, function (err, rows) {
+              if (err) reject(err);
+              resolve(rows.map(row => row));
+            });
+          });
+    }
+
     //if the temperature is over 1 year old 
     // - keep the average value of all temperatures recorded that day
     // - delete the rest

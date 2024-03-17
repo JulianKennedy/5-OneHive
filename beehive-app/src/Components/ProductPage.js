@@ -1,10 +1,12 @@
 import React from "react";
+import { Header } from "./Header";
+import { MemberHeader } from "./MemberHeader";
 import "./productpagestyle.css";
-const { Header } = require("./Header");
 const { Footer } = require("./Footer");
 
-
 export const ProductPage = () => {
+  const isAuthenticated = localStorage.getItem("jwt") ? true : false;
+
     return (
         <div class="product-page-desktop" id="product">
       <div class="div">
@@ -14,7 +16,7 @@ export const ProductPage = () => {
           </div>
         </div>
         <div class="rectangle"></div>
-        <Header className="header-instance" />
+        {isAuthenticated ? <MemberHeader /> : <Header />}
         <img class="img" src={require('./img/beehive.png')} />
         <div class="one-hive">
           <div class="one-hive-2">

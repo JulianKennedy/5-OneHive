@@ -8,7 +8,7 @@ import { Icon } from "@material-ui/core";
 function LoginPage() {
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
-    const [showError, setShowError] = useState(false); // Add state for error visibility
+    const [showError, setShowError] = useState(false); 
 
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
@@ -17,17 +17,25 @@ function LoginPage() {
     const handlePasswordChange = (event) => {
         setPassword(event.target.value);
     }
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log('Email: ' + email + 'Password: ' + password);
         const loginResult = await checkLogin(email, password);
-        if(loginResult.status) {
+        if (loginResult.status) {
+            localStorage.setItem("jwt", loginResult.token); // JWT  login token!!!
             window.location.href = "/dashboard";
         } else {
             setShowError(true); // Show error if login is incorrect
-        }     
-        setEmail("");
-        setPassword("");
+            setEmail("");
+            setPassword("");
+        }
+    };
+
+
+    // logout process?? - currently in MemberHeader.js
+    const logout = () => {
+        localStorage.removeItem("jwt"); 
     };
 
 

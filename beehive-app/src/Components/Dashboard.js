@@ -12,42 +12,68 @@ import TempTrendModal from './TempTrendModal';
 import HumidTrendModal from './HumidTrendModal';
 import FrequncyTrendModal from './FreqTrendModal';
 import WeightTrendModal from './WeightTrendModal';
+import { useNavigate } from "react-router-dom";
+
 
 let currHive = {};
 
 const Dashboard = () => {
-const [hive_name, setHiveName] = React.useState("");
-const [temperature, setTemperature] = React.useState(0);
-const [humidity, setHumidity] = React.useState(0);
-const [weight, setWeight] = React.useState(0);
-const [frequency, setFrequency] = React.useState(0);
-const [hives, setHives] = React.useState([]);
-const [addHiveModal, setAddHiveModal] = React.useState(false);
-const [date, setDate] = React.useState("");
-const [editHiveModal, setEditHiveModal] = React.useState(false);
-const [username, setUsername] = React.useState("");
-const [tempTrendModal, setTempTrendModal] = React.useState(false);
-const [humTrendModal, setHumTrendModal] = React.useState(false);
-const [freqTrendModal, setFreqTrendModal] = React.useState(false);
-const [weighTrendModal, setWeighTrendModal] = React.useState(false);
+  const [hive_name, setHiveName] = useState("");
+  const [temperature, setTemperature] = useState(0);
+  const [humidity, setHumidity] = useState(0);
+  const [weight, setWeight] = useState(0);
+  const [frequency, setFrequency] = useState(0);
+  const [hives, setHives] = useState([]);
+  const [addHiveModal, setAddHiveModal] = useState(false);
+  const [editHiveModal, setEditHiveModal] = useState(false);
+  const [username, setUsername] = useState("");
+  const [tempTrendModal, setTempTrendModal] = useState(false);
+  const [humTrendModal, setHumTrendModal] = useState(false);
+  const [freqTrendModal, setFreqTrendModal] = useState(false);
+  const [weighTrendModal, setWeighTrendModal] = useState(false);
+  const [date, setDate] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const navigate = useNavigate();
 
-useEffect(() => {
-  const fetchData = async () => {
-    const data = await getUserHivesOrGetHiveData("getUserHives", "");
-    console.log(data);
-    setHives(data);
-    if (data.length > 0) {
-      console.log(data[data.length-1].Hive_Name);
-      setHiveName(data[data.length-1].Hive_Name);
-      await fetchHiveData(data[data.length-1].Hive_Name);
+
+  useEffect(() => {
+    // CHECK FOR TOKEN
+    const token = localStorage.getItem("jwt");
+    if (token) {
+      setIsAuthenticated(true);
     }
-    const data2 = await getUserHivesOrGetHiveData("getUsername", "");
-    console.log(data2);
-    setUsername(data2[0].User_Name);
-  };
 
-  fetchData();
-}, []);
+    const fetchData = async () => {
+      if (isAuthenticated) {
+        const userHivesData = await getUserHivesOrGetHiveData("getUserHives", "");
+        setHives(userHivesData);
+        if (userHivesData.length > 0) {
+          setHiveName(userHivesData[userHivesData.length - 1].Hive_Name);
+          await fetchHiveData(userHivesData[userHivesData.length - 1].Hive_Name);
+        }
+        const usernameData = await getUserHivesOrGetHiveData("getUsername", "");
+        setUsername(usernameData[0].User_Name);
+      }
+    };
+
+    fetchData();
+  }, [isAuthenticated]);
+
+  // LOGIN ERROR MESSAGE
+  if (!isAuthenticated) {
+    return (
+      <div className="login-message" style={{ marginTop: "20px", textAlign: "center", fontSize: "18px" }}>
+        Not quiiiiitttte... Please login to view this page!
+        <br/>
+        <button 
+          onClick={() => navigate("/login")}
+          style={{ marginTop: "10px", cursor: "pointer" }}>
+          alyshia is the best
+        </button>
+      </div>
+    );
+  }
+
 
 const handleSubmit = async (name) => {
   setHiveName(name);
@@ -232,6 +258,11 @@ console.log(hives);
       setWeighTrendModal(false);
     }
     } hiveName={hive_name} />}
+
+    // add a button to navigate to map page
+    <Link to="/map" className="map-button" style={{ left: 1000, top: 1000, position: 'absolute', backgroundColor: 'white', border: 'none', display: 'flex', color: 'black', textDecoration: 'none', fontSize: '50px' }}>
+      Map
+      </Link>
 
     </div>
   );

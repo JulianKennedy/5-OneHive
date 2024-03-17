@@ -13,17 +13,20 @@ export const HomePage = () => {
   //   document.getElementsByClassName("header-instance").createElement(Header);
   // }
 
+  const isAuthenticated = localStorage.getItem("jwt") ? true : false;
+
   return (
-    <div class="home-page-desktop" id="home">
-      <div class="div" id="head">
-        <div class="overlap-group">
-          <div class="text-wrapper">Save The Bees</div>
-          <div class="text-wrapper-2">or else</div>
+    <div className="home-page-desktop" id="home">
+      <div className="div" id="head">
+        {isAuthenticated ? <MemberHeader /> : <Header />}
+        <div className="overlap-group">
+          <div className="text-wrapper">Save The Bees</div>
+          <div className="text-wrapper-2">or else</div>
         </div>
-        <div class="rectangle"></div>
-        <img class="img" src={require('./img/One-Hive+.png')} />
-        <img class="rectangle-2" src={require('./img/community.png')} />
-        <img class="rectangle-3" src={require('./img/stats.png')} />
+        <div className="rectangle"></div>
+        <img className="img" src={require('./img/One-Hive+.png')} alt="One-Hive+" />
+        <img className="rectangle-2" src={require('./img/community.png')} alt="Community" />
+        <img className="rectangle-3" src={require('./img/stats.png')} alt="Stats" />
         <div class="frame">
           <div class="one-hive">
             <div class="div-2">
@@ -63,8 +66,6 @@ export const HomePage = () => {
           </div>
           <div class="div-wrapper"><div class="text-wrapper-3"><a href="product">Learn More</a></div></div>
         </div>
-        {/* {localStorage.get("jwt") && (<MemberHeader className="header-instance"></MemberHeader>)} */}
-       <Header className="header-instance"></Header>
       </div>
     </div>
   );

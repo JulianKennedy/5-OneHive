@@ -187,6 +187,23 @@ export async function getFrequency(hiveName) {
     }
 }
 
+export async function GetLocations() {
+    try {
+        const response = await fetch('http://localhost:3000/map', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({"Email": localStorage.getItem('email')})
+        })
+        const locations = await response.json();
+        console.log(locations);
+        return locations;
+    }
+    catch (error) {
+        console.log(error);
+        return error;
+    }
+}
+
 export async function UpdateUser(email, password, username, location) {
     try {
         const response = await fetch('http://localhost:3000/profile', {

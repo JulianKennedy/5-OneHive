@@ -1,10 +1,13 @@
 import React from "react";
+import { Header } from "./Header";
+import { MemberHeader } from "./MemberHeader";
 import "./learnpagestyle.css";
-const { Header } = require("./Header");
 const { Footer } = require("./Footer");
 
 
 export const LearnPage = () => {
+    const isAuthenticated = localStorage.getItem("jwt") ? true : false;
+
     return (
         <div class="learn-beekeeping" id="learn">
             <div class="div">
@@ -39,7 +42,7 @@ export const LearnPage = () => {
                 <div class="div-wrapper"><div class="text-wrapper-3"><a type="button" href="product">Shop 5-Onehive+</a></div></div>
                 </div>
                 </div>
-                <Header className="header-instance" />
+                {isAuthenticated ? <MemberHeader /> : <Header />}
             </div>
         </div>
     );
