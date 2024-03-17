@@ -66,12 +66,12 @@ sql.prototype.addUser = function (firstName, lastName, email, password) {
   });
 }
 
-// sql.prototype.addHive = function (name, email, location, status) {
-//   var sql = "INSERT INTO Hive (Hive_Name, User_ID, Hive_Location, Hive_Anonymous) VALUES ('" + name + "', (SELECT User_ID FROM User WHERE Email='" + email + "'), '" + location + "', " + status + ")";
-//   con.query(sql, function (err, result) {
-//     if (err) throw err;
-//   });
-// }
+sql.prototype.addHive = function (name, email, streetAddress, city, province, postalCode, status) {
+  var sql = "INSERT INTO Hive (Hive_Name, User_ID, Hive_Anonymous, StreetAddress, City, Province, PostalCode) VALUES ('" + name + "', (SELECT User_ID FROM User WHERE Email='" + email + "'), " + status + ", '" + streetAddress + "', '" + city + "', '" + province + "', '" + postalCode + "')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+  });
+}
 
 sql.prototype.addHiveData = function (name, temperature, humidity, weight, frequency, audio_file_link, time) {
   var sql = "INSERT INTO HiveData (Hive_ID, Temperature, Humidity, Weight, Frequency, Audio_File_Link, Timestamp) VALUES ((SELECT Hive_ID FROM Hive WHERE Hive_Name='" + name + "'), " + temperature + ", " + humidity + ", " + weight + ", " + frequency + ", '" + audio_file_link + "', '" + time + "')";
@@ -140,7 +140,7 @@ sql.prototype.getUsers = function () {
 }
 
 sql.prototype.updateHive = function (old_hive_name, hive_name, streetAddress, city, province, postalCode, anonymous, email) {
-  var sql = "UPDATE Hive SET Hive_Name='" + hive_name + "', StreetAddress='" + streetAddress + "', City='" + city + "', Province='" + province + "', PostalCode='" + postalCode + "', Hive_Anonymous=" + anonymous + " WHERE Hive_Name='" + old_hive_name + "' AND User_ID=(SELECT User_ID FROM User WHERE Email='" + email + "')";
+  var sql = "UPDATE Hive SET Hive_Name='" + hive_name + "', Hive_Anonymous=" + anonymous + ", StreetAddress='" + streetAddress + "', City='" + city + "', Province='" + province + "', PostalCode='" + postalCode + "' WHERE Hive_Name='" + old_hive_name + "' AND User_ID=(SELECT User_ID FROM User WHERE Email='" + email + "')";
   con.query(sql, function (err, result) {
     if (err) throw err;
   });

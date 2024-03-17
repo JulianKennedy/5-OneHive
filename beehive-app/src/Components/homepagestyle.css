@@ -1,13 +1,13 @@
 .home-page-desktop .div {
   background-color: #ffffff;
-  width: 1440px;
+  width: 100%;
   height: 3200px;
   position: relative;
 }
 
 .home-page-desktop .overlap-group {
   position: absolute;
-  width: 1440px;
+  width: 100%;
   height: 550px;
   top: 86px;
   left: 0;

@@ -197,12 +197,16 @@ app.post('/dashboard', async (req, res) => {
 
 app.put('/dashboard', async (req, res) => {
     const hive = req.body.Hive_Name;
-    const location = req.body.Location;
+    const streetAddress = req.body.StreetAddress;
+    const city = req.body.City;
+    const province = req.body.Province;
+    const postalCode = req.body.PostalCode;
+    const lastName = req.body.LastName;
     const anonymous = req.body.Anonymous;
     const email = req.body.Email;
 
-    console.log(hive, location, anonymous, email);
-    await db.addHive(hive, email, location, anonymous);
+    console.log(hive, streetAddress, city, province, postalCode, anonymous, email);
+    await db.addHive(hive, email, streetAddress, city, province, postalCode, anonymous);
 
     const ret=await db.getHivesOfSpecificUser(email);
     console.log(ret);
@@ -212,13 +216,16 @@ app.put('/dashboard', async (req, res) => {
 app.patch('/dashboard', async (req, res) => {
     const old_hive_name = req.body.Old_Hive_Name;
     const hive = req.body.Hive_Name;
-    const location = req.body.Location;
+    const streetAddress = req.body.StreetAddress;
+    const city = req.body.City;
+    const province = req.body.Province;
+    const postalCode = req.body.PostalCode;
     const anonymous = req.body.Anonymous;
     const email = req.body.Email;
 
 
-    console.log(hive, location, anonymous, email);
-    await db.updateHive(old_hive_name, hive, location, anonymous, email);
+    console.log(hive, streetAddress, city, province, postalCode, anonymous, email);
+    await db.updateHive(old_hive_name, hive, streetAddress, city, province, postalCode, anonymous, email);
 
     const ret=await db.getHivesOfSpecificUser(email);
     console.log(ret);

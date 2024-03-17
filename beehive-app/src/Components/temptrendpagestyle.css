@@ -1,4 +1,4 @@
-.container .modal {
+.container .modalt {
     z-index: 1;
     width: 1000px;
     height: 600px;
@@ -10,6 +10,18 @@
     position: relative;
     animation: animate 0.3s;
   }
+
+  .modal-cont {
+    height: 100%;
+  }
+    
+    .modal-title {
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 15px;
+      margin-bottom: 50px;
+    }
 
   .modal-buttons {
     display: flex;

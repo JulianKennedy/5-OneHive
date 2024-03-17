@@ -11,10 +11,10 @@
   background: rgba(0, 0, 0, 0.7);
 }
 
-.container .modal {
+.container .moda {
   z-index: 1;
-  width: 350px;
-  height: 250px;
+  width: 550px;
+  height: 470px;
   background: white;
   display: flex;
   align-items: center;
@@ -26,7 +26,7 @@
 
 .modal-content {
   height: 100%;
-
+  width: 400px;
 }
   
   .modal-title {
@@ -37,9 +37,19 @@
     margin-bottom: 50px;
   }
 
-  #location, #name, #anonymous {
+  #city, #province, #autocomplete, #postalCode, #name {
     margin-left: 5px;
     margin-right: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 100%;
+  }
+
+  #anonymous {
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
   }
   
   .modal-buttons {
@@ -67,3 +77,50 @@
       cursor: pointer;
       background-color: #e5e5;
     }
+
+    .location-container {
+      display: flex;
+      flex-direction: column; /* Display children in a column */
+    }
+    
+    .input-container {
+      position: relative;
+      width: 100%; /* Ensure the input takes up full width */
+    }
+
+    .info-container {
+      position: relative;
+      display: inline-block;
+      padding: 2px;
+    }
+    .info-icon {
+      color: #ccc;
+      font-size: 15px;
+      padding-left: 3px;
+      padding-right: 10px;
+      transform: translateY(-5px);
+      cursor: pointer;
+    }
+    .info-popup {
+      display: none;
+      position: absolute;
+      top: calc(100% + 5px);
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 5px;
+      border-radius: 5px;
+      width: 200px;
+      z-index: 1;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .info-container:hover .info-popup {
+      display: block;
+    }
+
+    .anonymous-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    

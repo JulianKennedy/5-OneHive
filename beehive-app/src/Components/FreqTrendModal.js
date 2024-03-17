@@ -87,7 +87,7 @@ const FrequncyTrendModal = ({onClose, hiveName}) => {
   return (
     <div className="container" ref={modalRef} onClick={closeModal}>
       <div className="modal">
-        <div className="modal-content">
+        <div className="modal-cont">
           <h2 className="modal-title">Frequency Trends</h2>
           <canvas ref={chartRef} id="freqChart" width="800" height="400"></canvas>
           <div className="modal-buttons">

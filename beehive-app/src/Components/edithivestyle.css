@@ -11,10 +11,10 @@
     background: rgba(0, 0, 0, 0.7);
   }
   
-  .container .modal {
+  .container .mod {
     z-index: 1;
-    width: 350px;
-    height: 250px;
+    width: 550px;
+    height: 450px;
     background: white;
     display: flex;
     align-items: center;
@@ -26,7 +26,7 @@
   
   .modal-content {
     height: 100%;
-  
+    width: 400px;
   }
     
     .modal-title {
@@ -37,11 +37,11 @@
       margin-bottom: 50px;
     }
   
-    #location, #name, #anonymous {
+    #streetAdress, #city, #postalCode, #province, #name, #anonymous {
       margin-left: 5px;
       margin-right: 5px;
     }
-    
+
     .modal-buttons {
       display: flex;
       justify-content: space-between;

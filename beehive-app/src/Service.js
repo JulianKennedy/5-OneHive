@@ -37,12 +37,12 @@ export async function getUserHivesOrGetHiveData(type, hive) {
     }
 }
 
-export async function InsertHive(hive_name, location, anonymous) {
+export async function InsertHive(hive_name, streetAddress, city, province, postalCode, anonymous) {
     try {
         const response = await fetch('http://localhost:3000/dashboard', {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({"Hive_Name": hive_name, "Location": location, "Anonymous": anonymous, "Email": localStorage.getItem('email')})
+            body: JSON.stringify({"Hive_Name": hive_name, "StreetAddress": streetAddress, "City": city, "Province": province, "PostalCode": postalCode ,"Anonymous": anonymous, "Email": localStorage.getItem('email')})
         })
         const hives = await response.json();
         console.log(hives);
@@ -53,12 +53,12 @@ export async function InsertHive(hive_name, location, anonymous) {
     }
 }
 
-export async function UpdateHive(old_hive_name, hive_name, location, anonymous) {
+export async function UpdateHive(old_hive_name, hive_name, streetAddress, city, province, postalCode, anonymous) {
     try {
         const response = await fetch('http://localhost:3000/dashboard', {
             method: 'PATCH',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({"Old_Hive_Name": old_hive_name,"Hive_Name": hive_name, "Location": location, "Anonymous": anonymous, "Email": localStorage.getItem('email')})
+            body: JSON.stringify({"Old_Hive_Name": old_hive_name,"Hive_Name": hive_name, "StreetAddress": streetAddress, "City": city, "Province": province, "PostalCode": postalCode, "Anonymous": anonymous, "Email": localStorage.getItem('email')})
         })
         const hives = await response.json();
         console.log(hives);
