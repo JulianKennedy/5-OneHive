@@ -26,7 +26,8 @@ const Dashboard = () => {
   const [hives, setHives] = useState([]);
   const [addHiveModal, setAddHiveModal] = useState(false);
   const [editHiveModal, setEditHiveModal] = useState(false);
-  const [username, setUsername] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [tempTrendModal, setTempTrendModal] = useState(false);
   const [humTrendModal, setHumTrendModal] = useState(false);
   const [freqTrendModal, setFreqTrendModal] = useState(false);
@@ -52,7 +53,8 @@ const Dashboard = () => {
           await fetchHiveData(userHivesData[userHivesData.length - 1].Hive_Name);
         }
         const usernameData = await getUserHivesOrGetHiveData("getUsername", "");
-        setUsername(usernameData[0].User_Name);
+        setFirstName(usernameData[0].FirstName);
+        setLastName(usernameData[0].LastName);
       }
     };
 
@@ -149,7 +151,7 @@ console.log(hives);
   return (
     <div className="MemberDashboardPage" id="dash" style={{ width: 1440, height: 3200, position: 'relative', background: 'white' }}>
       <div className="Rectangle2" style={{ width: 1440, height: 222, left: 0, top: 2978, position: 'absolute', background: '#D9D9D9' }} />
-      <div className="JohnSBeehive" style={{ width: 600, height: 131, left: 75, top: 216, position: 'absolute', textAlign: 'center', color: 'black', fontSize: 64, fontFamily: 'Newsreader', fontWeight: '600', wordWrap: 'break-word' }}>{username}'s Beehive</div>
+      <div className="JohnSBeehive" style={{ width: 600, height: 131, left: 75, top: 216, position: 'absolute', textAlign: 'center', color: 'black', fontSize: 64, fontFamily: 'Newsreader', fontWeight: '600', wordWrap: 'break-word' }}>{firstName} {lastName}'s Beehive</div>
 
       {hives.map((hive, index) => (
         <div>

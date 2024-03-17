@@ -8,6 +8,10 @@ import { Checkbox } from '@material-ui/core';
 const AddHive = ({ onClose }) => {
 
     const [hiveName, setHiveName] = useState('');
+    // const [streetAddress, setStreetAddress] = useState('');
+    // const [city, setCity] = useState('');
+    // const [province, setProvince] = useState('');
+    // const [postalCode, setPostalCode] = useState('');
     const [location, setLocation] = useState('');
     const [anonymous, setAnonymous] = useState(0);
   
@@ -40,7 +44,7 @@ const AddHive = ({ onClose }) => {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="location">Hive Location: </label>
+                  <label htmlFor="streetAddress">Hive Location: </label>
                   <input
                     type="text"
                     id="location"

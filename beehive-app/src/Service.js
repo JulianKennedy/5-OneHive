@@ -101,12 +101,12 @@ export async function ExistingEmail(email) {
     }
 }
 
-export async function RegisterUser(email, password, username, location) {
+export async function RegisterUser(email, password, firstName, lastName) {
     try {
         const response = await fetch('http://localhost:3000/register', {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({"Email": email, "Password": password, "Username": username, "Location": location})
+            body: JSON.stringify({"Email": email, "Password": password, "FirstName": firstName, "LastName": lastName})
         })
         const hives = await response.json();
         console.log(hives);

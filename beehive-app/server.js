@@ -249,16 +249,17 @@ app.post('/register', async (req, res) => {
 });
 
 app.put('/register', async (req, res) => {
-    const name = req.body.Username;
+    const firstName = req.body.FirstName;
+    const lastName = req.body.LastName;
     const email = req.body.Email;
     const password = req.body.Password;
-    const location = req.body.Location;
+   
 
-    console.log(name, email, password, location);
+    console.log(firstName, lastName, email, password);
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await db.addUser(name, email, hashedPassword, location);
+    await db.addUser(firstName, lastName, email, hashedPassword);
     
     const ret=await db.getUsers(email);
     console.log(ret);

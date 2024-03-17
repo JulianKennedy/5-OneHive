@@ -8,8 +8,8 @@ import { Icon } from "@material-ui/core";
 function RegisterPage() {
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
-    const [username, setUsername] = useState("");
-    const [location, setLocation] = useState("");
+    const [firstName, setFirstName]= useState("");
+    const [lastName, setLastName]= useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [showPasswordConfirmationError, setShowPasswordConfirmationError] = useState(false); // Add state for error visibility
     const [showUserAlreadyExistsError, setShowUserAlreadyExistsError] = useState(false); // Add state for error visibility
@@ -22,12 +22,12 @@ function RegisterPage() {
         setPassword(event.target.value);
     }
 
-    const handleLocationChange = (event) => {
-        setLocation(event.target.value);
+    const handleFirstNameChange = (event) => {
+        setFirstName(event.target.value);
     }
 
-    const handleUsernameChange = (event) => {
-        setUsername(event.target.value);
+    const handleLastNameChange = (event) => {
+        setLastName(event.target.value);
     }
 
     const handleConfirmPasswordChange = (event) => {
@@ -36,7 +36,7 @@ function RegisterPage() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log('Email: ' + email + 'Password: ' + password + 'Username: ' + username + 'Location: ' + location);
+        console.log('Email: ' + email + 'Password: ' + password + 'First Name: ' + firstName + 'Last Name: '+ lastName);
         setShowPasswordConfirmationError(false);
         setShowUserAlreadyExistsError(false);
 
@@ -50,7 +50,7 @@ function RegisterPage() {
                 setShowUserAlreadyExistsError(true);
             }
             else {
-                const register = await RegisterUser(email, password, username, location);
+                const register = await RegisterUser(email, password, firstName, lastName);
                 const loginResult = await checkLogin(email, password);
                 if(loginResult.status) {
                     window.location.href = "/dashboard";
@@ -61,8 +61,8 @@ function RegisterPage() {
         }  
         setEmail("");
         setPassword("");
-        setUsername("");
-        setLocation("");
+        setFirstName("");
+        setLastName("");
         setConfirmPassword("");
     };
 
@@ -84,10 +84,10 @@ function RegisterPage() {
                         )}
                     </div>
                 </div>
-                <div className="Username" style={{width: 87, height: 41, textAlign: 'center', color: 'black', fontSize: 24, fontFamily: 'Newsreader', fontWeight: '200', wordWrap: 'break-word'}}>Name</div>
-                <input type="text" name="username" value={username} style={{width: 463, height: 60}}  onInput={handleUsernameChange}/>
-                <div className="Location" style={{width: 113, height: 41, textAlign: 'center', color: 'black', fontSize: 24, fontFamily: 'Newsreader', fontWeight: '200', wordWrap: 'break-word'}}>Location</div>
-                <input type="text" name="location" value={location} style={{width: 463, height: 60}}  onInput={handleLocationChange}/>
+                <div className="FirstName" style={{width: 113, height: 41, textAlign: 'center', color: 'black', fontSize: 24, fontFamily: 'Newsreader', fontWeight: '200', wordWrap: 'break-word'}}>First Name</div>
+                <input type="text" name="firstName" value={firstName} style={{width: 463, height: 60}}  onInput={handleFirstNameChange}/>
+                <div className="LastName" style={{width: 113, height: 41, textAlign: 'center', color: 'black', fontSize: 24, fontFamily: 'Newsreader', fontWeight: '200', wordWrap: 'break-word'}}>Last Name</div>
+                <input type="text" name="lastName" value={lastName} style={{width: 463, height: 60}}  onInput={handleLastNameChange}/>
                 <div className="Email" style={{width: 87, height: 41, textAlign: 'center', color: 'black', fontSize: 24, fontFamily: 'Newsreader', fontWeight: '200', wordWrap: 'break-word'}}>Email</div>
                 <input type="email" name="email" value={email} style={{width: 463, height: 60}}  onInput={handleEmailChange}/>
                 <div className="Password" style={{width: 113, height: 41, textAlign: 'center', color: 'black', fontSize: 24, fontFamily: 'Newsreader', fontWeight: '200', wordWrap: 'break-word'}}>Password</div>
