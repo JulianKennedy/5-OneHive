@@ -261,7 +261,6 @@ console.log(hives);
     }
     } hiveName={hive_name} />}
 
-    // add a button to navigate to map page
     <Link to="/map" className="map-button" style={{ left: 1000, top: 1000, position: 'absolute', backgroundColor: 'white', border: 'none', display: 'flex', color: 'black', textDecoration: 'none', fontSize: '50px' }}>
       Map
       </Link>
