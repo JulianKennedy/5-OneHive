@@ -1,54 +1,24 @@
-const port = 3000; // You can choose any available port
-const sql = require('./sql.js');
+const port = 3000;
+const sql = require('../sql.js');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
-const fs = require('fs');
 const express = require('express');
-const bodyParser = require("body-parser");
 const { WebSocketServer } = require('ws');
 require('dotenv').config();
-const https = require('https');
-const pem = require('pem')
-const jwt = require('jsonwebtoken');
-
 const app = express();
 
+// token import
+const jwt = require('jsonwebtoken');
+
 app.use(cors());
-app.use(express.json()) 						// to parse application/json
-app.use(express.urlencoded({ extended: true })) // to parse application/x-www-form-urlencoded
+app.use(express.json()) 
+app.use(express.urlencoded({ extended: true })) 
 
 // Start the server
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
 });
 
-
-// potential future solution??
-// pem.createCertificate({ days: 1, selfSigned: true }, (err, keys) => {
-//     if (err) {
-//       throw err
-//     }
-//     const app = express()
-  
-//     app.get('/', (req, res) => {
-//       res.send('o hai!')
-//     })
-  
-//     const server = https.createServer({ key: keys.clientKey, cert: keys.certificate }, app).listen(443)
-//   const sockserver = new WebSocketServer({ server });
-// sockserver.on('connection', ws => {
-// console.log('New client connected!')
-// ws.send('connection established')
-// ws.on('close', () => console.log('Client has disconnected!'))
-// ws.on('message', data => {
-//     data=data.toString()
-//     console.log(data);
-// })
-// ws.onerror = function () {
-//     console.log('websocket error')
-// }
-// });
-// });
 
 function toISOLocal(d) {
     const z = n => ('0' + n).slice(-2);
@@ -86,26 +56,6 @@ process.env.TOKEN_SECRET;
 
 var db = new sql();
 
-// function generateAccessToken(username) {
-//     return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: '1d' });
-//   }
-
-//   function authenticateToken(req, res, next) {
-//     const authHeader = req.headers['authorization']
-//     const token = authHeader && authHeader.split(' ')[1]
-  
-//     if (token == null) return res.sendStatus(401)
-
-//     jwt.verify(token, String(process.env.TOKEN_SECRET), (err, user) => {
-//         console.log(err)
-
-//         if (err) return res.sendStatus(403)
-
-//         req.user = user
-
-//         next()
-//     })
-//   }
 
 app.post('/login', async (req, res) => {
 
@@ -113,41 +63,47 @@ app.post('/login', async (req, res) => {
     const email = req.body.Email;
     const password = req.body.Password;
 
-    //hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
     console.log(email, password);
 
-
-
-    
-    //check if any of the users have the same email and password
-    //if they do, then return true
-    //if they don't, then return false
     const ret=await db.getUsers(email, hashedPassword);
     console.log(ret);
 
-
-    //loop through users and unhash passwords
-    //if any of the passwords match, then return true
-    //if none of the passwords match, then return false
-    //the return from the query is stored in ret
     for (let i = 0; i < ret.length; i++) {
         const element = ret[i];
         if (element.Email == email && await bcrypt.compare(password, element.Password)) {
-            res.send({status: true
-            //, token:
-            });
+            // user authenticated! generate a token!
+            const token = jwt.sign(
+                { userId: element.id }, // payload
+                process.env.TOKEN_SECRET, // secret
+                { expiresIn: '30m' } // token expiration
+            );
+
+            res.send({ status: true, token });
             return;
         }
     }
-    res.send({status: false});
+    res.send({ status: false });
 });
 
-app.post('/dashboard', async (req, res) => {
 
-    //find the hives of a specific user then return the data of a specific hive
+// verify token 
+function authenticateToken(req, res, next) {
+    console.log('verifying token...')
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if (token == null) return res.sendStatus(401); // no token, deny access
 
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+        if (err) return res.sendStatus(403); // token not valid, deny access
+        req.user = user;
+        next(); // proceed to the next function
+    });
+}
+
+
+app.post('/dashboard', authenticateToken, async (req, res) => {
     const type = req.body.Type;
     console.log(req.body);
 
@@ -195,6 +151,7 @@ app.post('/dashboard', async (req, res) => {
     }
 });
 
+
 app.put('/dashboard', async (req, res) => {
     const hive = req.body.Hive_Name;
     const location = req.body.Location;
@@ -208,6 +165,7 @@ app.put('/dashboard', async (req, res) => {
     console.log(ret);
     res.send(ret);   
 });
+
 
 app.patch('/dashboard', async (req, res) => {
     const old_hive_name = req.body.Old_Hive_Name;
@@ -225,6 +183,7 @@ app.patch('/dashboard', async (req, res) => {
     res.send(ret); 
 });
 
+
 app.delete('/dashboard', async (req, res) => {
     const hive = req.body.Hive_Name;
     const email = req.body.Email;
@@ -237,6 +196,7 @@ app.delete('/dashboard', async (req, res) => {
     res.send(ret);
 });
 
+
 app.post('/register', async (req, res) => {
     const email = req.body.Email;
 
@@ -248,13 +208,13 @@ app.post('/register', async (req, res) => {
     res.send(ret);
 });
 
+
 app.put('/register', async (req, res) => {
     const firstName = req.body.FirstName;
     const lastName = req.body.LastName;
     const email = req.body.Email;
     const password = req.body.Password;
    
-
     console.log(firstName, lastName, email, password);
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -266,6 +226,7 @@ app.put('/register', async (req, res) => {
     res.send(ret);
 });
 
+
 app.post('/map', async (req, res) => {
     const email = req.body.Email;
     const ret=await db.getLocations(email);
@@ -273,11 +234,9 @@ app.post('/map', async (req, res) => {
     res.send(ret);
 });
 
-// Define a route for the homepage
+
 app.get('/', (req, res) => {
     res.send('Hello World');
-    // res.sendFile(__dirname + '/public/index.html');
-    // req.sendFile(__dirname + '/public/LoginPage.js');
 });
 
 
@@ -303,19 +262,15 @@ function insertHiveData(){
 }
 
 async function insertUsers(){
-    const hashedPassword1 = await bcrypt.hash("Password1", 10); // 10 is the salt rounds
-    const hashedPassword2 = await bcrypt.hash("Password2", 10); // 10 is the salt rounds
-    const hashedPassword3 = await bcrypt.hash("Password3", 10); // 10 is the salt rounds
+    const hashedPassword1 = await bcrypt.hash("Password1", 10);
+    const hashedPassword2 = await bcrypt.hash("Password2", 10);
+    const hashedPassword3 = await bcrypt.hash("Password3", 10); 
     (db.addUser("User1", "Email1", hashedPassword1, "Location1"));
     (db.addUser("User2", "Email2", hashedPassword2, "Location2"));
     (db.addUser("User3", "Email3", hashedPassword3, "Location3"));
 
 }
 
+
 addTables();
-// db.addOrder("Email1", "Product1", '2021-05-01');
-// db.addOrder("Email2", "Product2", '2021-05-02');
-// db.addProduct("Product1", "Description1", 10.0);
-// db.addProduct("Product2", "Description2", 20.0);
-// insertHiveData();
 db.deleteOldData();

@@ -1,79 +1,121 @@
-#dash{
+/* Base styles */
+#dash {
   z-index: 0;
 }
 
-.root{
+.root {
   --temp: '℃';
   --hum: '%';
+  --weight: 'kg';
   --tempnum: 0%;
   --humnum: 0%;
+  --weight: 0%
 }
 
+/* Styles for ALL progress bars */
+.progress-bar, .progress-bar2, .progress-bar3, .progress-bar4 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 340px; 
+  height: 340px; 
+  border-radius: 50%;
+  position: absolute;
+}
+
+/* Specific styles for temperature progress bar */
 .progress-bar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background: 
-      radial-gradient(closest-side, white 79%, transparent 80% 100%),
-      conic-gradient(hotpink var(--tempnum), pink 0);    
-  }
-  
-  .progress-bar::before {
-    content: var(--temp) "℃";
-     font-size: 48px;
-      font-family: 'Newsreader';
-       font-weight: '700';
-        word-wrap: 'break-word';
-color: black;
-text-decoration: none;
-  }
+  background: radial-gradient(closest-side, white 79%, transparent 80% 100%), conic-gradient(hotpink var(--tempnum), pink 0);
+  left: 90px;
+  top: 775px;
+}
 
-  .progress-bar2 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background: 
-      radial-gradient(closest-side, white 79%, transparent 80% 100%),
-      conic-gradient(hotpink var(--humnum), pink 0);    
-  }
-  
-  .progress-bar2::before {
-    content: var(--hum) "%";
-    color: 'black';
-     font-size: 48px;
-      font-family: 'Newsreader';
-       font-weight: '700';
-        word-wrap: 'break-word';
-  }
+.progress-bar::before {
+  content: var(--temp) "℃";
+  font-size: 45px;
+  font-family: 'Newsreader';
+  font-weight: 300;
+  color: black;
+  text-decoration: none;
+}
 
-  .button-plus:hover{
-    cursor: pointer;
-  }
+/* Specific styles for humidity progress bar */
+.progress-bar2 {
+  background: radial-gradient(closest-side, white 79%, transparent 80% 100%), conic-gradient(hotpink var(--humnum), pink 0);
+  left: 570px;
+  top: 775px;
+}
 
-  .edit-button:hover{
-    cursor: pointer;
-  }
+.progress-bar2::before {
+  content: var(--hum) "%";
+  font-size: 45px;
+  font-family: 'Newsreader';
+  font-weight: 300;
+  color: black;
+  text-decoration: none;
+}
 
-  .temp-trend-button:hover {
-    cursor: pointer;
-  }
+/* Specific styles for weight progress bar */
+.progress-bar3 {
+  background: radial-gradient(closest-side, white 79%, transparent 80% 100%), conic-gradient(hotpink var(--weightnum), pink 0);
+  left: 90px;
+  top: 1350px;
+}
 
-  .hum-trend-button:hover {
-    cursor: pointer;
-  }
+.progress-bar3::before {
+  content: var(--weight) " kg";
+  font-size: 45px;
+  font-family: 'Newsreader';
+  font-weight: 300;
+  color: black;
+  text-decoration: none;
+}
 
-  .freq-trend-button:hover {
-    cursor: pointer;
-  }
+/* Specific styles for frequency progress bar */
+.progress-bar4 {
+  background: radial-gradient(closest-side, white 79%, transparent 80% 100%), conic-gradient(hotpink var(--freqnum), pink 0);
+  left: 570px;
+  top: 1350px;
+}
 
-  .weigh-trend-button:hover {
-    cursor: pointer;
-  }
+.progress-bar4::before {
+  content: var(--freq) " Hz";
+  font-size: 45px;
+  font-family: 'Newsreader';
+  font-weight: 300;
+  color: black;
+  text-decoration: none;
+}
+
+/* Styles for labels */
+.Temperature, .Humidity, .Weight, .Frequency {
+  width: 280px;
+  height: 77px;
+  position: absolute;
+  text-align: center;
+  color: black;
+  font-size: 30px;
+  font-family: 'Newsreader';
+  font-weight: 700;
+  word-wrap: break-word;
+}
+
+.Temperature { left: 122px; top: 1150px; }
+.Humidity { left: 592px; top: 1150px; }
+.Weight { left: 122px; top: 1725px; }
+.Frequency { left: 592px; top: 1725px; }
+
+/* Styles for low temperature alert */
+.danger-alert {
+  margin-top: 20px;
+  background-color: red;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+/* Hover styles for various buttons */
+.button-plus:hover, .edit-button:hover, .temp-trend-button:hover, .hum-trend-button:hover, .freq-trend-button:hover, .weigh-trend-button:hover {
+  cursor: pointer;
+}

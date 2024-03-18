@@ -5,10 +5,10 @@ import "./productpagestyle.css";
 const { Footer } = require("./Footer");
 
 export const ProductPage = () => {
-  const isAuthenticated = localStorage.getItem("jwt") ? true : false;
+  const isAuthenticated = localStorage.getItem("token") ? true : false;
 
-    return (
-        <div class="product-page-desktop" id="product">
+  return (
+    <div class="product-page-desktop" id="product">
       <div class="div">
         <div class="overlap-group">
           <div class="group">
@@ -30,6 +30,6 @@ export const ProductPage = () => {
         <div class="adopt-now-button"><div class="text-wrapper-2"><a href='payment'>Pay By Donation</a></div></div>
       </div>
     </div>
-    );
+  );
 };
 export default ProductPage;
