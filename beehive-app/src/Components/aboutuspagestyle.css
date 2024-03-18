@@ -5,13 +5,7 @@
     justify-content: center;
     width: 100%;
   }
-  
-  .about-us-page .div {
-    background-color: #ffffff;
-    width: 100%;
-    height: 3200px;
-    position: relative;
-  }
+
   
   .about-us-page .overlap-group {
     position: absolute;
@@ -102,30 +96,6 @@
     line-height: 35px;
   }
   
-  .about-us-page .header {
-    display: inline-flex;
-    align-items: center;
-    gap: 153px;
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    background-color: transparent;
-  }
-  
-  .about-us-page .FEC-logo {
-    position: relative;
-    width: 139px;
-    height: 55px;
-  }
-  
-  .about-us-page .navbar {
-    display: inline-flex;
-    align-items: flex-start;
-    gap: 40px;
-    position: relative;
-    flex: 0 0 auto;
-  }
-  
   .about-us-page .text-wrapper-2 {
     position: relative;
     width: fit-content;
@@ -140,22 +110,6 @@
     white-space: nowrap;
   }
   
-  .about-us-page .header .login-button button {
-    display: flex;
-    width: 150px;
-    height: 55px;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-weight: bold;
-    padding: 10px;
-    position: relative;
-    font-family: "Newsreader-SemiBold";
-    background-color: #e5bcff;
-    border: none;
-    font-size: 25px;
-  }
-  
   .about-us-page .text-wrapper-3 {
     position: relative;
     width: fit-content;
@@ -168,22 +122,3 @@
     line-height: normal;
     white-space: nowrap;
   }
-
-  .about-us-page .header .navbar button {
-    background-color: white;
-    border: none;
-    color: black;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-weight: bold;
-    font-size: 20px;
-    margin: 4px 2px;
-    cursor: pointer;
-  }
-
-  .about-us-page .header .login-button button:hover {
-    cursor: pointer;
-    background-color: #e5e5;
-  }
-  

@@ -8,7 +8,7 @@ require('dotenv').config();
 const app = express();
 
 // token import
-const jwt = require('jsonwebtoken');
+// const jwt = require('jsonwebtoken');
 
 app.use(cors());
 app.use(express.json()) 
@@ -74,13 +74,15 @@ app.post('/login', async (req, res) => {
         const element = ret[i];
         if (element.Email == email && await bcrypt.compare(password, element.Password)) {
             // user authenticated! generate a token!
-            const token = jwt.sign(
-                { userId: element.id }, // payload
-                process.env.TOKEN_SECRET, // secret
-                { expiresIn: '30m' } // token expiration
-            );
+            // const token = jwt.sign(
+            //     { userId: element.id }, // payload
+            //     process.env.TOKEN_SECRET, // secret
+            //     { expiresIn: '30m' } // token expiration
+            // );
 
-            res.send({ status: true, token });
+            res.send({ status: true
+                // , token 
+            });
             return;
         }
     }
@@ -88,22 +90,24 @@ app.post('/login', async (req, res) => {
 });
 
 
-// verify token 
-function authenticateToken(req, res, next) {
-    console.log('verifying token...')
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
-    if (token == null) return res.sendStatus(401); // no token, deny access
+// // verify token 
+// function authenticateToken(req, res, next) {
+//     console.log('verifying token...')
+//     const authHeader = req.headers['authorization'];
+//     const token = authHeader && authHeader.split(' ')[1];
+//     if (token == null) return res.sendStatus(401); // no token, deny access
 
-    jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
-        if (err) return res.sendStatus(403); // token not valid, deny access
-        req.user = user;
-        next(); // proceed to the next function
-    });
-}
+//     jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
+//         if (err) return res.sendStatus(403); // token not valid, deny access
+//         req.user = user;
+//         next(); // proceed to the next function
+//     });
+// }
 
 
-app.post('/dashboard', authenticateToken, async (req, res) => {
+app.post('/dashboard', 
+// authenticateToken, 
+async (req, res) => {
     const type = req.body.Type;
     console.log(req.body);
 

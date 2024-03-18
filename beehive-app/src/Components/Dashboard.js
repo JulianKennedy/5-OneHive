@@ -47,10 +47,11 @@ const Dashboard = () => {
       const userHivesData = await getUserHivesOrGetHiveData("getUserHives", "");
       setHives(userHivesData);
       if (userHivesData.length > 0) {
-        setHiveName(userHivesData[userHivesData.length - 1].Hive_Name);
-        await fetchHiveData(userHivesData[userHivesData.length - 1].Hive_Name);
+        setHiveName(userHivesData[0].Hive_Name);
+        await fetchHiveData(userHivesData[0].Hive_Name);
       }
       const usernameData = await getUserHivesOrGetHiveData("getUsername", "");
+      console.log(usernameData);
       setFirstName(usernameData[0].FirstName);
       setLastName(usernameData[0].LastName);
     };
@@ -67,25 +68,25 @@ const Dashboard = () => {
     const data = await getUserHivesOrGetHiveData("getHiveData", name);
     if (data.length > 0) {
       console.log(data);
-      setTemperature(data[data.length - 1].Temperature);
-      setHumidity(data[data.length - 1].Humidity);
-      setWeight(data[data.length - 1].Weight);
-      setFrequency(data[data.length - 1].Frequency);
+      setTemperature(data[0].Temperature);
+      setHumidity(data[0].Humidity);
+      setWeight(data[0].Weight);
+      setFrequency(data[0].Frequency);
       //setDate(convertDate(new Date()).split("T")[0] + " " + convertDate(new Date()).split("T")[1].split(".")[0]);
       const dateOptions = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true };
       const formattedDate = new Date().toLocaleString('en-US', dateOptions);
       setDate(formattedDate);
 
-      document.documentElement.style.setProperty(`--temp`, `'${data[data.length - 1].Temperature}'`)
-      document.documentElement.style.setProperty(`--hum`, `'${data[data.length - 1].Humidity}'`)
-      document.documentElement.style.setProperty(`--tempnum`, `${data[data.length - 1].Temperature}%`)
-      document.documentElement.style.setProperty(`--humnum`, `${data[data.length - 1].Humidity}%`)
+      document.documentElement.style.setProperty(`--temp`, `'${data[0].Temperature}'`)
+      document.documentElement.style.setProperty(`--hum`, `'${data[0].Humidity}'`)
+      document.documentElement.style.setProperty(`--tempnum`, `${data[0].Temperature}%`)
+      document.documentElement.style.setProperty(`--humnum`, `${data[0].Humidity}%`)
 
       // weight and frequency! temp display and can be changed
-      document.documentElement.style.setProperty(`--weight`, `'${data[data.length - 1].Weight}'`);
-      document.documentElement.style.setProperty(`--freq`, `'${data[data.length - 1].Frequency}'`);
-      document.documentElement.style.setProperty(`--weightnum`, `${data[data.length - 1].Weight}%`);
-      document.documentElement.style.setProperty(`--freqnum`, `${data[data.length - 1].Frequency}%`);
+      document.documentElement.style.setProperty(`--weight`, `'${data[0].Weight}'`);
+      document.documentElement.style.setProperty(`--freq`, `'${data[0].Frequency}'`);
+      document.documentElement.style.setProperty(`--weightnum`, `${data[0].Weight}%`);
+      document.documentElement.style.setProperty(`--freqnum`, `${data[0].Frequency}%`);
 
     }
     else {
@@ -147,8 +148,9 @@ const Dashboard = () => {
   console.log(hives);
 
   return (
-    <div className="MemberDashboardPage" id="dash" style={{ width: 1440, height: 3200, position: 'relative', background: 'white' }}>
-      <div className="login-button" style={{
+    <div className="MemberDashboardPage" id="dash" style={{ width: '100%', height: '100%', position: 'relative', background: 'white' }}>
+      <MemberHeader className="header-instance"></MemberHeader>
+      <div className="name" style={{
         width: 600,
         height: 131,
         left: 75,
@@ -159,9 +161,9 @@ const Dashboard = () => {
         fontSize: 64,
         border: '5px solid black',
       }}>{firstName} {lastName}'s Beehives</div>
-      <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-start', gap: '20px', paddingLeft: '75px', paddingTop: '420px' }}>
+      <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-start', gap: '20px', paddingLeft: '75px', paddingTop: '420px', paddingBottom: '50px' }}>
         {hives.map((hive, index) => (
-          <div key={index} style={{ width: '240px', height: '190px', position: 'relative' }}>
+          <div key={index} style={{ width: '240px', height: '190px', position: 'relative', overflow: 'hidden' }}>
             <button
               className="login-button"
               style={{
@@ -171,11 +173,12 @@ const Dashboard = () => {
                 borderRadius: '20px',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'flex-end',
                 alignItems: 'center',
-                //border: '5px solid light grey',
                 color: 'black',
                 textDecoration: 'none',
+                whiteSpace: 'nowrap', // Prevent text from wrapping
+                overflow: 'hidden', // Hide overflowing text
+                textOverflow: 'ellipsis', // Add ellipsis (...) when text overflows
               }}
               onClick={() => handleSubmit(hive.Hive_Name)}
             >
@@ -205,17 +208,17 @@ const Dashboard = () => {
                 padding: '3px',
                 border: '2px solid black',
               }}
-
               onClick={() => editHive(currHive = hive)}
             />
           </div>
+
         ))}
       </div>
       <button
         className="button-plus"
         style={{
-          left: `${334 * hives.length - 200}px`,
-          top: '475px',
+          left: `${hives.length % 5 === 0 ? 260 * ((hives.length - 1) % 5) + 260 + 75 : 260 * (hives.length % 5) + 75}px`, // Adjust left position based on the number of hives displayed
+          top: `${hives.length % 5 === 0 ? 475 + 220 * Math.floor((hives.length - 1) / 5) : 475 + 220 * Math.floor(hives.length / 5)}px`, // Adjust top position based on the number of rows of hives
           backgroundColor: 'white',
           border: 'none',
           display: 'flex',
@@ -227,10 +230,9 @@ const Dashboard = () => {
         onClick={() => addHiveClick()}>
         +
       </button>
-      <div className="Time" style={{ width: 'auto', height: 2, left: 75, top: 675, position: 'absolute', textAlign: 'center', color: 'black', fontSize: 36, fontFamily: 'Newsreader', fontWeight: '700', wordWrap: 'break-word' }}>
+      <div className="Time" style={{ width: 'auto', height: 2, left: 75, position: 'absolute', textAlign: 'center', color: 'black', fontSize: 36, fontFamily: 'Newsreader', fontWeight: '700', wordWrap: 'break-word' }}>
         {hive_name} updated: {date}
       </div>
-      <MemberHeader className="header-instance"></MemberHeader>
       <a className="temp-trend-button" onClick={() => tempTrendClick()} >
         <div className="progress-bar">
         </div>
@@ -298,11 +300,11 @@ const Dashboard = () => {
 
       {addHiveModal && <AddHive onClose={async () => {
         setAddHiveModal(false);
-        const data = await getUserHivesOrGetHiveData("getUserHives", "");
-        console.log(data);
-        setHives(data);
-        if (data.length > 0) {
-          await fetchHiveData(data[data.length - 1].Hive_Name);
+        const userHivesData = await getUserHivesOrGetHiveData("getUserHives", "");
+        setHives(userHivesData);
+        if (userHivesData.length > 0) {
+          setHiveName(userHivesData[0].Hive_Name);
+          await fetchHiveData(userHivesData[0].Hive_Name);
         }
       }} />}
 
@@ -312,7 +314,8 @@ const Dashboard = () => {
         console.log(data);
         setHives(data);
         if (data.length > 0) {
-          await fetchHiveData(data[data.length - 1].Hive_Name);
+          setHiveName(data[0].Hive_Name);
+          await fetchHiveData(data[0].Hive_Name);
         }
       }} oldHive={currHive} />}
 
@@ -336,18 +339,18 @@ const Dashboard = () => {
       }
       } hiveName={hive_name} />}
 
-    {freqTrendModal && <FrequncyTrendModal onClose={async () => {
-      setFreqTrendModal(false);
-    }
-    } hiveName={hive_name} />}
+      {freqTrendModal && <FrequncyTrendModal onClose={async () => {
+        setFreqTrendModal(false);
+      }
+      } hiveName={hive_name} />}
 
-    {weighTrendModal && <WeightTrendModal onClose={async () => {
-      setWeighTrendModal(false);
-    }
-    } hiveName={hive_name} />}
+      {weighTrendModal && <WeightTrendModal onClose={async () => {
+        setWeighTrendModal(false);
+      }
+      } hiveName={hive_name} />}
 
-    <Link to="/map" className="map-button" style={{ left: 1000, top: 1000, position: 'absolute', backgroundColor: 'white', border: 'none', display: 'flex', color: 'black', textDecoration: 'none', fontSize: '50px' }}>
-      Map
+      <Link to="/map" className="map-button" style={{ left: 1000, top: 1000, position: 'absolute', backgroundColor: 'white', border: 'none', display: 'flex', color: 'black', textDecoration: 'none', fontSize: '50px' }}>
+        Map
       </Link>
 
     </div>

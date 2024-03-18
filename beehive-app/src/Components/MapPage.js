@@ -1,16 +1,18 @@
 // Map.js
 import React, { Component } from 'react';
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from 'google-maps-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { GetLocations } from '../Service';
 import Header from './Header';
 import MemberHeader from './MemberHeader';
+require('dotenv').config();
 
 const MapPage = ({ google }) => {
   const [cities, setCities] = useState([]);
   const [activeMarker, setActiveMarker] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [showingInfoWindow, setShowingInfoWindow] = useState(false);
+  const mapRef = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -72,6 +74,14 @@ const MapPage = ({ google }) => {
     setSelectedPlace(props);
     setActiveMarker(marker);
     setShowingInfoWindow(true);
+
+    // Zoom in when a marker is clicked
+    if (mapRef.current) {
+      const map = mapRef.current.map;
+      map.setZoom(10); // Set your desired zoom level
+
+      map.setCenter(marker.getPosition());
+    }
   };
 
   const onClose = () => {
@@ -85,6 +95,7 @@ const MapPage = ({ google }) => {
       zoom={4}
       initialCenter={{ lat: 60.1087, lng: -113.6426 }} // Centered on Canada
       style={{ height: '600px', width: '600px', position: 'relative', margin: 'auto' }}
+      ref={mapRef}
     >
       {cities.map(city => (
         <Marker

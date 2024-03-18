@@ -10,8 +10,8 @@ export const AboutUsPage = () => {
 
   return (
     <div className="about-us-page" id="about">
+      {isAuthenticated ? <MemberHeader /> : <Header />}
       <div className="div">
-        {isAuthenticated ? <MemberHeader /> : <Header />}
         <div className="overlap-group">
           <div className="text-wrapper">Save The Bees</div>
         </div>

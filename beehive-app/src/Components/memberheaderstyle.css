@@ -1,76 +1,51 @@
-.header {
-    display: inline-flex;
-    align-items: center;
-    gap: 153px;
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    background-color: transparent;
+.profile-circle {
+  width: 60px; /* Adjust as needed */
+  height: 60px; /* Adjust as needed */
+  border-radius: 50%; /* Creates a circular shape */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+  border: 3px solid grey;
 }
 
-  .FEC-logo {
-    position: relative;
-    width: 139px;
-    height: 55px;
+  
+  #profpic {
+    height: 30px;
+    border-radius: 50%;
   }
 
-  .navbar {
-    display: inline-flex;
-    align-items: flex-start;
-    gap: 40px;
-    position: relative;
-    flex: 0 0 auto;
+  .profile-circle:hover {
+    cursor: pointer;
   }
 
-  .text-wrapper-4 {
+  .profile-dropdown {
     position: relative;
-    width: fit-content;
-    margin-top: -1px;
-    font-family: "Newsreader-SemiBold", Helvetica;
-    font-weight: 600;
-    color: #000000;
-    font-size: 26px;
-    text-align: center;
-    letter-spacing: 0;
-    line-height: normal;
-    white-space: nowrap;
+    display: inline-block;
   }
   
-   .login-button {
-    display: flex;
-    width: 150px;
-    height: 55px;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-weight: bold;
-    padding: 8px;
-    position: relative;
-    font-family: "Newsreader-SemiBold";
-    background-color: #e5bcff;
-    border: none;
-    font-size: 25px;
-    text-decoration: none;
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    right: 0; /* Position the dropdown at the right edge of its container */
   }
-
-.login-button:hover {
-    cursor: pointer;
-    background-color: #e5e5;
-  }
-
-  .header .navbar a {
-    background-color: white;
-    border: none;
+  
+  .dropdown-content a {
     color: black;
-    text-align: center;
+    padding: 12px 16px;
     text-decoration: none;
-    display: inline-block;
-    font-weight: bold;
-    font-size: 20px;
-    margin: 4px 35px;
-    cursor: pointer;
+    display: block;
   }
-
-  .header a:visited, link:visited {
-    color: black;
+  
+  .dropdown-content a:hover {
+    background-color: #f1f1f1;
   }
+  
+  .profile-dropdown:hover .dropdown-content {
+    display: block;
+  }
+  

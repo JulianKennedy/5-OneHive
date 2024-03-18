@@ -27,7 +27,7 @@
 .progress-bar {
   background: radial-gradient(closest-side, white 79%, transparent 80% 100%), conic-gradient(hotpink var(--tempnum), pink 0);
   left: 90px;
-  top: 775px;
+  margin-top: 100px;
 }
 
 .progress-bar::before {
@@ -43,7 +43,7 @@
 .progress-bar2 {
   background: radial-gradient(closest-side, white 79%, transparent 80% 100%), conic-gradient(hotpink var(--humnum), pink 0);
   left: 570px;
-  top: 775px;
+  margin-top: 100px;
 }
 
 .progress-bar2::before {
@@ -59,7 +59,7 @@
 .progress-bar3 {
   background: radial-gradient(closest-side, white 79%, transparent 80% 100%), conic-gradient(hotpink var(--weightnum), pink 0);
   left: 90px;
-  top: 1350px;
+  margin-top: 675px;
 }
 
 .progress-bar3::before {
@@ -75,7 +75,7 @@
 .progress-bar4 {
   background: radial-gradient(closest-side, white 79%, transparent 80% 100%), conic-gradient(hotpink var(--freqnum), pink 0);
   left: 570px;
-  top: 1350px;
+  margin-top: 675px;
 }
 
 .progress-bar4::before {
@@ -100,10 +100,10 @@
   word-wrap: break-word;
 }
 
-.Temperature { left: 122px; top: 1150px; }
-.Humidity { left: 592px; top: 1150px; }
-.Weight { left: 122px; top: 1725px; }
-.Frequency { left: 592px; top: 1725px; }
+.Temperature { left: 122px; margin-top: 475px; }
+.Humidity { left: 592px; margin-top: 475px; }
+.Weight { left: 122px; margin-top: 1050px; }
+.Frequency { left: 592px; margin-top: 1050px; }
 
 /* Styles for low temperature alert */
 .danger-alert {
@@ -118,4 +118,21 @@
 /* Hover styles for various buttons */
 .button-plus:hover, .edit-button:hover, .temp-trend-button:hover, .hum-trend-button:hover, .freq-trend-button:hover, .weigh-trend-button:hover {
   cursor: pointer;
+}
+
+.name {
+  display: flex;
+  width: 150px;
+  height: 55px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: bold;
+  padding: 8px;
+  position: relative;
+  font-family: "Newsreader-SemiBold";
+  background-color: #e5bcff;
+  border: none;
+  font-size: 25px;
+  text-decoration: none;
 }

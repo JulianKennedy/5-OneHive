@@ -27,8 +27,8 @@ export async function getUserHivesOrGetHiveData(type, hive) {
         const response = await fetch('http://localhost:3000/dashboard/', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}` // Attach the token
+                'Content-Type': 'application/json'
+                // ,                'Authorization': `Bearer ${token}` // Attach the token
             },
             body: JSON.stringify({"Type": type, "User": localStorage.getItem('email'), "Hive": hive})
         });
@@ -46,8 +46,8 @@ export async function InsertHive(hive_name, streetAddress, city, province, posta
         const token = localStorage.getItem('token'); // Retrieve the stored token
         const response = await fetch('http://localhost:3000/dashboard', {
             method: 'PUT',
-            headers: {'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}` // Attach the token
+            headers: {'Content-Type': 'application/json'
+            // ,            'Authorization': `Bearer ${token}` // Attach the token
             },
             body: JSON.stringify({"Hive_Name": hive_name, "StreetAddress": streetAddress, "City": city, "Province": province, "PostalCode": postalCode ,"Anonymous": anonymous, "Email": localStorage.getItem('email')})
         })

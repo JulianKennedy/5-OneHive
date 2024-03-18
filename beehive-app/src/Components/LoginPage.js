@@ -34,8 +34,8 @@ function LoginPage() {
 
 
     return (
-        <div className="LoginPageDesktop" style={{ width: 1440, height: 3200, position: 'relative', background: 'white' }}>
-            <Header className="HeaderInstance" style={{ width: 1440, height: 100, left: 0, top: 0, position: 'absolute' }} />
+        <div className="LoginPageDesktop" style={{ width: '100%', height: '100%', position: 'relative', background: 'white' }}>
+            <Header className="HeaderInstance" style={{ width: '100%', height: 100, left: 0, top: 0, position: 'absolute' }} />
             <div className="Rectangle9" style={{ width: 543, height: 500, left: 131, top: 504, position: 'absolute', background: '#D9D9D9' }}></div>
             <div className="Frame7" style={{ width: 580, height: 500, left: 720, top: 504, position: 'absolute', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', gap: 30, display: 'inline-flex' }}>
                 <div className="Onehive" style={{ flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', gap: 30, display: 'flex' }}>
@@ -58,7 +58,7 @@ function LoginPage() {
                     <label htmlFor="Keep me signed in" style={{ width: 32, textAlign: 'center', color: 'black', fontSize: 15, fontFamily: 'Newsreader', fontWeight: '400', wordWrap: 'break-word' }}>Keep me signed in</label><br />
                 </div>
                 <div className="Frame8" style={{ justifyContent: 'center', alignItems: 'center', gap: 10, display: 'flex-start' }}>
-                    <div className="Login" style={{ textAlign: 'center', color: 'black', fontSize: 26, fontFamily: 'Newsreader', fontWeight: '600', wordWrap: 'break-word', marginLeft: '150px', marginTop: '30px' }}><a href="dashboard" className="login-button" type="button" color="#e5bcff" textDecoration="none" onClick={handleSubmit}>Login</a></div>
+                    <div className="Login" style={{ textAlign: 'center', color: 'black', fontSize: 26, fontFamily: 'Newsreader', fontWeight: '600', wordWrap: 'break-word', marginLeft: '150px', marginTop: '30px', color: "#e5bcff" }}><a href="dashboard" className="login-button" type="button" textDecoration="none" onClick={handleSubmit}>Login</a></div>
                     <div className="Register" style={{ textAlign: 'left', color: 'black', fontSize: 20, fontFamily: 'Newsreader', fontWeight: '600', wordWrap: 'break-word', marginLeft: '20px', textDecoration: 'none', marginTop: '30px' }}>If you don't have an account, <a href="register" className="register-button" type="button" color="#e5bcff" textDecoration="none">Register</a> for one now</div>
                 </div>
             </div>
