@@ -23,7 +23,7 @@ function LoginPage() {
         console.log('Email: ' + email + 'Password: ' + password);
         const loginResult = await checkLogin(email, password);
         if (loginResult.status) {
-            localStorage.setItem('token', loginResult.token); // store locally!
+            localStorage.setItem('jwt', loginResult.token); // store locally!
             window.location.href = "/dashboard";
         } else {
             setShowError(true); // Show error if login is incorrect

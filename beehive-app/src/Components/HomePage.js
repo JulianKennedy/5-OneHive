@@ -13,7 +13,7 @@ export const HomePage = () => {
   //   document.getElementsByClassName("header-instance").createElement(Header);
   // }
 
-  const isAuthenticated = localStorage.getItem("token") ? true : false;
+  const isAuthenticated = localStorage.getItem("jwt") ? true : false;
 
   return (
     <div className="home-page-desktop" id="home">

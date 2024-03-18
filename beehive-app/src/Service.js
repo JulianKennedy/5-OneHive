@@ -22,7 +22,7 @@ export async function checkLogin(email, password) {
 
 export async function getUserHivesOrGetHiveData(type, hive) {
     try {
-        const token = localStorage.getItem('token'); // Retrieve the stored token
+        // const token = localStorage.getItem('token'); // Retrieve the stored token
         //const token = 'thisIsAFakeTokenMwahHaHa';
         const response = await fetch('http://localhost:3000/dashboard/', {
             method: 'POST',
@@ -30,7 +30,7 @@ export async function getUserHivesOrGetHiveData(type, hive) {
                 'Content-Type': 'application/json'
                 // ,                'Authorization': `Bearer ${token}` // Attach the token
             },
-            body: JSON.stringify({"Type": type, "User": localStorage.getItem('email'), "Hive": hive})
+            body: JSON.stringify({"Type": type, "User": localStorage.getItem('email'), "Hive": hive, "token": localStorage.getItem('token')})
         });
         const hives = await response.json();
         console.log(hives);
@@ -65,8 +65,8 @@ export async function UpdateHive(old_hive_name, hive_name, streetAddress, city, 
         const token = localStorage.getItem('token'); // Retrieve the stored token
         const response = await fetch('http://localhost:3000/dashboard', {
             method: 'PATCH',
-            headers: {'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}` // Attach the token
+            headers: {'Content-Type': 'application/json'
+                    // 'Authorization': `Bearer ${token}` // Attach the token
             },
             body: JSON.stringify({"Old_Hive_Name": old_hive_name,"Hive_Name": hive_name, "StreetAddress": streetAddress, "City": city, "Province": province, "PostalCode": postalCode, "Anonymous": anonymous, "Email": localStorage.getItem('email')})
         })
@@ -86,8 +86,8 @@ export async function DeleteHive(hive_name) {
         const response = await fetch('http://localhost:3000/dashboard', {
             method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}` // Attach the token
+                'Content-Type': 'application/json'
+                // 'Authorization': `Bearer ${token}` // Attach the token
             },
             body: JSON.stringify({
                 "Hive_Name": hive_name,
@@ -139,14 +139,14 @@ export async function RegisterUser(email, password, firstName, lastName) {
 export async function GetTemperatures(hiveName) {
     console.log("hi");
     try {
-        const token = localStorage.getItem('token'); // Retrieve the stored token
+        // const token = localStorage.getItem('token'); // Retrieve the stored token
         const response = await fetch('http://localhost:3000/dashboard', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}` // Attach the token
+                'Content-Type': 'application/json'
+                // 'Authorization': `Bearer ${token}` // Attach the token
             },
-            body: JSON.stringify({"Type": "temptrend", "User": localStorage.getItem('email'), "Hive": hiveName})
+            body: JSON.stringify({"Type": "temptrend", "User": localStorage.getItem('email'), "Hive": hiveName, "token": localStorage.getItem('token')})
         });
         console.log("here");
         const temperatures = await response.json();
@@ -161,14 +161,14 @@ export async function GetTemperatures(hiveName) {
 
 export async function getHumidity(hiveName) {
     try {
-        const token = localStorage.getItem('token');
+        // const token = localStorage.getItem('token');
         const response = await fetch('http://localhost:3000/dashboard', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                'Content-Type': 'application/json'
+                // 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({"Type": "humtrend", "User": localStorage.getItem('email'), "Hive": hiveName})
+            body: JSON.stringify({"Type": "humtrend", "User": localStorage.getItem('email'), "Hive": hiveName, "token": localStorage.getItem('token')})
         });
         const humidities = await response.json();
         console.log(humidities);
@@ -182,14 +182,14 @@ export async function getHumidity(hiveName) {
 
 export async function getWeight(hiveName) {
     try {
-        const token = localStorage.getItem('token');
+        // const token = localStorage.getItem('token');
         const response = await fetch('http://localhost:3000/dashboard', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                'Content-Type': 'application/json'
+                // 'Authorization': `Bearer ${token}`
             },
-            body: JSON.stringify({"Type": "weighttrend", "User": localStorage.getItem('email'), "Hive": hiveName})
+            body: JSON.stringify({"Type": "weighttrend", "User": localStorage.getItem('email'), "Hive": hiveName, "token": localStorage.getItem('token')})
         });
         const weights = await response.json();
         console.log(weights);
@@ -203,12 +203,12 @@ export async function getWeight(hiveName) {
 
 export async function getFrequency(hiveName) {
     try {
-        const token = localStorage.getItem('token');
+        // const token = localStorage.getItem('token');
         const response = await fetch('http://localhost:3000/dashboard', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                'Content-Type': 'application/json'
+                // 'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({"Type": "frequencytrend", "User": localStorage.getItem('email'), "Hive": hiveName, "token": localStorage.getItem('token')})
         })

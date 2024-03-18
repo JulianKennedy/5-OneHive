@@ -6,7 +6,7 @@ import "./aboutuspagestyle.css";
 
 export const AboutUsPage = () => {
 
-  const isAuthenticated = localStorage.getItem("token") ? true : false;
+  const isAuthenticated = localStorage.getItem("jwt") ? true : false;
 
   return (
     <div className="about-us-page" id="about">

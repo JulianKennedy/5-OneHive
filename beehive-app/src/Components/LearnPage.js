@@ -7,7 +7,7 @@ const { Footer } = require("./Footer");
 
 export const LearnPage = () => {
 
-    const isAuthenticated = localStorage.getItem("token") ? true : false;
+    const isAuthenticated = localStorage.getItem("jwt") ? true : false;
 
     return (
         <div class="learn-beekeeping" id="learn">

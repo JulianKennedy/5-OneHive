@@ -5,7 +5,7 @@ import "./productpagestyle.css";
 const { Footer } = require("./Footer");
 
 export const ProductPage = () => {
-  const isAuthenticated = localStorage.getItem("token") ? true : false;
+  const isAuthenticated = localStorage.getItem("jwt") ? true : false;
 
   return (
     <div class="product-page-desktop" id="product">
