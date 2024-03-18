@@ -22,12 +22,16 @@ export async function checkLogin(email, password) {
 
 export async function getUserHivesOrGetHiveData(type, hive) {
     try {
+        const token = localStorage.getItem('token'); // Retrieve the stored token
+        //const token = 'thisIsAFakeTokenMwahHaHa';
         const response = await fetch('http://localhost:3000/dashboard/', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            //get token from javawebtoken
-            body: JSON.stringify({"Type": type, "User": localStorage.getItem('email'), "Hive": hive, "token": localStorage.getItem('token')})
-        })
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` // Attach the token
+            },
+            body: JSON.stringify({"Type": type, "User": localStorage.getItem('email'), "Hive": hive})
+        });
         const hives = await response.json();
         console.log(hives);
         return hives;
@@ -39,9 +43,12 @@ export async function getUserHivesOrGetHiveData(type, hive) {
 
 export async function InsertHive(hive_name, streetAddress, city, province, postalCode, anonymous) {
     try {
+        const token = localStorage.getItem('token'); // Retrieve the stored token
         const response = await fetch('http://localhost:3000/dashboard', {
             method: 'PUT',
-            headers: {'Content-Type': 'application/json'},
+            headers: {'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` // Attach the token
+            },
             body: JSON.stringify({"Hive_Name": hive_name, "StreetAddress": streetAddress, "City": city, "Province": province, "PostalCode": postalCode ,"Anonymous": anonymous, "Email": localStorage.getItem('email')})
         })
         const hives = await response.json();
@@ -55,9 +62,12 @@ export async function InsertHive(hive_name, streetAddress, city, province, posta
 
 export async function UpdateHive(old_hive_name, hive_name, streetAddress, city, province, postalCode, anonymous) {
     try {
+        const token = localStorage.getItem('token'); // Retrieve the stored token
         const response = await fetch('http://localhost:3000/dashboard', {
             method: 'PATCH',
-            headers: {'Content-Type': 'application/json'},
+            headers: {'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}` // Attach the token
+            },
             body: JSON.stringify({"Old_Hive_Name": old_hive_name,"Hive_Name": hive_name, "StreetAddress": streetAddress, "City": city, "Province": province, "PostalCode": postalCode, "Anonymous": anonymous, "Email": localStorage.getItem('email')})
         })
         const hives = await response.json();
@@ -69,13 +79,21 @@ export async function UpdateHive(old_hive_name, hive_name, streetAddress, city, 
     }
 }
 
+
 export async function DeleteHive(hive_name) {
     try {
+        const token = localStorage.getItem('token'); // Retrieve the stored token
         const response = await fetch('http://localhost:3000/dashboard', {
             method: 'DELETE',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({"Hive_Name": hive_name, "Email": localStorage.getItem('email')})
-        })
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` // Attach the token
+            },
+            body: JSON.stringify({
+                "Hive_Name": hive_name,
+                "Email": localStorage.getItem('email')
+            })
+        });
         const hives = await response.json();
         console.log(hives);
         return hives;
@@ -84,6 +102,7 @@ export async function DeleteHive(hive_name) {
         return error;
     }
 }
+
 
 export async function ExistingEmail(email) {
     try {
@@ -120,61 +139,77 @@ export async function RegisterUser(email, password, firstName, lastName) {
 export async function GetTemperatures(hiveName) {
     console.log("hi");
     try {
+        const token = localStorage.getItem('token'); // Retrieve the stored token
         const response = await fetch('http://localhost:3000/dashboard', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({"Type": "temptrend", "User": localStorage.getItem('email'), "Hive": hiveName, "token": localStorage.getItem('token')})
-        })
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` // Attach the token
+            },
+            body: JSON.stringify({"Type": "temptrend", "User": localStorage.getItem('email'), "Hive": hiveName})
+        });
         console.log("here");
         const temperatures = await response.json();
         console.log(temperatures);
         return temperatures;
-    }
-    catch (error) {
+    } catch (error) {
         console.log(error);
         return error;
     }
 }
+
 
 export async function getHumidity(hiveName) {
     try {
+        const token = localStorage.getItem('token');
         const response = await fetch('http://localhost:3000/dashboard', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({"Type": "humtrend", "User": localStorage.getItem('email'), "Hive": hiveName, "token": localStorage.getItem('token')})
-        })
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({"Type": "humtrend", "User": localStorage.getItem('email'), "Hive": hiveName})
+        });
         const humidities = await response.json();
         console.log(humidities);
         return humidities;
-    }
-    catch (error) {
+    } catch (error) {
         console.log(error);
         return error;
     }
 }
+
 
 export async function getWeight(hiveName) {
     try {
+        const token = localStorage.getItem('token');
         const response = await fetch('http://localhost:3000/dashboard', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({"Type": "weighttrend", "User": localStorage.getItem('email'), "Hive": hiveName, "token": localStorage.getItem('token')})
-        })
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({"Type": "weighttrend", "User": localStorage.getItem('email'), "Hive": hiveName})
+        });
         const weights = await response.json();
         console.log(weights);
         return weights;
-    }
-    catch (error) {
+    } catch (error) {
         console.log(error);
         return error;
     }
 }
 
+
 export async function getFrequency(hiveName) {
     try {
+        const token = localStorage.getItem('token');
         const response = await fetch('http://localhost:3000/dashboard', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
             body: JSON.stringify({"Type": "frequencytrend", "User": localStorage.getItem('email'), "Hive": hiveName, "token": localStorage.getItem('token')})
         })
         const frequencies = await response.json();

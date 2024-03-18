@@ -5,12 +5,13 @@ import "./aboutuspagestyle.css";
 //import "./homepagestyle.css";
 
 export const AboutUsPage = () => {
-  const isAuthenticated = localStorage.getItem("jwt") ? true : false;
+
+  const isAuthenticated = localStorage.getItem("token") ? true : false;
 
   return (
     <div className="about-us-page" id="about">
       <div className="div">
-      {isAuthenticated ? <MemberHeader /> : <Header />}
+        {isAuthenticated ? <MemberHeader /> : <Header />}
         <div className="overlap-group">
           <div className="text-wrapper">Save The Bees</div>
         </div>
