@@ -28,6 +28,9 @@ export const ProductPage = () => {
           </div>
         </div>
         <div class="adopt-now-button"><div class="text-wrapper-2"><a href='payment'>Pay By Donation</a></div></div>
+        <div className="foo">
+        <Footer/>
+      </div>
       </div>
     </div>
   );

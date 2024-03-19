@@ -13,6 +13,7 @@ import HumidTrendModal from './HumidTrendModal';
 import FrequncyTrendModal from './FreqTrendModal';
 import WeightTrendModal from './WeightTrendModal';
 import { useNavigate } from "react-router-dom";
+import { Footer } from './Footer';
 
 
 let currHive = {};
@@ -148,7 +149,7 @@ const Dashboard = () => {
   console.log(hives);
 
   return (
-    <div className="MemberDashboardPage" id="dash" style={{ width: '100%', height: '100%', position: 'relative', background: 'white' }}>
+    <div className="MemberDashboardPage" id="dash" style={{ width: '100%', height: '100%', background: 'white' }}>
       <MemberHeader className="header-instance"></MemberHeader>
       <div className="name" style={{
         width: 600,
@@ -289,6 +290,9 @@ const Dashboard = () => {
           ) : null}
         </div>
       </a>
+      <div className="footer-instance" >
+      <Footer />
+      </div>
       {/* <a className="freq-trend-button" onClick={() => freqTrendClick()} >
         <div className="Frequency150Hz" style={{ width: 166, height: 170, left: 1006, top: 1326, position: 'absolute', textAlign: 'center' }}>Frequency<br />{frequency} Hz</div>
         <img className="Image3" style={{ width: 208, height: 170, left: 1199, top: 1326, position: 'absolute' }} src="https://via.placeholder.com/208x170" />
@@ -338,21 +342,6 @@ const Dashboard = () => {
         setWeighTrendModal(false);
       }
       } hiveName={hive_name} />}
-
-      {freqTrendModal && <FrequncyTrendModal onClose={async () => {
-        setFreqTrendModal(false);
-      }
-      } hiveName={hive_name} />}
-
-      {weighTrendModal && <WeightTrendModal onClose={async () => {
-        setWeighTrendModal(false);
-      }
-      } hiveName={hive_name} />}
-
-      <Link to="/map" className="map-button" style={{ left: 1000, top: 1000, position: 'absolute', backgroundColor: 'white', border: 'none', display: 'flex', color: 'black', textDecoration: 'none', fontSize: '50px' }}>
-        Map
-      </Link>
-
     </div>
   );
 };

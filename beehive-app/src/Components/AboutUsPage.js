@@ -3,6 +3,7 @@ import { Header } from "./Header";
 import { MemberHeader } from "./MemberHeader";
 import "./aboutuspagestyle.css";
 //import "./homepagestyle.css";
+import { Footer } from "./Footer";
 
 export const AboutUsPage = () => {
 
@@ -27,6 +28,9 @@ export const AboutUsPage = () => {
             </p>
           </div>
         </div>
+        <div className="foot">
+        <Footer/>
+      </div>
       </div>
     </div>
   );

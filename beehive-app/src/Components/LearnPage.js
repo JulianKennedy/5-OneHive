@@ -44,6 +44,9 @@ export const LearnPage = () => {
                     </div>
                 </div>
                 {isAuthenticated ? <MemberHeader /> : <Header />}
+                <div className="footerr">
+        <Footer/>
+      </div>
             </div>
         </div>
     );

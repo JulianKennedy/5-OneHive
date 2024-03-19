@@ -6,6 +6,10 @@
     width: 100%;
   }
 
+  .about-us-page .div {
+    width: 100%;
+  }
+
   
   .about-us-page .overlap-group {
     position: absolute;
@@ -31,15 +35,6 @@
     letter-spacing: 0;
     line-height: normal;
     white-space: nowrap;
-  }
-  
-  .about-us-page .rectangle {
-    position: absolute;
-    width: 1440px;
-    height: 222px;
-    top: 2978px;
-    left: 0;
-    background-color: #d9d9d9;
   }
   
   .about-us-page .img {
@@ -121,4 +116,9 @@
     letter-spacing: 0;
     line-height: normal;
     white-space: nowrap;
+  }
+
+  .foot {
+    margin-top: 1400px;
+    width: 100%;
   }

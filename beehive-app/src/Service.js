@@ -222,12 +222,12 @@ export async function getFrequency(hiveName) {
     }
 }
 
-export async function GetLocations() {
+export async function GetLocations(type) {
     try {
         const response = await fetch('http://localhost:3000/map', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({"Email": localStorage.getItem('email')})
+            body: JSON.stringify({"Type": type})
         })
         const locations = await response.json();
         console.log(locations);
@@ -282,6 +282,24 @@ export async function DeleteUser(email) {
         console.log(hives);
         return hives;
     } catch (error) {
+        console.log(error);
+        return error;
+    }
+}
+
+export async function getHives(type) {
+    try {
+        const response = await fetch('http://localhost:3000/map', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({"Type": type})
+            
+        })
+        const hives = await response.json();
+        console.log(hives);
+        return hives;
+    }
+    catch (error) {
         console.log(error);
         return error;
     }

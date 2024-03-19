@@ -228,15 +228,28 @@ sql.prototype.getFrequencies = function (hive_name) {
     });
 }
 
-sql.prototype.getLocations = function(email){
-  var sql = "SELECT StreetAddress, City, Province, PostalCode, Hive_Anonymous FROM Hive";
+sql.prototype.getLocations = function () {
+  var sql = "SELECT Hive_ID, Hive_Name, StreetAddress, City, Province, PostalCode, Hive_Anonymous, FirstName, Email FROM Hive JOIN User ON Hive.User_ID = User.User_ID";
   return new Promise(
-      (resolve, reject) => {
-        con.query(sql, function (err, rows) {
-          if (err) reject(err);
-          resolve(rows.map(row => row));
-        });
+    (resolve, reject) => {
+      con.query(sql, function (err, rows) {
+        if (err) reject(err);
+        resolve(rows.map(row => row));
       });
+    });
+}
+
+sql.prototype.getHives = function () {
+  //get all hive information and the most recent temperature, humidity, weight, frequency, and timestamp from each hive there should only be one row per hive
+
+  var sql = "SELECT H.Hive_ID, H.Hive_Name, H.StreetAddress, H.City, H.Province, H.PostalCode, H.Hive_Anonymous, HD.Temperature, HD.Humidity, HD.Weight, HD.Frequency, HD.Timestamp, HD.Hive_Data_Point_ID FROM Hive H LEFT JOIN HiveData HD ON H.Hive_ID = HD.Hive_ID WHERE (HD.Hive_ID, HD.Timestamp) IN (SELECT Hive_ID, MAX(Timestamp) FROM HiveData GROUP BY Hive_ID);";
+  return new Promise(
+    (resolve, reject) => {
+      con.query(sql, function (err, rows) {
+        if (err) reject(err);
+        resolve(rows.map(row => row));
+      });
+    });
 }
 
 //if the temperature is over 1 year old 

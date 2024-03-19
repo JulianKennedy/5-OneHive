@@ -69,8 +69,8 @@ function RegisterPage() {
 
 
     return (
-        <div className="RegisterPageDesktop" style={{width: 1440, height: 3200, position: 'relative', background: 'white'}}>
-            <Header className="HeaderInstance" style={{width: 1440, height: 100, left: 0, top: 0, position: 'absolute'}} />
+        <div className="RegisterPageDesktop" style={{width: '100%', height: '100%', position: 'relative', background: 'white'}}>
+            <Header className="HeaderInstance" style={{width: '100%', height: 100, left: 0, top: 0, position: 'absolute'}} />
             <div className="Rectangle9" style={{width: 543, height: 500, left: 131, top: 504, position: 'absolute', background: '#D9D9D9'}}></div>
             <div className="Frame7" style={{width: 580, height: 500, left: 720, top: 250, position: 'absolute', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', gap: 30, display: 'inline-flex'}}>
                 <div className="Onehive" style={{flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', gap: 30, display: 'flex'}}>
@@ -96,7 +96,7 @@ function RegisterPage() {
                 <input type="password" name="confirmPassword" value={confirmPassword} style={{width: 463, height: 60}} onInput={handleConfirmPasswordChange} />
                 <div className="Frame8" style={{justifyContent: 'center', alignItems: 'center', gap: 10, display: 'flex-start'}}>
                     <div className="Register" style={{textAlign: 'center', color: 'black', fontSize: 26, fontFamily: 'Newsreader', fontWeight: '600', wordWrap: 'break-word', marginLeft: '70px', marginTop: '40px'}}><a href="dashboard" className="login-button" type="button" color="#e5bcff" textDecoration="none" onClick={handleSubmit}>Sign Up</a></div>
-                    <div className="Login" style={{textAlign: 'left', color: 'black', fontSize: 20, fontFamily: 'Newsreader', fontWeight: '600', wordWrap: 'break-word', marginLeft: "20px", textDecoration:"none", marginTop:"30px"}}>Already have an account? <a href="login" className="login" type="button" color="#e5bcff" textDecoration="none">Log In</a></div>
+                    <div className="Login" style={{textAlign: 'left', color: 'black', fontSize: 20, fontFamily: 'Newsreader', fontWeight: '600', wordWrap: 'break-word', marginLeft: "20px", textDecoration:"none", marginTop:"30px", marginBottom:'100px'}}>Already have an account? <a href="login" className="login" type="button" color="#e5bcff" textDecoration="none">Log In</a></div>
                 </div>
             </div>
             <img className="Image1" style={{width: 378, height: 151, left: 210, top: 678, position: 'absolute'}} src={require('./img/fec.png')} />

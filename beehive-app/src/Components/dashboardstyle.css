@@ -136,3 +136,9 @@
   font-size: 25px;
   text-decoration: none;
 }
+
+.footer-instance {
+  margin-top: 1330px;
+  position: relative;
+  width: 100%;
+}

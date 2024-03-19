@@ -9,7 +9,6 @@
   .product-page-desktop .div {
     background-color: #ffffff;
     width: 100%;
-    height: 3200px;
     position: relative;
   }
   
@@ -45,15 +44,7 @@
     letter-spacing: 0;
     line-height: 85px;
   }
-  
-  .product-page-desktop .rectangle {
-    position: absolute;
-    width: 1440px;
-    height: 222px;
-    top: 2978px;
-    left: 0;
-    background-color: #d9d9d9;
-  }
+
 
   .product-page-desktop .text-wrapper {
     position: relative;
@@ -154,4 +145,11 @@
   .product-page-desktop .adopt-now-button a:hover{
     cursor: pointer;
     background-color: #e5e5;
+  }
+
+  .foo {
+    position: absolute;
+    margin-top: 1500px;
+    position: relative;
+    width: 100%;
   }

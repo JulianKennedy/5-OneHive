@@ -11,8 +11,8 @@ const app = express();
 // const jwt = require('jsonwebtoken');
 
 app.use(cors());
-app.use(express.json()) 
-app.use(express.urlencoded({ extended: true })) 
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 // Start the server
 app.listen(port, () => {
@@ -26,28 +26,28 @@ function toISOLocal(d) {
     const sign = off < 0 ? '+' : '-';
     off = Math.abs(off);
     return new Date(d.getTime() - (d.getTimezoneOffset() * 60000)).toISOString().slice(0, -1) + sign + z(off / 60 | 0) + ':' + z(off % 60);
-  }
-  console.log(toISOLocal(new Date()));
+}
+console.log(toISOLocal(new Date()));
 
 const sockserver = new WebSocketServer({ port: 443 });
 sockserver.on('connection', ws => {
-console.log('New client connected!')
-ws.send('connection established')
-ws.on('close', () => console.log('Client has disconnected!'))
-ws.on('message', data => {
-    data=data.toString()
-    console.log(data);
+    console.log('New client connected!')
+    ws.send('connection established')
+    ws.on('close', () => console.log('Client has disconnected!'))
+    ws.on('message', data => {
+        data = data.toString()
+        console.log(data);
 
-    //parse data and add it to hive
-    if( data !== "Hello, server!"){
-    const hiveData = JSON.parse(data);
-    console.log(hiveData);
-    db.addHiveData("Andi", hiveData.Temperature, hiveData.Humidity, hiveData.Weight, hiveData.Frequency, "youtube.com", toISOLocal(new Date()).slice(0, 19).replace('T', ' '));
+        //parse data and add it to hive
+        if (data !== "Hello, server!") {
+            const hiveData = JSON.parse(data);
+            console.log(hiveData);
+            db.addHiveData("Andi", hiveData.Temperature, hiveData.Humidity, hiveData.Weight, hiveData.Frequency, "youtube.com", toISOLocal(new Date()).slice(0, 19).replace('T', ' '));
+        }
+    })
+    ws.onerror = function () {
+        console.log('websocket error')
     }
-})
-ws.onerror = function () {
-    console.log('websocket error')
-}
 });
 
 
@@ -67,7 +67,7 @@ app.post('/login', async (req, res) => {
 
     console.log(email, password);
 
-    const ret=await db.getUsers(email, hashedPassword);
+    const ret = await db.getUsers(email, hashedPassword);
     console.log(ret);
 
     for (let i = 0; i < ret.length; i++) {
@@ -80,7 +80,8 @@ app.post('/login', async (req, res) => {
             //     { expiresIn: '30m' } // token expiration
             // );
 
-            res.send({ status: true
+            res.send({
+                status: true
                 // , token 
             });
             return;
@@ -105,55 +106,55 @@ app.post('/login', async (req, res) => {
 // }
 
 
-app.post('/dashboard', 
-// authenticateToken, 
-async (req, res) => {
-    const type = req.body.Type;
-    console.log(req.body);
+app.post('/dashboard',
+    // authenticateToken, 
+    async (req, res) => {
+        const type = req.body.Type;
+        console.log(req.body);
 
-    if (type == "getUserHives") {
-        const user = req.body.User;
-        const ret=await db.getHivesOfSpecificUser(user);
-        console.log(ret);
-        res.send(ret);
-    }
-    else if (type == "getUsername") {
-        const user = req.body.User;
-        const ret=await db.getUserName(user);
-        console.log(ret);
-        res.send(ret);
-    }
-    else if(type == "temptrend") {
-        const hive = req.body.Hive;
-        const ret=await db.getTemperatures(hive);
-        console.log(ret);
-        res.send(ret);
-    }
-    else if(type == "humtrend") {
-        const hive = req.body.Hive;
-        const ret=await db.getHumidities(hive);
-        console.log(ret);
-        res.send(ret);
-    }
-    else if(type == "weighttrend") {
-        const hive = req.body.Hive;
-        const ret=await db.getWeights(hive);
-        console.log(ret);
-        res.send(ret);
-    }
-    else if(type == "frequencytrend") {
-        const hive = req.body.Hive;
-        const ret=await db.getFrequencies(hive);
-        console.log(ret);
-        res.send(ret);
-    }
-    else{
-        const hive = req.body.Hive;
-        const ret=await db.getHiveDataOfSpecificHive(hive);
-        console.log(ret);
-        res.send(ret);
-    }
-});
+        if (type == "getUserHives") {
+            const user = req.body.User;
+            const ret = await db.getHivesOfSpecificUser(user);
+            console.log(ret);
+            res.send(ret);
+        }
+        else if (type == "getUsername") {
+            const user = req.body.User;
+            const ret = await db.getUserName(user);
+            console.log(ret);
+            res.send(ret);
+        }
+        else if (type == "temptrend") {
+            const hive = req.body.Hive;
+            const ret = await db.getTemperatures(hive);
+            console.log(ret);
+            res.send(ret);
+        }
+        else if (type == "humtrend") {
+            const hive = req.body.Hive;
+            const ret = await db.getHumidities(hive);
+            console.log(ret);
+            res.send(ret);
+        }
+        else if (type == "weighttrend") {
+            const hive = req.body.Hive;
+            const ret = await db.getWeights(hive);
+            console.log(ret);
+            res.send(ret);
+        }
+        else if (type == "frequencytrend") {
+            const hive = req.body.Hive;
+            const ret = await db.getFrequencies(hive);
+            console.log(ret);
+            res.send(ret);
+        }
+        else {
+            const hive = req.body.Hive;
+            const ret = await db.getHiveDataOfSpecificHive(hive);
+            console.log(ret);
+            res.send(ret);
+        }
+    });
 
 
 app.put('/dashboard', async (req, res) => {
@@ -169,9 +170,9 @@ app.put('/dashboard', async (req, res) => {
     console.log(hive, streetAddress, city, province, postalCode, anonymous, email);
     await db.addHive(hive, email, streetAddress, city, province, postalCode, anonymous);
 
-    const ret=await db.getHivesOfSpecificUser(email);
+    const ret = await db.getHivesOfSpecificUser(email);
     console.log(ret);
-    res.send(ret);   
+    res.send(ret);
 });
 
 
@@ -189,9 +190,9 @@ app.patch('/dashboard', async (req, res) => {
     console.log(hive, streetAddress, city, province, postalCode, anonymous, email);
     await db.updateHive(old_hive_name, hive, streetAddress, city, province, postalCode, anonymous, email);
 
-    const ret=await db.getHivesOfSpecificUser(email);
+    const ret = await db.getHivesOfSpecificUser(email);
     console.log(ret);
-    res.send(ret); 
+    res.send(ret);
 });
 
 
@@ -201,8 +202,8 @@ app.delete('/dashboard', async (req, res) => {
 
     console.log(hive, email);
     db.deleteHive(hive, email);
-    
-    const ret=await db.getHivesOfSpecificUser(email);
+
+    const ret = await db.getHivesOfSpecificUser(email);
     console.log(ret);
     res.send(ret);
 });
@@ -213,7 +214,7 @@ app.post('/register', async (req, res) => {
 
     console.log(email);
 
-    const ret=await db.getUsersWithEmail(email);
+    const ret = await db.getUsersWithEmail(email);
 
     console.log(ret);
     res.send(ret);
@@ -225,24 +226,31 @@ app.put('/register', async (req, res) => {
     const lastName = req.body.LastName;
     const email = req.body.Email;
     const password = req.body.Password;
-   
+
     console.log(firstName, lastName, email, password);
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     await db.addUser(firstName, lastName, email, hashedPassword);
-    
-    const ret=await db.getUsers(email);
+
+    const ret = await db.getUsers(email);
     console.log(ret);
     res.send(ret);
 });
 
 
 app.post('/map', async (req, res) => {
-    const email = req.body.Email;
-    const ret=await db.getLocations(email);
-    console.log(ret);
-    res.send(ret);
+    const type = req.body.Type;
+    if (type == "location") {
+        const ret = await db.getLocations();
+        console.log("251\n"+ ret);
+        res.send(ret);
+    }
+    else {
+        const ret = await db.getHives();
+        console.log(ret);
+        res.send(ret);
+    }
 });
 
 
@@ -251,31 +259,31 @@ app.get('/', (req, res) => {
 });
 
 
- function addTables(){
+function addTables() {
     let data3 = (db.createUserTable());
-    let data =  (db.createHiveTable());
+    let data = (db.createHiveTable());
     let data2 = (db.createHiveDataTable());
     let data4 = (db.createProductTable());
     let data5 = (db.createOrderTable());
-    
+
 }
 
-function insertHive(){
+function insertHive() {
     db.addHive("Hive1", "Email1", "Location1", 1);
     (db.addHive("Hive2", "Email2", "Location2", 0));
     db.addHive("Hive3", "Email3", "Location3", 1);
 }
 
-function insertHiveData(){
+function insertHiveData() {
     // (db.addHiveData("Hive1",70, 55, 12, 150, "File1", toISOLocal(new Date()).slice(0, 19).replace('T', ' ')));
     // (db.addHiveData("Hive1",60, 50, 11, 100, "File2", '2023-08-02'));
     // (db.addHiveData("Hive2",50, 45, 10, 50, "File3", '2023-08-03'));
 }
 
-async function insertUsers(){
+async function insertUsers() {
     const hashedPassword1 = await bcrypt.hash("Password1", 10);
     const hashedPassword2 = await bcrypt.hash("Password2", 10);
-    const hashedPassword3 = await bcrypt.hash("Password3", 10); 
+    const hashedPassword3 = await bcrypt.hash("Password3", 10);
     (db.addUser("User1", "Email1", hashedPassword1, "Location1"));
     (db.addUser("User2", "Email2", hashedPassword2, "Location2"));
     (db.addUser("User3", "Email3", hashedPassword3, "Location3"));

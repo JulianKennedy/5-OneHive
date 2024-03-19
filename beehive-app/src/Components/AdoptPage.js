@@ -39,6 +39,9 @@ export const AdoptPage = () => {
                 </div>
                 </div>
                 <Header className="header-instance" />
+                <div className="footy">
+        <Footer/>
+      </div>
             </div>
         </div>
     );

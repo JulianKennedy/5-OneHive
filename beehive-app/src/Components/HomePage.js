@@ -23,7 +23,6 @@ export const HomePage = () => {
           <div className="text-wrapper">Save The Bees</div>
           <div className="text-wrapper-2">or else</div>
         </div>
-        <div className="rectangle"></div>
         <img className="img" src={require('./img/One-Hive+.png')} alt="One-Hive+" />
         <img className="rectangle-2" src={require('./img/community.png')} alt="Community" />
         <img className="rectangle-3" src={require('./img/stats.png')} alt="Stats" />
@@ -66,6 +65,9 @@ export const HomePage = () => {
           </div>
           <div class="div-wrapper"><div class="text-wrapper-3"><a href="product">Learn More</a></div></div>
         </div>
+      </div>
+      <div className="foot">
+        <Footer/>
       </div>
     </div>
   );
