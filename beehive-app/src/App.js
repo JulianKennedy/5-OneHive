@@ -44,6 +44,9 @@ function App() {
       <Route path="/forgotpassword" element={<ForgotPasswordPage/>} />
       <Route path="/cart" element={<CartPage/>} />
       <Route path="/orderhistory" element={<OrderHistoryPage/>} />
+      <Route path="/product2" element={<ProductPage2/>} />
+      <Route path="/adopthome" element={<AdoptHomePage/>} />
+      
       {/* <Route path="/add-on" element={<AddOnPage/>} />
       <Route path="/stats" element={<StatsPage/>} />
       <Route path="/payment" element={<PaymentPage/>} />

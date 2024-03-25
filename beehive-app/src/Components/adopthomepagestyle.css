@@ -31,9 +31,9 @@
   
   .adopt-a-beehive-page .rectangle {
     position: absolute;
-    width: 1440px;
+    width: 100%;
     height: 222px;
-    top: 2978px;
+    top: 100%;
     left: 0;
     background-color: #d9d9d9;
   }
