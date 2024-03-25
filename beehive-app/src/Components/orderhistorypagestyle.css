@@ -1,0 +1,121 @@
+  /* .order-history-page {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+  } */
+  
+  .order-history-page .div {
+    background-color: #ffffff;
+    height: 1400px;
+    position: relative;
+    width: 1440px;
+  }
+
+  .order-history-page .title {
+    color: #000000;
+    font-family: "Newsreader-SemiBold";
+    font-size: 45px;
+    font-weight: 600;
+    height: 45px;
+    left: 576px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 215px;
+    white-space: nowrap;
+  }
+
+  .order-history-page .rectangle-1 {
+    height: 76px;
+    left: 130px;
+    position: absolute;
+    top: 334px;
+    width: 1180px;
+  }
+
+  .order-history-page .rectangle-2 {
+    height: 76px;
+    left: 130px;
+    position: absolute;
+    top: 442px;
+    width: 1180px;
+  }
+
+  .order-history-page .text-wrapper-5 {
+    color: #000000;
+    font-family: "Newsreader-SemiBold";
+    font-size: 24px;
+    font-weight: 600;
+    height: 24px;
+    left: 130px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 305px;
+    white-space: nowrap;
+  }
+  
+  .order-history-page .text-wrapper-6 {
+    color: #000000;
+    font-family: "Newsreader-SemiBold";
+    font-size: 24px;
+    font-weight: 600;
+    height: 24px;
+    left: 391px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 305px;
+    white-space: nowrap;
+  }
+  
+  .order-history-page .text-wrapper-7 {
+    color: #000000;
+    font-family: "Newsreader-SemiBold";
+    font-size: 24px;
+    font-weight: 600;
+    height: 24px;
+    left: 830px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 305px;
+    white-space: nowrap;
+  }
+  
+  .order-history-page .text-wrapper-8 {
+    color: #000000;
+    font-family: "Newsreader-SemiBold";
+    font-size: 24px;
+    font-weight: 600;
+    height: 24px;
+    left: 569px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 305px;
+    white-space: nowrap;
+  }
+  
+  .order-history-page .text-wrapper-9 {
+    color: #000000;
+    font-family: "Newsreader-SemiBold";
+    font-size: 24px;
+    font-weight: 600;
+    height: 24px;
+    left: 1138px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 305px;
+    white-space: nowrap;
+  }
+
