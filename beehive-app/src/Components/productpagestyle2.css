@@ -1,0 +1,359 @@
+/* .product-page-2 {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+  } */
+  
+  .product-page-2 .div {
+    background-color: #ffffff;
+    height: 3200px;
+    position: relative;
+    width: 1440px;
+  }
+
+  .product-page-2 .overlap {
+    height: 636px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 1440px;
+  }
+
+  .product-page-2 .product-home-image {
+    height: 550px;
+    left: 0;
+    position: absolute;
+    top: 86px;
+    width: 1440px;
+  }
+
+  .product-page-2 .group {
+    height: 170px;
+    left: 410px;
+    position: absolute;
+    top: 225px;
+    width: 622px;
+  }
+
+  .product-page-2 .product-home-text {
+    color: #ffffff;
+    font-family: "Newsreader-SemiBold";
+    font-size: 70px;
+    font-weight: 600;
+    height: 170px;
+    left: 0;
+    letter-spacing: 0;
+    line-height: 85px;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 620px;
+  }
+
+  .product-page-2 .one-hive {
+    align-items: center;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 30px;
+    left: 734px;
+    position: absolute;
+    top: 817px;
+  }
+
+  .product-page-2 .one-hive-2 {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .product-page-2 .one-hive-heading {
+    color: #000000;
+    font-family: "Newsreader-SemiBold";
+    font-size: 45px;
+    font-weight: 600;
+    height: 110px;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -1px;
+    position: relative;
+    width: 580px;
+  }
+
+  .product-page-2 .one-hive-body {
+    color: var(--collection-1-dark-grey);
+    font-family: "Newsreader-Regular";
+    font-size: 25px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 35px;
+    position: relative;
+    width: 580px;
+  }
+
+  .product-page-2 .adopt-now-button {
+    align-items: center;
+    background-color: #e5bcff;
+    border-radius: 4px;
+    display: flex;
+    gap: 10px;
+    height: 55px;
+    justify-content: center;
+    left: 914px;
+    padding: 10px;
+    position: absolute;
+    top: 1070px;
+    width: 220px;
+  }
+
+  .product-page-2 .text-wrapper-5 {
+    color: #000000;
+    font-family: "Newsreader-SemiBold";
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: normal;
+    position: relative;
+    text-align: center;
+    white-space: nowrap;
+    width: fit-content;
+  }
+
+  .product-page-2 .frame-4 {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 19px;
+    height: 314px;
+    left: 139px;
+    position: absolute;
+    top: 1443px;
+    width: 1171px;
+  }
+
+  .product-page-2 .p {
+    color: var(--collection-1-dark-grey);
+    font-family: "Newsreader-Regular";
+    font-size: 25px;
+    font-weight: 400;
+    height: 270px;
+    letter-spacing: 0;
+    line-height: 35px;
+    margin-bottom: -27px;
+    position: relative;
+    width: 1171px;
+  }
+  
+  .product-page-2 .text-wrapper-6 {
+    color: #000000;
+    font-family: "Newsreader-SemiBold";
+    font-size: 40px;
+    font-weight: 600;
+    height: 53px;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -1px;
+    position: relative;
+    width: 318px;
+  }
+
+  .product-page-2 .beehive-image {
+    height: 580px;
+    left: 130px;
+    position: absolute;
+    top: 801px;
+    width: 550px;
+  }
+
+  .product-page-2 .text-wrapper-7 {
+    color: #000000;
+    font-family: "Newsreader-SemiBold";
+    font-size: 45px;
+    font-weight: 600;
+    height: 87px;
+    left: 430px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    text-align: center;
+    top: 1850px;
+    width: 580px;
+  }
+  
+  .product-page-2 .beehive-infographic {
+    height: 638px;
+    left: 430px;
+    object-fit: cover;
+    position: absolute;
+    top: 1977px;
+    width: 580px;
+  }
+  
+  .product-page-2 .text-wrapper-8 {
+    color: var(--collection-1-dark-grey);
+    font-family: "Newsreader-Medium";
+    font-size: 25px;
+    font-weight: 500;
+    left: 130px;
+    letter-spacing: 0;
+    line-height: 35px;
+    position: absolute;
+    text-align: center;
+    top: 2009px;
+    width: 238px;
+  }
+  
+  .product-page-2 .text-wrapper-9 {
+    color: var(--collection-1-dark-grey);
+    font-family: "Newsreader-Medium";
+    font-size: 25px;
+    font-weight: 500;
+    left: 1072px;
+    letter-spacing: 0;
+    line-height: 35px;
+    position: absolute;
+    text-align: center;
+    top: 2102px;
+    width: 238px;
+  }
+  
+  .product-page-2 .text-wrapper-10 {
+    color: var(--collection-1-dark-grey);
+    font-family: "Newsreader-Medium";
+    font-size: 25px;
+    font-weight: 500;
+    left: 130px;
+    letter-spacing: 0;
+    line-height: 35px;
+    position: absolute;
+    text-align: center;
+    top: 2353px;
+    width: 238px;
+  }
+  
+  .product-page-2 .text-wrapper-11 {
+    color: var(--collection-1-dark-grey);
+    font-family: "Newsreader-Medium";
+    font-size: 25px;
+    font-weight: 500;
+    left: 1073px;
+    letter-spacing: 0;
+    line-height: 35px;
+    position: absolute;
+    text-align: center;
+    top: 2446px;
+    width: 238px;
+  }
+
+  .product-page-2 .contribute-group {
+    align-items: center;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 30px;
+    left: 197px;
+    position: absolute;
+    top: 2776px;
+  }
+  
+  .product-page-2 .contribute {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    height: 217px;
+    position: relative;
+    width: 1046px;
+  }
+  
+  .product-page-2 .heading-2 {
+    color: #000000;
+    font-family: "Newsreader-SemiBold";
+    font-size: 45px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-right: -2px;
+    margin-top: -1px;
+    position: relative;
+    text-align: center;
+    width: 1048px;
+  }
+  
+  .product-page-2 .body-2 {
+    color: var(--collection-1-dark-grey);
+    font-family: "Newsreader-Regular";
+    font-size: 25px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 35px;
+    margin-bottom: -67px;
+    position: relative;
+    text-align: center;
+    width: 1046px;
+  }
+  
+  .product-page-2 .learn-more-button {
+    align-items: center;
+    background-color: #e5bcff;
+    border-radius: 4px;
+    display: flex;
+    gap: 10px;
+    height: 55px;
+    justify-content: center;
+    padding: 10px;
+    position: relative;
+    width: 240px;
+  }
+  
+  .product-page-2 .text-wrapper-12 {
+    color: #000000;
+    font-family: "Newsreader-SemiBold";
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-bottom: -8px;
+    margin-top: -10px;
+    position: relative;
+    text-align: center;
+    white-space: nowrap;
+    width: fit-content;
+  }
+
+  .how-to-adopt-page .div-wrapper {
+    display: flex;
+    width: 250px;
+    height: 72px;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    background-color: #e5bcff;
+    margin-top: 100px;
+    margin: 0 auto;
+    /* left: 413px;
+    position: absolute;
+    top: 160px; */
+  }
+
+  .how-to-adopt-page .div-wrapper a {
+    display: flex;
+    width: 250px;
+    height: 72px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: #e5bcff;
+    border: none;
+    font-size: 25px;
+    font-weight: bold;
+    text-decoration: none;
+    color:black;
+    }
+  
+   
+  .how-to-adopt-page .div-wrapper a:hover {
+    cursor: pointer;
+    background-color: #e5e5;
+  }
