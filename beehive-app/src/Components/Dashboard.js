@@ -38,11 +38,11 @@ const Dashboard = () => {
 
   useEffect(() => {
 
-    // user must be authenticated to view page!
-    if (!localStorage.getItem('token')) {
-      navigate('/login');
-      return;
-    }
+    // // user must be authenticated to view page!
+    // if (!localStorage.getItem('token')) {
+    //   navigate('/login');
+    //   return;
+    // }
 
     const fetchData = async () => {
       const userHivesData = await getUserHivesOrGetHiveData("getUserHives", "");
@@ -161,7 +161,7 @@ const Dashboard = () => {
         color: 'black',
         fontSize: 64,
         border: '5px solid black',
-      }}>{firstName} {lastName}'s Beehives</div>
+      }}>{firstName}'s Beehives</div>
       <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-start', gap: '20px', paddingLeft: '75px', paddingTop: '420px', paddingBottom: '50px' }}>
         {hives.map((hive, index) => (
           <div key={index} style={{ width: '240px', height: '190px', position: 'relative', overflow: 'hidden' }}>

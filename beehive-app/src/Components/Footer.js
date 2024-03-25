@@ -35,7 +35,7 @@ export const Footer = () => {
           <FontAwesomeIcon icon={faXTwitter} />
           <p>Twitter</p>
         </a>
-        <a href="mailto:?subject=Our Team&body=https://feccanada.org/our-team"> {/* Replace "https://example.com" with the URL of the external website */}
+        <a href="mailto:info@ttgteams.com?subject=Our Team&body=https://feccanada.org/our-team"> {/* Replace "https://example.com" with the URL of the external website */}
           <FontAwesomeIcon icon={faEnvelope} />
           <p>Email</p>
         </a>

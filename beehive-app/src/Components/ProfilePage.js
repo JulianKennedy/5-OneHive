@@ -1,88 +1,89 @@
-
-import { pink } from '@material-ui/core/colors';
-import './profilepagestyle.css';
-import React, { useState } from 'react';
-import { Checkbox } from '@material-ui/core';
-import checked from '@material-ui/core/Checkbox';
-import { GetUserProfile } from '../Service';
+import React, { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { GetProfile, UpdateProfile } from '../Service';
 
 const ProfilePage = () => {
-  const [expandedField, setExpandedField] = useState('');
-  const [username, setUsername] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [hiveCount, setHiveCount] = useState('');
+  const [donationAmount, setDonationAmount] = useState('');
+  const [profilePic, setProfilePic] = useState('');
 
-  const handleExpand = (fieldName) => {
-    if (expandedField === fieldName) {
-      setExpandedField('');
-    } else {
-      setExpandedField(fieldName);
-    }
-  };
-
-    const [checked, setChecked] = React.useState(true);
-
-    const handleChange = (event) => {
-        setChecked(event.target.checked);
-        setExpandedField('Preferences');
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await GetProfile();
+        setFirstName(data[0].FirstName);
+        setLastName(data[0].LastName);
+        setEmail(data[0].Email);
+        setHiveCount(data[0].Hive_Count);
+        setDonationAmount(data[0].Donation_Amount);
+        setProfilePic(data[0].Profile_Pic);
+        console.log(profilePic);
+      } catch (error) {
+        console.error('Error fetching profile data:', error);
+      }
     };
+    fetchData();
+  }, []); 
 
-    // useEffect(() => {
-    // //     const fetchData = async () => {
-    // //       console.log("fetching data");
-    // //       const data = await GetUserProfile();
-    // //       console.log(data);
-    // //       setUsername(data.User_Name);
-    // //       setHumidityData(formattedData);
-    // //     };
-    // //     fetchData();
-    //   }, [hiveName]); 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setProfilePic(reader.result);
+    }
+    reader.readAsDataURL(file);
+  }
 
+  
 
-  const renderArrow = (fieldName) => {
-    return expandedField === fieldName ? '↑' : '↓'; // Upwards arrow when expanded, downwards when not
-  };
+  const handleUpload = async () => {
+    try {
+      console.log('Uploading profile picture...');
+      const update = await UpdateProfile(email, firstName, lastName, donationAmount, profilePic);
+      console.log(update);
+    } catch (error) {
+      console.error('Error uploading profile picture:', error);
+    }
+  }
+
+  const handleRemove = async () => {
+    try {
+      console.log('Removing profile picture...');
+      const update = await UpdateProfile(email, firstName, lastName, donationAmount, '');
+      console.log(update);
+      setProfilePic('');
+    } catch (error) {
+      console.error('Error removing profile picture:', error);
+    }
+  }
 
   return (
-    <div style={{ maxWidth: '800px', margin: '20px auto', fontSize: '18px' }}> {/* Increased base font size */}
-      {['PersonalInformation', 'Security', 'Location', 'Preferences'].map((field) => (
-        <div
-          key={field}
-          style={{
-            marginBottom: '10px',
-            border: '1px solid #ddd', // Consider lightening this if you want a lighter grey
-            backgroundColor: '#e5bcff', // Light grey background
-            borderRadius: '8px',
-            padding: '20px', // Increase padding for bigger text
-            cursor: 'pointer',
-            fontSize: '22px', // Bigger text inside each box
-            fontWeight: 'normal', // Bold text
-          }}
-          onClick={() => handleExpand(field)}
-        >      
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight: 'bold' }}>
-            {field.replace(/([A-Z])/g, ' $1').trim()} {/* Adds space before capital letters for readability */}
-            <span style={{ fontSize: '26px'}}>{renderArrow(field)}</span>
-          </div>
-          {expandedField === field && field === 'PersonalInformation' && <div className='name' style={{ marginTop: '15px'}}>Full Name: </div>}
-          {expandedField === field && field === 'PersonalInformation' && <div className='email' style={{ marginTop: '25px' }}>Email Address: </div>}
-            {expandedField === field && field === 'Security' && <div className='username' style={{ marginTop: '25px' }}>Username: </div>}
-          {expandedField === field && field === 'Security' && <div className='password' style={{ marginTop: '15px' }}>Password: </div>}
-          {expandedField === field && field === 'Location' && <div className='address' style={{ marginTop: '15px' }}>Address: </div>}
-          {expandedField === field && field === 'Location' && <div className='city' style={{ marginTop: '25px' }}>City: </div>}
-          {expandedField === field && field === 'Location' && <div className='state' style={{ marginTop: '25px' }}>State: </div>}
-          {expandedField === field && field === 'Location' && <div className='zip' style={{ marginTop: '25px' }}>Zip Code: </div>}
-          {/* do not close the dropdown when the checkbox is clicked */}
-            {expandedField === field && field === 'Preferences' && <div className='anonymous' style={{ marginTop: '15px' }}>Anonymous: 
-            <Checkbox
-                checked={checked}
-                onChange={handleChange}
-                inputProps={{ 'aria-label': 'primary checkbox' }}
-            />
-            </div>}
-
-          
-
+    <div style={{ maxWidth: '800px', margin: '20px auto', fontSize: '18px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
+        {(
+          <img src={profilePic} alt="Profile" onChange={handleFileChange} style={{ width: '50px', height: '50px', borderRadius: '50%', marginRight: '10px' }} />
+        )}
+        {console.log(profilePic)}
+        <div style={{ flex: 1 }}>
+          <div style={{ fontSize: '24px', marginBottom: '10px' }}>{firstName} {lastName}</div>
+          <input type="file" onChange={handleFileChange} accept="image/*" />
+          <button onClick={handleUpload}>Upload</button>
+          <button onClick={handleRemove}>Remove</button>
         </div>
-      ))}
+      </div>
+      <div style={{ marginBottom: '10px', border: '1px solid #ddd', backgroundColor: '#e5bcff', borderRadius: '8px', padding: '20px', fontSize: '22px', fontWeight: 'normal' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight: 'bold' }}>
+          Personal Information
+        </div>
+        <div className='profile-name' style={{ marginTop: '15px' }}>Full Name: {firstName} {lastName}</div>
+        <div className='email' style={{ marginTop: '25px' }}>Email Address: {email}</div>
+        <div className='hives' style={{ marginTop: '15px' }}>Number of Hives: {hiveCount}</div>
+        <div className='donations' style={{ marginTop: '15px' }}>Total Donation Amount: ${donationAmount}</div>
+      </div>
     </div>
   );
 };

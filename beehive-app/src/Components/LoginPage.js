@@ -36,9 +36,6 @@ function LoginPage() {
 
     return (
             <div className="LoginPageDesktop" style={{ width: '100%', position: 'relative', background: 'white' }}>
-                    <div className="fo">
-                            <Footer className="FooterInstance" style={{ width: '100%', marginTop: '100px', position: 'relative' }} />
-                        </div>
                 <Header className="HeaderInstance" style={{ width: '100%', height: 100, left: 0, top: 0, position: 'absolute' }} />
                 <div className="Rectangle9" style={{ width: 543, height: 500, left: 131, top: 504, position: 'absolute', background: '#D9D9D9' }}></div>
                 <div className="Frame7" style={{ width: 580, height: 500, left: 720, top: 504, position: 'absolute', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', gap: 30, display: 'inline-flex' }}>

@@ -4,6 +4,7 @@ const cors = require('cors');
 const bcrypt = require('bcrypt');
 const express = require('express');
 const { WebSocketServer } = require('ws');
+const nodemailer = require('nodemailer');
 require('dotenv').config();
 const app = express();
 
@@ -252,6 +253,69 @@ app.post('/map', async (req, res) => {
         res.send(ret);
     }
 });
+
+
+app.post('/profile', async (req, res) => {
+    const email = req.body.Email;
+    const ret = await db.getProfile(email);
+    console.log(ret);
+    res.send(ret);
+});
+
+app.patch('/profile', async (req, res) => {
+    const email = req.body.Email;
+    const firstName = req.body.FirstName;
+    const lastName = req.body.LastName;
+    const donationAmount = req.body.Donation_Amount;
+    const profilePic = req.body.ProfilePic;
+
+    console.log(email, firstName, lastName, donationAmount, profilePic);
+    await db.updateProfile(email, firstName, lastName, donationAmount, profilePic);
+
+    const ret = await db.getProfile(email);
+    console.log(ret);
+    res.send(ret);
+});
+
+
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+     user: 'cpen491f1@gmail.com',
+     pass: 'ljtf fyrf yhci zqf',
+    },
+   });
+ 
+   app.post('/forgotpassword', async (req, res) => {
+    const email = req.body.Email;
+    const mailOptions = {
+     from: 'cpen491f1@gmail.com',
+     to: email,
+     subject: 'Email verification',
+     html:
+   '<p>Please click on the following link to verify your email address:</p>',
+   };
+ 
+   transporter.sendMail(mailOptions, function (error, info) {
+     if (error) {
+       console.log('Error in sending email  ' + error);
+       return true;
+     } else {
+      console.log('Email sent: ' + info.response);
+      return false;
+     }
+    });
+   });
+  
+  // Function to generate reset token
+  function generateResetToken() {
+    // Implement your token generation logic here
+    return 'dummy_reset_token';
+  }
 
 
 app.get('/', (req, res) => {

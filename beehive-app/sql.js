@@ -80,6 +80,7 @@ sql.prototype.addHiveData = function (name, temperature, humidity, weight, frequ
   });
 }
 
+
 sql.prototype.addProduct = function (name, description, price) {
   var sql = "INSERT INTO Product (Product_Name, Product_Description, Product_Price) VALUES ('" + name + "', '" + description + "', " + price + ")";
   con.query(sql, function (err, result) {
@@ -252,6 +253,32 @@ sql.prototype.getHives = function () {
     });
 }
 
+sql.prototype.getProfile = function (email) {
+  //find the number of hives owned by a user, the user's first name, last name, email, password, donation amount, and profile picture
+  var sql = "SELECT U.FirstName, U.LastName, U.Email, U.Donation_Amount, U.ProfilePic, COUNT(H.Hive_ID) as Hive_Count FROM User U LEFT JOIN Hive H ON U.User_ID = H.User_ID WHERE U.Email='" + email + "'";
+  return new Promise(
+    (resolve, reject) => {
+      con.query(sql, function (err, rows) {
+        if (err) reject(err);
+        resolve(rows.map(row => row));
+      });
+    });
+}
+
+sql.prototype.updateProfile = function (email, firstName, lastName, donationAmount, profilePic) {
+  console.log("Profilepic: "+profilePic);
+  if(profilePic !== ''){
+  var sql = "UPDATE User SET FirstName='" + firstName + "', LastName='" + lastName + "', Donation_Amount=" + donationAmount + ", ProfilePic='" + profilePic + "' WHERE Email='" + email + "'";
+  }
+  else {
+    var sql = "UPDATE User SET FirstName='" + firstName + "', LastName='" + lastName + "', Donation_Amount=" + donationAmount + ", ProfilePic=NULL WHERE Email='" + email + "'";
+  }
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+  });
+}
+
+
 //if the temperature is over 1 year old 
 // - keep the average value of all temperatures recorded that day
 // - delete the rest
@@ -269,14 +296,16 @@ sql.prototype.deleteOldData = function () {
 
       //console.log(result);
       //insert the average data back into the table from the result of the previous query
-      var sql = "INSERT INTO HiveData (Hive_ID, Temperature, Humidity, Weight, Frequency, Timestamp) VALUES ?";
-      var values = [];
-      for (var i = 0; i < result.length; i++) {
-        values.push([result[i].Hive_ID, result[i].Avg_Temperature, result[i].Avg_Humidity, result[i].Avg_Weight, result[i].Avg_Frequency, result[i].Timestamp]);
+      if (result.length > 0) {
+        var sql = "INSERT INTO HiveData (Hive_ID, Temperature, Humidity, Weight, Frequency, Timestamp) VALUES ?";
+        var values = [];
+        for (var i = 0; i < result.length; i++) {
+          values.push([result[i].Hive_ID, result[i].Avg_Temperature, result[i].Avg_Humidity, result[i].Avg_Weight, result[i].Avg_Frequency, result[i].Timestamp]);
+        }
+        con.query(sql, [values], function (err, result) {
+          if (err) throw err;
+        });
       }
-      con.query(sql, [values], function (err, result) {
-        if (err) throw err;
-      });
     }
   });
 }

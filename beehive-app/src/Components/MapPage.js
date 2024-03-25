@@ -156,13 +156,8 @@ const MapPage = ({ google }) => {
                 {!selectedPlace.frequency && <p>Frequency: N/A</p>}
                 {!selectedPlace.temperature && !selectedPlace.humidity && !selectedPlace.weight && !selectedPlace.frequency && <p>No data available for this beehive</p>}
                 {selectedPlace && !selectedPlace.anonymous && (
-                  <div className="contact-dropdown" style={{textAlign: 'center'}}>
-                    <p style={{textAlign: 'center'}}>Contact {selectedPlace.owner}</p>
-                    <div className='contact-dropdown-content'>
-                      <p style={{ fontWeight: "bold", justifyContent: 'center', alignContent: 'center' }}>Contact Information</p>
-                      <p><strong>Name: </strong>{selectedPlace.owner}</p>
-                      <p><strong>Email: </strong>{selectedPlace.email}</p>
-                    </div>
+                  <div className="contact-dropdown" style={{textAlign: 'center', paddingBottom: '5px'}}>
+                  <a className="contact" href={`mailto:${selectedPlace.email}`}>Contact {selectedPlace.owner}</a>
                   </div>
                 )}
                 {selectedPlace.anonymous === 1 && <p>User is anonymous. No contact information available.</p>}

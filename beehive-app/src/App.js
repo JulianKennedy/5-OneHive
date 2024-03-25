@@ -14,6 +14,7 @@ import AddHive from './Components/AddHive';
 import RegisterPage from './Components/RegisterPage';
 import ProfilePage from './Components/ProfilePage';
 import MapPage from './Components/MapPage';
+import ForgotPasswordPage from './Components/ForgotPasswordPage';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
       <Route path="/register" element={<RegisterPage/>} />
       <Route path="/profile" element={<ProfilePage/>} />
       <Route path="/map" element={<MapPage/>} />
+      <Route path="/forgotpassword" element={<ForgotPasswordPage/>} />
       {/* <Route path="/add-on" element={<AddOnPage/>} />
       <Route path="/stats" element={<StatsPage/>} />
       <Route path="/payment" element={<PaymentPage/>} />

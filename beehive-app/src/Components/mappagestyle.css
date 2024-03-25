@@ -1,4 +1,4 @@
-  .contact-dropdown {
+  .contact {
     background-color: transparent;
     border: none;
     color: blue;
@@ -9,36 +9,4 @@
     position: relative;
     display: inline-block;
     width: 100%;
-  }
-
-  .contact-dropdown-content {
-    display: none;
-    position: relative;
-    cursor: auto;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-
-  }
-
-  .contact-dropdown-content p {
-    color: black;
-    padding: 8px 12px;
-    text-decoration: none;
-    display: block;
-  }
-
-  .contact-dropdown-content a:hover {
-    background-color: #f1f1f1;
-  }
-
-  /* Keep dropdown content visible after hovering */
-  .contact-dropdown:hover .contact-dropdown-content {
-    display: block;
-  }
-
-  /* Display dropdown content when hovering over it */
-  .contact-dropdown-content:hover {
-    display: block;
   }
