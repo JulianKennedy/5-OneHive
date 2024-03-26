@@ -1,47 +1,88 @@
-import React from "react";
-import "./cartpagestyle.css";
-const { Header } = require("./Header");
-const { Footer } = require("./Footer");
+import React, { useState } from 'react';
 
+function CartPage() {
+  const [cartItems, setCartItems] = useState([
+    { id: 1, name: 'OneHive+ Beehive Frame', price: 300, quantity: 1 },
+  ]);
 
-export const CartPage = () => {
-    return (
-        <div class="cart-page" id="cart">
-            <div class="div">
-                <Header className="header-instance" />
-            </div>
-            <div className="text-wrapper-8">Your Cart</div>
+  const updateQuantity = (itemId, newQuantity) => {
+    if (newQuantity >= 1) {
+      setCartItems((prevCartItems) =>
+        prevCartItems.map((item) =>
+          item.id === itemId ? { ...item, quantity: newQuantity } : item
+        )
+      );
+    } else {
+      // Handle invalid quantity input
+      console.error('Invalid quantity: Quantity must be at least 1.');
+      // You can also display an error message to the user here
+    }
+  };
 
-            <div className="component">
-                <img className="line" src={require('./img/cart_item_line.svg')} alt="Line" />
-                <img className="img" src={require('./img/beehive.png')} alt="Rectangle" />
-                <div className="frame-3">
-                    <div className="product-name">OneHive+ Beehive Frame</div>
-                    <div className="text-wrapper-5">Remove</div>
-                </div>
-                <div className="text-wrapper-6">$300</div>
-                <div className="frame-4">
-                    <img className="rectangle-2" src={require('./img/cart_item_box.svg')} alt="Rectangle" />
-                    <div className="text-wrapper-7">1</div>
-                </div>
-                <div className="text-wrapper">$300</div>
-                <img className="line-2" src={require('./img/cart_item_line.svg')} alt="Line" />
-            </div>
-
-            <div className="text-wrapper-9">$300</div>
-            <div className="text-wrapper-10">Item</div>
-            <div className="text-wrapper-11">Price</div>
-            <div className="text-wrapper-12">Quantity</div>
-            <p className="p">Taxes and shipping calculated at checkout</p>
-            <div className="text-wrapper-13">Subtotal</div>
-            <div className="text-wrapper-14">Total</div>
-            <img className="checkout" src={require('./img/checkoutButtons.png')} alt="Checkout" />
-
-            <div className="foot">
-                <Footer />
-            </div>
-        </div>
-
+  const removeItem = (itemId) => {
+    setCartItems((prevCartItems) =>
+      prevCartItems.filter((item) => item.id !== itemId)
     );
-};
+  };
+
+  const calculateSubtotal = () => {
+    let subtotal = 0;
+    cartItems.forEach((item) => (subtotal += item.price * item.quantity));
+    return subtotal;
+  };
+
+  return (
+    <div className="container">
+      <header>
+        <h1>Your Cart</h1>
+      </header>
+      <main>
+        <table>
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {cartItems.map((item) => (
+              <tr key={item.id}>
+                <td>{item.name}</td>
+                <td>${item.price}</td>
+                <td>
+                  <input
+                    type="number"
+                    min="1"
+                    value={item.quantity}
+                    onChange={(e) => updateQuantity(item.id, e.target.value)}
+                  />
+                </td>
+                <td>${item.price * item.quantity}</td>
+                <td>
+                  <button onClick={() => removeItem(item.id)}>Remove</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div className="subtotal">
+          <p>Subtotal: ${calculateSubtotal()}</p>
+        </div>
+        <p>Taxes and shipping calculated at checkout</p>
+      </main>
+      <footer>
+        <button>CHECK OUT</button>
+        <div className="payment-methods">
+          <img src="shop_pay.png" alt="Shop Pay" />
+          <img src="paypal.png" alt="PayPal" />
+          <img src="g_pay.png" alt="G Pay" />
+        </div>
+      </footer>
+    </div>
+  );
+}
+
 export default CartPage;

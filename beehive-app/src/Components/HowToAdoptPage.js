@@ -18,9 +18,7 @@ export const HowToAdoptPage = () => {
                     <div className="subsection">
                         <p className="heading">What Happens After I Adopt a Hive?</p>
                         <p className="body">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-                            ea commodo consequat basically you now have access to your own beehive dashboard yahoo.
+                            Once you've adopted a hive, you gain access to your own beehive dashboard where you can monitor and manage your hive. {/* Updated text */}
                         </p>
                     </div>
                     <div className="div-wrapper-2">
@@ -32,18 +30,14 @@ export const HowToAdoptPage = () => {
                     <div className="subsection">
                         <div className="heading-2">How to Adopt</div>
                         <p className="body-2">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-                            ea commodo consequat anyone can adopt whether you’re a beginner or a hobbyist
+                            Adopting a hive is easy and open to everyone, whether you’re a beginner or a hobbyist. {/* Updated text */}
                         </p>
                     </div>
                     <div className="subsection-2">
                         <p className="heading-3">1. Are you ready to become a beekeeper?</p>
                         <p className="body-3">
                             <span className="span">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                                dolore magna aliqua. commodo consequat like the famous beekeeper Augusta Gusteau once said: anyone can
-                                beekeep! Here’s our beginner overview if you want to learn more about beekeeping:{" "}
+                                Beekeeping is for everyone! Whether you're new to beekeeping or an experienced hobbyist, anyone can get started. {/* Updated text */}
                             </span>
                             <span className="text-wrapper-5">
                                 <a href="learn">Learn Beekeeping</a>
@@ -56,33 +50,28 @@ export const HowToAdoptPage = () => {
                     <div className="subsection-4">
                         <p className="heading-3">2. Complete an adoption application form</p>
                         <p className="body-3">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna aliqua. commodo consequat
+                            Fill out our adoption application form to begin your journey as a beekeeper. {/* Updated text */}
                         </p>
                     </div>
 
-                    <div className="div-wrapper">
+                    <div className="div-wrapper-2">
                         <div className="text-wrapper-4"><a type="button" href="adoptionform">Adoption Form</a></div>
                     </div>
-
                 </div>
 
                 <div className="subsection-3">
                     <p className="heading-3">3. Bring your new beehive home!</p>
                     <p className="body-3">
                         <span className="span">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud if you need help with setting up your beehive,
-                            don’t hesitate to contact our team for help:{" "}
+                            Once you've completed the adoption process, it's time to bring your new beehive home. If you need assistance setting up your hive, our support team is here to help. {/* Updated text */}
                         </span>
                         <span className="text-wrapper-5">Contact Support Team</span>
                     </p>
                 </div>
 
-                <div className="foot">
-                    <Footer />
-                </div>
-
+            </div>
+            <div className="footerr">
+                <Footer />
             </div>
         </div>
 

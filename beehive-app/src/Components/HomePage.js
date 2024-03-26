@@ -5,14 +5,6 @@ import { MemberHeader } from "./MemberHeader";
 import "./homepagestyle.css";
 
 export const HomePage = () => {
-  // document.getElementById("head").createElement("header-instance");
-  // if(localStorage) {
-  //   document.getElementsByClassName("header-instance").createElement(MemberHeader);
-  // }
-  // else {
-  //   document.getElementsByClassName("header-instance").createElement(Header);
-  // }
-
   const isAuthenticated = localStorage.getItem("jwt") ? true : false;
 
   return (
@@ -21,7 +13,7 @@ export const HomePage = () => {
         {isAuthenticated ? <MemberHeader /> : <Header />}
         <div className="overlap-group">
           <div className="text-wrapper">Save The Bees</div>
-          <div className="text-wrapper-2">or else</div>
+          {/* <div className="text-wrapper-2">or else</div> */}
         </div>
         <img className="img" src={require('./img/One-Hive+.png')} alt="One-Hive+" />
         <img className="rectangle-2" src={require('./img/community.png')} alt="Community" />
@@ -31,9 +23,7 @@ export const HomePage = () => {
             <div class="div-2">
               <div class="heading">OneHive+</div>
               <p class="body">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                ex ea commodo consequat.
+                Bees are important for pollination and ecosystem balance. Protecting them is vital for our planet's health.
               </p>
             </div>
           </div>
@@ -46,9 +36,7 @@ export const HomePage = () => {
           <div class="div-2">
             <div class="heading">Our Community</div>
             <p class="p">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-              ea commodo consequat.
+              Join our community dedicated to saving bees and supporting sustainable practices.
             </p>
           </div>
           <div class="frame-3"></div>
@@ -58,9 +46,7 @@ export const HomePage = () => {
           <div class="div-2">
             <div class="heading">Real-Time Stats</div>
             <p class="body">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-              ea commodo consequat.
+              Get real-time updates on our progress in protecting bees and promoting environmental conservation.
             </p>
           </div>
           <div class="div-wrapper"><div class="text-wrapper-3"><a href="product">Learn More</a></div></div>

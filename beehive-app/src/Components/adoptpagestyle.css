@@ -7,7 +7,7 @@
   .adopt-a-beehive-page .overlap-group {
     position: absolute;
     width: 100%;
-    height: 100%;
+    height: 550px;
     top: 86px;
     left: 0;
     background-image: url(./img/adopt.png);
@@ -219,7 +219,7 @@
   }
 
 
-  .footy {
+  .footier {
     margin-top: 2100px;
     width: 100%;
   }

@@ -5,9 +5,8 @@
   
   .how-to-adopt-page .div-2 {
     background-color: #ffffff;
-    height: 3200px;
     position: relative;
-    width: 1440px;
+    width: 100%;
   }
 
   .how-to-adopt-page .overlap {
@@ -15,7 +14,7 @@
     left: 0;
     position: absolute;
     top: 0;
-    width: 1440px;
+    width: 100%;
   }
 
   .how-to-adopt-page .howtoadopt-home-image {
@@ -23,7 +22,7 @@
     left: 0;
     position: absolute;
     top: 86px;
-    width: 1440px;
+    width: 100%;
   }
 
   .how-to-adopt-page .p {
@@ -101,7 +100,7 @@
     width: 275px;
   }
   
-  .how-to-adopt-page .text-wrapper-4 {
+  .how-to-adopt-page .texter {
     color: #000000;
     font-family: "Newsreader-SemiBold";
     font-size: 26px;
@@ -195,7 +194,7 @@
     flex-direction: column;
     left: 196px;
     position: absolute;
-    top: 1568px;
+    top: 1600px;
     width: 1048px;
   }
 
@@ -302,7 +301,7 @@
     background-color: #e5e5;
   }
 
-  .how-to-adopt-page .foot {
+  .how-to-adopt-page .footerr {
     margin-top: 2400px;
     width: 100%;
   }

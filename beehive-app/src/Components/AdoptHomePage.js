@@ -6,7 +6,7 @@ const { Footer } = require("./Footer");
 
 export const AdoptHomePage = () => {
     return (
-        <div class="adopt-a-beehive-page" id="adopt">
+        <div class="adopt-home" id="adopt">
             <div class="div">
                 <div class="overlap-group"><div class="text-wrapper">Adopt A Beehive Today</div></div>
                 <div class="rectangle"></div>
@@ -16,9 +16,7 @@ export const AdoptHomePage = () => {
                         <div class="div-2">
                             <div class="heading">How to Adopt a Beehive</div>
                             <p class="body">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                                ex ea commodo consequat.
+                                Learn how you can make a difference by adopting a beehive and supporting our cause to save the bees.
                             </p>
                         </div>
                     </div>
@@ -36,9 +34,7 @@ export const AdoptHomePage = () => {
                     <div className="real-time-stats">
                         <div className="heading-2">Contribute to the Foundation</div>
                         <p className="body-2">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-                            ea commodo consequat.
+                            Support our mission to save the bees and promote environmental conservation.
                         </p>
                     </div>
                     <div className="div-wrapper">

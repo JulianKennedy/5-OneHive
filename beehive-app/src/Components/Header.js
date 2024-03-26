@@ -10,9 +10,9 @@ export const Header = () => {
             </a>
             <div class="home"><Link to="/home" className="home">Home</Link></div>
             <div class="about"><Link to="/about" className="about">About</Link></div>
-            <div class="product"><Link to="/product" className="product">Product</Link></div>
+            <div class="product"><Link to="/product2" className="product">Product</Link></div>
             <div class="learn"><Link to="/learn" className="learn">Learn</Link></div>
-            <div class="adopt"><Link to="/adopt" className="adopt">Adopt</Link></div>
+            <div class="adopt"><Link to="/adopthome" className="adopt">Adopt</Link></div>
             <div className="login-button"><a href="login" className="login-button" type="button" color="#e5bcff">LOGIN</a></div>
         </header>
     );

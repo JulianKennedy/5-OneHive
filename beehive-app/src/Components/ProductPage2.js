@@ -15,9 +15,9 @@ export const ProductPage2 = () => {
                     <img className="product-home-image" src={require('./img/product.png')} alt="Rectangle" />
                     <div className="group">
                         <div className="product-home-text">
-                            Beekeeping Like
+                            Experience Beekeeping
                             <br />
-                            Never Before
+                            Like Never Before
                         </div>
                     </div>
                 </div>
@@ -26,8 +26,7 @@ export const ProductPage2 = () => {
                 <div className="one-hive-2">
                     <div className="one-hive-heading">OneHive+</div>
                     <p className="one-hive-body">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                        dolore magna aliqua.
+                        Discover the innovative features of OneHive+ and revolutionize your beekeeping experience.
                     </p>
                 </div>
             </div>
@@ -37,37 +36,30 @@ export const ProductPage2 = () => {
             <div className="frame-4">
                 <div className="text-wrapper-6">Features</div>
                 <ul className="p">
-                    {/* Insert bullet points */}
-                    <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                    incididunt </li>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua.</li>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua.</li>
+                    <li>Customizable hive settings to suit different bee species and environments.</li>
+                    <li>Real-time monitoring and alerts for hive health and productivity.</li>
+                    <li>Integrated educational resources for novice and experienced beekeepers alike.</li>
                 </ul>
             </div>
             <img className="beehive-image" src={require('./img/beehive.png')} alt="Rectangle" />
             <div className="text-wrapper-7">How It Works</div>
             <img className="beehive-infographic" src={require('./img/beehive-infographic.png')} alt="Rectangle" />
             <p className="text-wrapper-8">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.
+                Get started with OneHive+ and experience beekeeping in a whole new way.
             </p>
             <p className="text-wrapper-9">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+                Discover the simplicity and effectiveness of our hive management system.
             </p>
-            <p className="text-wrapper-10">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.</p>
+            <p className="text-wrapper-10">Join the beekeeping community and make a difference today.</p>
             <p className="text-wrapper-11">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+                Explore the possibilities of sustainable beekeeping with OneHive+.
             </p>
 
             <div className="contribute-group">
                 <div className="contribute">
                     <div className="heading-2">Contribute to the Foundation</div>
                     <p className="body-2">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-                        ea commodo consequat.
+                        Support the mission of the foundation by making a donation. Every contribution helps us protect bees and promote environmental conservation.
                     </p>
                 </div>
 

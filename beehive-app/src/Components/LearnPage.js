@@ -4,7 +4,6 @@ import { MemberHeader } from "./MemberHeader";
 import "./learnpagestyle.css";
 const { Footer } = require("./Footer");
 
-
 export const LearnPage = () => {
 
     const isAuthenticated = localStorage.getItem("jwt") ? true : false;
@@ -21,9 +20,7 @@ export const LearnPage = () => {
                         <div class="div-2">
                             <div class="heading">Learn the Basics</div>
                             <p class="body">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                                ex ea commodo consequat.
+                                Get started on your beekeeping journey by learning the fundamentals. Explore bee behavior, hive management, and more to become a successful beekeeper.
                             </p>
                         </div>
                     </div>
@@ -36,7 +33,7 @@ export const LearnPage = () => {
                     <div class="div-2">
                         <div class="heading">Start Your Beekeeping Journey Now</div>
                         <p class="p">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et.
+                            Begin your beekeeping adventure today and join a community dedicated to supporting each other in sustainable beekeeping practices.
                         </p>
                     </div>
                     <div class="frame-3">
@@ -45,8 +42,8 @@ export const LearnPage = () => {
                 </div>
                 {isAuthenticated ? <MemberHeader /> : <Header />}
                 <div className="footerr">
-        <Footer/>
-      </div>
+                    <Footer/>
+                </div>
             </div>
         </div>
     );

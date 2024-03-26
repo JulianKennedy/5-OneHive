@@ -22,9 +22,7 @@ export const AboutUsPage = () => {
           <div className="one-hive-2">
             <div className="heading">Our Team</div>
             <p className="body">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-              ea commodo consequat.
+              Meet the dedicated team behind 5-OneHive, working to save the bees and promote environmental conservation. From top to bottom and left to right: Andi, Clare, Mena, Cesar, and Julian.
             </p>
           </div>
         </div>

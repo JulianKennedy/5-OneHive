@@ -8,9 +8,9 @@
   
   .product-page-2 .div {
     background-color: #ffffff;
-    height: 3200px;
+    height: 1900px;
     position: relative;
-    width: 1440px;
+    width: 100%;
   }
 
   .product-page-2 .overlap {
@@ -18,7 +18,7 @@
     left: 0;
     position: absolute;
     top: 0;
-    width: 1440px;
+    width: 100%;
   }
 
   .product-page-2 .product-home-image {
@@ -26,7 +26,7 @@
     left: 0;
     position: absolute;
     top: 86px;
-    width: 1440px;
+    width: 100%;
   }
 
   .product-page-2 .group {
@@ -320,6 +320,7 @@
     text-align: center;
     white-space: nowrap;
     width: fit-content;
+    text-decoration: none;
   }
 
   .how-to-adopt-page .div-wrapper {
@@ -356,4 +357,8 @@
   .how-to-adopt-page .div-wrapper a:hover {
     cursor: pointer;
     background-color: #e5e5;
+  }
+
+  .text-wrapper-12 a {
+    text-decoration: none;
   }
