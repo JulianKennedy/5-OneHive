@@ -105,6 +105,23 @@ export async function DeleteHive(hive_name) {
     }
 }
 
+export async function GetProducts() {
+    try {
+        const response = await fetch('http://localhost:3000/purchase', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ "Type": "products"})
+        })
+        const products = await response.json();
+        console.log(products);
+        return products;
+    } catch (error) {
+        console.log(error);
+        return error;
+    }
+
+}
+
 
 export async function ExistingEmail(email) {
     try {

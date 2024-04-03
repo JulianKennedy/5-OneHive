@@ -20,7 +20,6 @@ app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
 });
 
-
 function toISOLocal(d) {
     const z = n => ('0' + n).slice(-2);
     let off = d.getTimezoneOffset();
@@ -277,6 +276,11 @@ app.patch('/profile', async (req, res) => {
     res.send(ret);
 });
 
+app.post('/purchase', async (req, res) => {
+    const ret = await db.getProducts();
+    console.log(ret);
+    res.send(ret);
+});
 
 
 const transporter = nodemailer.createTransport({

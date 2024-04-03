@@ -278,6 +278,18 @@ sql.prototype.updateProfile = function (email, firstName, lastName, donationAmou
   });
 }
 
+sql.prototype.getProducts = function () {
+  var sql = "SELECT * FROM Product";
+  return new Promise(
+    (resolve, reject) => {
+      con.query(sql, function (err, rows) {
+        if (err) reject(err);
+        resolve(rows.map(row => row));
+      });
+    });
+}
+
+
 
 //if the temperature is over 1 year old 
 // - keep the average value of all temperatures recorded that day

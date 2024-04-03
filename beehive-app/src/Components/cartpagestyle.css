@@ -1,6 +1,7 @@
 /* Basic styling for the container, header, main, and footer */
 .container {
-  width: 100%;
+  width: 80%;
+  margin: 0 auto;
 }
 
 header {
@@ -27,11 +28,42 @@ td {
   border-bottom: 1px solid #ddd;
 }
 
-/* Styling for payment methods in the footer */
+.item-image {
+  width: 50px; /* Adjust image size as needed */
+}
+
+/* Styling for input field */
+input[type='number'] {
+  width: 50px;
+}
+
+/* Styling for checkout button */
+.checkout-buttons {
+  text-align: center;
+}
+
+.checkout-btn {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+/* Styling for payment methods buttons */
 .payment-methods {
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
 }
 
-.payment-methods img
+.payment-methods button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.payment-methods button img {
+  width: 80px;
+}

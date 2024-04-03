@@ -20,6 +20,7 @@ import MapPage from './Components/MapPage';
 import ForgotPasswordPage from './Components/ForgotPasswordPage';
 import CartPage from './Components/CartPage';
 import OrderHistoryPage from './Components/OrderHistoryPage';
+import ProductPurchasePage from './Components/ProductPurchasePage';
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
       <Route path="/orderhistory" element={<OrderHistoryPage/>} />
       <Route path="/product2" element={<ProductPage2/>} />
       <Route path="/adopthome" element={<AdoptHomePage/>} />
+      <Route path="/purchase" element={<ProductPurchasePage/>} />
       
       {/* <Route path="/add-on" element={<AddOnPage/>} />
       <Route path="/stats" element={<StatsPage/>} />
