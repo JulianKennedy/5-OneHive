@@ -283,6 +283,7 @@ app.post('/purchase', async (req, res) => {
         console.log(ret);
         res.send(ret);
 });
+
     
 
 const transporter = nodemailer.createTransport({

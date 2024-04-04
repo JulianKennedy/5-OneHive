@@ -182,7 +182,7 @@ function CartPage() {
               <Typography variant="body1" className={classes.taxesText}>Taxes and shipping calculated at checkout</Typography>
             </Box>
             <div className={classes.paymentMethods}>
-              <Button className={classes.checkoutBtn} variant="contained" color="primary">CHECK OUT</Button>
+              <Button className={classes.checkoutBtn} variant="contained" color="primary" href="/checkout">CHECK OUT</Button>
             </div>
           </>
         ) : (

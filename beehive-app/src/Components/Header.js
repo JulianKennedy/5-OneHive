@@ -25,7 +25,7 @@ export const Header = () => {
             <div class="product"><Link to="/product2" className="product">Product</Link></div>
             <div class="learn"><Link to="/learn" className="learn">Learn</Link></div>
             <div class="adopt"><Link to="/adopthome" className="adopt">Adopt</Link></div>
-            <a href="https://buy.stripe.com/test_6oEbKE5QE3Sj7wQeUU" className="cart-link" >
+            <a href="/cart" className="cart-link" >
                 <div className="cart-icon-container">
                     <FontAwesomeIcon icon={faShoppingCart} className="cart-icon" />
                     {/* {cartItems > 0 && <div className="cart-count">{cartItems}</div>} */}

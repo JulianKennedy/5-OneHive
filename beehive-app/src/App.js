@@ -21,6 +21,7 @@ import ForgotPasswordPage from './Components/ForgotPasswordPage';
 import CartPage from './Components/CartPage';
 import OrderHistoryPage from './Components/OrderHistoryPage';
 import ProductPurchasePage from './Components/ProductPurchasePage';
+import CheckoutPage from './Components/CheckoutPage';
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
       <Route path="/product2" element={<ProductPage2/>} />
       <Route path="/adopthome" element={<AdoptHomePage/>} />
       <Route path="/purchase" element={<ProductPurchasePage/>} />
+      <Route path="/checkout" element={<CheckoutPage/>} />
       
       {/* <Route path="/add-on" element={<AddOnPage/>} />
       <Route path="/stats" element={<StatsPage/>} />
