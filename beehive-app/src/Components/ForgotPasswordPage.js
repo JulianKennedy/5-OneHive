@@ -1,7 +1,25 @@
 import React, { useState } from 'react';
+import { TextField, Button, Typography, Link, Grid } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { resetPassword } from '../Service';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    minHeight: '100vh',
+    padding: theme.spacing(4),
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
+
 const ForgotPasswordPage = () => {
+  const classes = useStyles();
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
 
@@ -13,21 +31,12 @@ const ForgotPasswordPage = () => {
     event.preventDefault();
 
     try {
-      // Assuming you have a backend API to handle sending email
-      const response = await fetch('http://localhost:3000/forgotpassword', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      const data = await response.json();
+      const response = await resetPassword(email);
 
       if (response.ok) {
-        setMessage(data.message);
+        setMessage('Reset email sent successfully!');
       } else {
-        setMessage(data.error);
+        setMessage('Error sending reset email.');
       }
     } catch (error) {
       setMessage('An error occurred while sending the reset email.');
@@ -36,22 +45,48 @@ const ForgotPasswordPage = () => {
   };
 
   return (
-    <div>
-      <h2>Forgot Password</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Email:
-          <input
-            type="email"
+    <Grid container justify="center" alignItems="center" className={classes.root}>
+      <Grid item xs={12} sm={8} md={6} lg={4}>
+        <Typography variant="h4" align="center" gutterBottom style={{ color: '#e5e5' }}>
+          Forgot Password
+        </Typography>
+        <form className={classes.form} onSubmit={handleSubmit}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
             value={email}
             onChange={handleEmailChange}
-            required
           />
-        </label>
-        <button type="submit">Send Reset Email</button>
-      </form>
-      {message && <p>{message}</p>}
-    </div>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            style={{ background: '#e5bcff', color: 'black' }}
+            className={classes.submit}
+          >
+            Send Reset Email
+          </Button>
+        </form>
+        {message && (
+          <Typography variant="body1" align="center" color="error">
+            {message}
+          </Typography>
+        )}
+        <Typography variant="body1" align="center">
+          <Link href="/login" style={{ color: '#e5bcff' }}>
+            Back to Login
+          </Link>
+        </Typography>
+      </Grid>
+    </Grid>
   );
 };
 

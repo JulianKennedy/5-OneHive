@@ -286,37 +286,84 @@ app.post('/purchase', async (req, res) => {
 
     
 
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
-    auth: {
-     user: 'cpen491f1@gmail.com',
-     pass: 'ljtf fyrf yhci zqf',
-    },
-   });
+// const transporter = nodemailer.createTransport({
+//     service: 'gmail',
+//     host: 'smtp.gmail.com',
+//     port: 465,
+//     secure: true,
+//     auth: {
+//      user: 'cpen491f1@gmail.com',
+//      pass: 'ljtf fyrf yhci zqf',
+//     },
+//    });
  
-   app.post('/forgotpassword', async (req, res) => {
-    const email = req.body.Email;
-    const mailOptions = {
-     from: 'cpen491f1@gmail.com',
-     to: email,
-     subject: 'Email verification',
-     html:
-   '<p>Please click on the following link to verify your email address:</p>',
-   };
+//    app.post('/forgotpassword', async (req, res) => {
+//     const email = req.body.Email;
+//     const mailOptions = {
+//      from: 'cpen491f1@gmail.com',
+//      to: email,
+//      subject: 'Email verification',
+//      html:
+//    '<p>Please click on the following link to verify your email address:</p>',
+//    };
  
-   transporter.sendMail(mailOptions, function (error, info) {
-     if (error) {
-       console.log('Error in sending email  ' + error);
-       return true;
-     } else {
-      console.log('Email sent: ' + info.response);
-      return false;
-     }
-    });
-   });
+//    transporter.sendMail(mailOptions, function (error, info) {
+//      if (error) {
+//        console.log('Error in sending email  ' + error);
+//        return true;
+//      } else {
+//       console.log('Email sent: ' + info.response);
+//       return false;
+//      }
+//     });
+//    });
+
+
+
+// Route for handling forgot password request
+app.post('/forgotpassword', async (req, res) => {
+    const { email } = req.body;
+  
+    // Check if email exists in your database
+    // Assuming you have a function to check the existence of the email
+    const userExists = true; // Replace with your actual check logic
+  
+    if (userExists) {
+      // Generate a temporary password reset token (optional)
+      const resetToken = 'generate-your-reset-token-here';
+  
+      // Send reset email
+      try {
+        const transporter = nodemailer.createTransport({
+          // Configure your SMTP settings here
+          // For example, if you're using Gmail:
+          service: 'Gmail',
+          auth: {
+            user: 'cpen491f1@gmail.com',
+            pass: 'xpej jwic jyem qcvn',
+          }
+        });
+  
+        const mailOptions = {
+          from: 'cpen491f1@gmail.com',
+          to: 'julian.m.kennedy@gmail.com',
+          subject: 'Password Reset Request',
+          text: `Hello! You requested a password reset. Here is your reset token: ${resetToken}`
+        };
+  
+        await transporter.sendMail(mailOptions);
+        
+        res.status(200).json({ message: 'Reset email sent successfully!' });
+      } catch (error) {
+        console.error('Error sending reset email:', error);
+        res.status(500).json({ error: 'An error occurred while sending the reset email.' });
+      }
+    } else {
+      res.status(404).json({ error: 'User not found.' });
+    }
+  });
+
+
   
   // Function to generate reset token
   function generateResetToken() {

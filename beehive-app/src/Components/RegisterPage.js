@@ -1,18 +1,16 @@
 /* global gapi */
-import * as React from "react";
-import Header from "./Header";
-import { useState } from "react";
+import React, { useState } from "react";
+import { TextField, Button, Typography, Link, Grid } from "@material-ui/core";
 import { RegisterUser, ExistingEmail, checkLogin } from "../Service";
-import { Icon } from "@material-ui/core";
 
 function RegisterPage() {
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
-    const [firstName, setFirstName]= useState("");
-    const [lastName, setLastName]= useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [showPasswordConfirmationError, setShowPasswordConfirmationError] = useState(false); // Add state for error visibility
-    const [showUserAlreadyExistsError, setShowUserAlreadyExistsError] = useState(false); // Add state for error visibility
+    const [passwordError, setPasswordError] = useState(false);
+    const [emailExistsError, setEmailExistsError] = useState(false);
 
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
@@ -36,21 +34,18 @@ function RegisterPage() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log('Email: ' + email + 'Password: ' + password + 'First Name: ' + firstName + 'Last Name: '+ lastName);
-        setShowPasswordConfirmationError(false);
-        setShowUserAlreadyExistsError(false);
+        setPasswordError(false);
+        setEmailExistsError(false);
 
-        if(password !== confirmPassword){
-            setShowPasswordConfirmationError(true);
-        }
-        else{
+        if (password !== confirmPassword) {
+            setPasswordError(true);
+        } else {
             const emailResult = await ExistingEmail(email);
-            console.log(emailResult);
-            if(emailResult.length > 0) {
-                setShowUserAlreadyExistsError(true);
-            }
-            else {
+            if (emailResult.length > 0) {
+                setEmailExistsError(true);
+            } else {
                 const register = await RegisterUser(email, password, firstName, lastName);
+                // Handle successful registration
                 const loginResult = await checkLogin(email, password);
                 if(loginResult.status) {
                     window.location.href = "/dashboard";
@@ -69,38 +64,80 @@ function RegisterPage() {
 
 
     return (
-        <div className="RegisterPageDesktop" style={{width: '100%', height: '100%', position: 'relative', background: 'white'}}>
-            <Header className="HeaderInstance" style={{width: '100%', height: 100, left: 0, top: 0, position: 'absolute'}} />
-            <div className="Rectangle9" style={{width: 543, height: 500, left: 131, top: 504, position: 'absolute', background: '#D9D9D9'}}></div>
-            <div className="Frame7" style={{width: 580, height: 500, left: 720, top: 250, position: 'absolute', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', gap: 30, display: 'inline-flex'}}>
-                <div className="Onehive" style={{flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', gap: 30, display: 'flex'}}>
-                    <div className="Onehive" style={{flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', display: 'flex'}}>
-                        <div className="Heading" style={{width: 580, height: 110, textAlign: 'center', color: 'black', fontSize: 45, fontFamily: 'Newsreader', fontWeight: '600', wordWrap: 'break-word'}}>Sign Up</div>
-                        {showPasswordConfirmationError && ( // Show error text if showError is true
-                            <div className="password-error-text" style={{width: 580, height: 110, textAlign: 'center', color: 'red', fontSize: 30, fontFamily: 'Newsreader', fontWeight: '600', wordWrap: 'break-word'}}>Passwords do not match</div>
-                        )}
-                        {showUserAlreadyExistsError && ( // Show error text if showError is true
-                            <div className="user-error-text" style={{width: 580, height: 110, textAlign: 'center', color: 'red', fontSize: 30, fontFamily: 'Newsreader', fontWeight: '600', wordWrap: 'break-word'}}>User already exists</div>
-                        )}
-                    </div>
-                </div>
-                <div className="FirstName" style={{width: 113, height: 41, textAlign: 'center', color: 'black', fontSize: 24, fontFamily: 'Newsreader', fontWeight: '200', wordWrap: 'break-word'}}>First Name</div>
-                <input type="text" name="firstName" value={firstName} style={{width: 463, height: 60}}  onInput={handleFirstNameChange}/>
-                <div className="LastName" style={{width: 113, height: 41, textAlign: 'center', color: 'black', fontSize: 24, fontFamily: 'Newsreader', fontWeight: '200', wordWrap: 'break-word'}}>Last Name</div>
-                <input type="text" name="lastName" value={lastName} style={{width: 463, height: 60}}  onInput={handleLastNameChange}/>
-                <div className="Email" style={{width: 87, height: 41, textAlign: 'center', color: 'black', fontSize: 24, fontFamily: 'Newsreader', fontWeight: '200', wordWrap: 'break-word'}}>Email</div>
-                <input type="email" name="email" value={email} style={{width: 463, height: 60}}  onInput={handleEmailChange}/>
-                <div className="Password" style={{width: 113, height: 41, textAlign: 'center', color: 'black', fontSize: 24, fontFamily: 'Newsreader', fontWeight: '200', wordWrap: 'break-word'}}>Password</div>
-                <input type="password" name="password" value={password} style={{width: 463, height: 60}} onInput={handlePasswordChange} />
-                <div className="ConfirmPassword" style={{width: 200, height: 41, textAlign: 'center', color: 'black', fontSize: 24, fontFamily: 'Newsreader', fontWeight: '200', wordWrap: 'break-word'}}>Confirm Password</div>
-                <input type="password" name="confirmPassword" value={confirmPassword} style={{width: 463, height: 60}} onInput={handleConfirmPasswordChange} />
-                <div className="Frame8" style={{justifyContent: 'center', alignItems: 'center', gap: 10, display: 'flex-start'}}>
-                    <div className="Register" style={{textAlign: 'center', color: 'black', fontSize: 26, fontFamily: 'Newsreader', fontWeight: '600', wordWrap: 'break-word', marginLeft: '70px', marginTop: '40px'}}><a href="dashboard" className="login-button" type="button" color="#e5bcff" textDecoration="none" onClick={handleSubmit}>Sign Up</a></div>
-                    <div className="Login" style={{textAlign: 'left', color: 'black', fontSize: 20, fontFamily: 'Newsreader', fontWeight: '600', wordWrap: 'break-word', marginLeft: "20px", textDecoration:"none", marginTop:"30px", marginBottom:'100px'}}>Already have an account? <a href="login" className="login" type="button" color="#e5bcff" textDecoration="none">Log In</a></div>
-                </div>
-            </div>
-            <img className="Image1" style={{width: 378, height: 151, left: 210, top: 678, position: 'absolute'}} src={require('./img/fec.png')} />
-        </div>
+        <Grid container justify="center" alignItems="center" style={{ minHeight: "100vh" }}>
+            <Grid item xs={12} sm={8} md={6} lg={4}>
+                <Typography variant="h4" align="center" gutterBottom style={{ color: "#e5e5" }}>
+                    Sign Up
+                </Typography>
+                <form onSubmit={handleSubmit}>
+                    <TextField
+                        label="First Name"
+                        variant="outlined"
+                        fullWidth
+                        value={firstName}
+                        onChange={handleFirstNameChange}
+                        margin="normal"
+                    />
+                    <TextField
+                        label="Last Name"
+                        variant="outlined"
+                        fullWidth
+                        value={lastName}
+                        onChange={handleLastNameChange}
+                        margin="normal"
+                    />
+                    <TextField
+                        label="Email"
+                        variant="outlined"
+                        type="email"
+                        fullWidth
+                        value={email}
+                        onChange={handleEmailChange}
+                        margin="normal"
+                    />
+                    <TextField
+                        label="Password"
+                        variant="outlined"
+                        type="password"
+                        fullWidth
+                        value={password}
+                        onChange={handlePasswordChange}
+                        margin="normal"
+                    />
+                    <TextField
+                        label="Confirm Password"
+                        variant="outlined"
+                        type="password"
+                        fullWidth
+                        value={confirmPassword}
+                        onChange={handleConfirmPasswordChange}
+                        margin="normal"
+                        error={passwordError}
+                        helperText={passwordError && "Passwords do not match"}
+                    />
+                    {emailExistsError && (
+                        <Typography variant="body1" color="error" align="center">
+                            User already exists
+                        </Typography>
+                    )}
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        fullWidth
+                        type="submit"
+                        style={{ marginTop: 20, background: "#e5bcff", color: "black" }}
+                    >
+                        Sign Up
+                    </Button>
+                </form>
+                <Typography variant="body1" align="center" style={{ marginTop: 20 }}>
+                    Already have an account?{" "}
+                    <Link href="login" style={{ color: "#e5bcff" }}>
+                        Log In
+                    </Link>
+                </Typography>
+            </Grid>
+        </Grid>
     );
 }
 

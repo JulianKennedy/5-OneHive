@@ -1,105 +1,213 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faEdit, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { Grid, Typography, Button, Input, Avatar, Paper, TextField, IconButton, createMuiTheme, ThemeProvider, CircularProgress } from '@material-ui/core';
 import { GetProfile, UpdateProfile } from '../Service';
+import { Footer } from './Footer';
+import MemberHeader from './MemberHeader';
 
 const ProfilePage = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [hiveCount, setHiveCount] = useState('');
-  const [donationAmount, setDonationAmount] = useState('');
-  const [profilePic, setProfilePic] = useState(null); // Initialize with null
-  const [loading, setLoading] = useState(true); // Track loading state
+  const [profileData, setProfileData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    hiveCount: '',
+    donationAmount: ''
+  });
+
+  const [profilePic, setProfilePic] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [editing, setEditing] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await GetProfile();
+        const { FirstName, LastName, Email, Hive_Count, Donation_Amount } = data[0];
+        setProfileData({ firstName: FirstName, lastName: LastName, email: Email, hiveCount: Hive_Count, donationAmount: Donation_Amount });
+        const storedProfilePic = localStorage.getItem('profilePic');
+        if (storedProfilePic) {
+          setProfilePic(storedProfilePic);
+        } else {
+          setProfilePic(data[0].Profile_Pic ? bufferToBase64(data[0].Profile_Pic.data) : null);
+        }
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching profile data:', error);
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
   const bufferToBase64 = (buffer) => {
     const binary = Buffer.from(buffer).toString('base64');
     return `data:image/jpeg;base64,${binary}`;
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await GetProfile();
-        setFirstName(data[0].FirstName);
-        setLastName(data[0].LastName);
-        setEmail(data[0].Email);
-        setHiveCount(data[0].Hive_Count);
-        setDonationAmount(data[0].Donation_Amount);
-        setProfilePic(data[0].Profile_Pic ? bufferToBase64(data[0].Profile_Pic.data) : null);
-        console.log(data);
-        console.log(profilePic);
-        setLoading(false); // Set loading to false after fetching data
-      } catch (error) {
-        console.error('Error fetching profile data:', error);
-        setLoading(false); // Set loading to false in case of error
-      }
-    };
-    fetchData();
-  }, [profilePic]); 
-
-  console.log(profilePic);
-
   const handleFileChange = (e) => {
     const file = e.target.files[0];
+    setSelectedFile(file);
     const reader = new FileReader();
     reader.onloadend = () => {
       setProfilePic(reader.result);
-    }
+      localStorage.setItem('profilePic', reader.result);
+    };
     reader.readAsDataURL(file);
-  }
+  };
 
   const handleUpload = async () => {
     try {
+      setUploading(true);
       console.log('Uploading profile picture...');
-      const update = await UpdateProfile(email, firstName, lastName, donationAmount, profilePic);
+      const update = await UpdateProfile(profileData.email, profileData.firstName, profileData.lastName, profileData.donationAmount, profilePic);
       console.log(update);
+      setSelectedFile(null);
+      setUploading(false);
     } catch (error) {
       console.error('Error uploading profile picture:', error);
+      setUploadError('Failed to upload image. Please try again.');
+      setUploading(false);
     }
-  }
+  };
 
   const handleRemove = async () => {
     try {
       console.log('Removing profile picture...');
-      const update = await UpdateProfile(email, firstName, lastName, donationAmount, '');
+      const update = await UpdateProfile(profileData.email, profileData.firstName, profileData.lastName, profileData.donationAmount, '');
       console.log(update);
       setProfilePic(null);
+      localStorage.removeItem('profilePic');
     } catch (error) {
       console.error('Error removing profile picture:', error);
     }
-  }
+  };
 
-  // Conditional rendering based on loading state
+  const handleEditClick = () => {
+    setEditing(!editing);
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setProfileData({ ...profileData, [name]: value });
+  };
+
+  const handleSave = async () => {
+    try {
+      console.log('Saving profile data...');
+      const update = await UpdateProfile(profileData.email, profileData.firstName, profileData.lastName, profileData.donationAmount, profilePic);
+      console.log(update);
+      setEditing(false);
+    } catch (error) {
+      console.error('Error saving profile data:', error);
+    }
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
 
+  const theme = createMuiTheme({
+    palette: {
+      primary: {
+        main: '#ff7bb0'
+      }
+    }
+  });
+
   return (
-    <div style={{ maxWidth: '800px', margin: '20px auto', fontSize: '18px' }}>
-      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
-        {profilePic ? (
-          <img src={profilePic} alt="Profile" style={{ width: '50px', height: '50px', borderRadius: '50%', marginRight: '10px' }} />
-        ) : (
-          <FontAwesomeIcon icon={faUser} style={{ fontSize: '50px', marginRight: '10px' }} />
-        )}
-        <div style={{ flex: 1 }}>
-          <div style={{ fontSize: '24px', marginBottom: '10px' }}>{firstName} {lastName}</div>
-          <input type="file" onChange={handleFileChange} accept="image/*" />
-          <button onClick={handleUpload}>Upload</button>
-          <button onClick={handleRemove}>Remove</button>
-        </div>
-      </div>
-      <div style={{ marginBottom: '10px', border: '1px solid #ddd', backgroundColor: '#e5bcff', borderRadius: '8px', padding: '20px', fontSize: '22px', fontWeight: 'normal' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontWeight: 'bold' }}>
-          Personal Information
-        </div>
-        <div className='profile-name' style={{ marginTop: '15px' }}>Full Name: {firstName} {lastName}</div>
-        <div className='email' style={{ marginTop: '25px' }}>Email Address: {email}</div>
-        <div className='hives' style={{ marginTop: '15px' }}>Number of Hives: {hiveCount}</div>
-        <div className='donations' style={{ marginTop: '15px' }}>Total Donation Amount: ${donationAmount}</div>
-      </div>
-    </div>
+    <ThemeProvider theme={theme}>
+      <MemberHeader style={{marginBottom:'200px'}} />
+      <Grid container justify="center" alignItems="center" style={{ minHeight: '100vh' }}>
+        <Grid item xs={12} sm={10} md={8} lg={6}>
+          <Paper elevation={3} style={{ padding: '20px', textAlign: 'center' }}>
+            <Typography variant="h4" gutterBottom style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              {editing ? (
+                <>
+                  <TextField
+                    name="firstName"
+                    label="First Name"
+                    value={profileData.firstName}
+                    onChange={handleInputChange}
+                  />
+                  <TextField
+                    name="lastName"
+                    label="Last Name"
+                    value={profileData.lastName}
+                    onChange={handleInputChange}
+                  />
+                </>
+              ) : (
+                <>
+                  <Typography variant="h5" gutterBottom>{profileData.firstName} {profileData.lastName}</Typography>
+                  <IconButton onClick={handleEditClick} color="primary">
+                    <FontAwesomeIcon icon={faEdit} />
+                  </IconButton>
+                </>
+              )}
+            </Typography>
+            <Avatar src={profilePic} style={{ width: '150px', height: '150px', margin: '0 auto 20px' }}>
+              <FontAwesomeIcon icon={faUser} style={{ fontSize: '150px', color: '#9e9e9e' }} />
+            </Avatar>
+            <Input
+              type="file"
+              onChange={handleFileChange}
+              inputProps={{ style: { display: 'none' } }}
+              accept="image/*"
+              id="contained-button-file"
+            />
+            <label htmlFor="contained-button-file">
+              <Button variant="contained" color="primary" component="span">
+                {uploading ? <CircularProgress size={24} /> : (selectedFile ? selectedFile.name : 'Choose File')}
+              </Button>
+            </label>
+            <Button variant="contained" color="primary" onClick={handleUpload} disabled={!selectedFile || uploading}>
+              Upload
+            </Button>
+            <Button variant="contained" color="secondary" onClick={handleRemove} style={{ backgroundColor: '#ff7bb0' }}>
+              <FontAwesomeIcon icon={faTrash} style={{ marginRight: '5px' }} />
+              Remove
+            </Button>
+            {uploadError && <Typography color="error">{uploadError}</Typography>}
+          </Paper>
+          <Paper elevation={3} style={{ padding: '20px', marginTop: '20px', textAlign: 'center' }}>
+            <Typography variant="h5" gutterBottom style={{ textAlign: 'center' }}>Personal Information</Typography>
+            <TextField
+              label="Email Address"
+              value={profileData.email}
+              onChange={handleInputChange}
+              disabled={!editing}
+              fullWidth
+              style={{ marginBottom: '10px' }}
+            />
+            <TextField
+              label="Number of Hives"
+              value={profileData.hiveCount}
+              disabled
+              fullWidth
+              style={{ marginBottom: '10px' }}
+            />
+            <TextField
+              label="Total Donation Amount"
+              value={`$${profileData.donationAmount}`}
+              disabled
+              fullWidth
+              style={{ marginBottom: '10px' }}
+            />
+            {editing && (
+              <Button variant="contained" color="primary" onClick={handleSave}>
+                <FontAwesomeIcon icon={faSave} style={{ marginRight: '5px' }} />
+                Save
+              </Button>
+            )}
+          </Paper>
+        </Grid>
+      </Grid>
+      <Footer />
+    </ThemeProvider>
   );
 };
 
