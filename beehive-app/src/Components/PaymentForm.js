@@ -9,6 +9,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Divider from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const TAX_RATE = 0.08; // Sample tax rate
 
@@ -65,7 +66,8 @@ const PaymentForm = () => {
             {error && <Typography variant="body2" color="error">{error}</Typography>}
             <Button type="submit" disabled={!stripe} variant="contained" color="secondary">
                 {loading ? 'Processing...' : 'Pay Now'}
-                {window.location.href = "/payment-confirmation"};
+                {loading && <CircularProgress size={24} style={{ position: 'absolute' }} />}
+
             </Button>
         </form>
     );
