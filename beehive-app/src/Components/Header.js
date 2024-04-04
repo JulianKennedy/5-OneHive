@@ -5,7 +5,7 @@ import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const Header = () => {
-    const [cartItems, setCartItems] = useState(1);
+    const [cartItems, setCartItems] = useState(0);
 
     // Function to increment cart items (example)
     const addToCart = () => {

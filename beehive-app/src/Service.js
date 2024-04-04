@@ -155,6 +155,7 @@ export async function RegisterUser(email, password, firstName, lastName) {
     }
 }
 
+
 export async function GetTemperatures(hiveName) {
     console.log("hi");
     try {

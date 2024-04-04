@@ -290,7 +290,6 @@ sql.prototype.getProducts = function () {
 }
 
 
-
 //if the temperature is over 1 year old 
 // - keep the average value of all temperatures recorded that day
 // - delete the rest

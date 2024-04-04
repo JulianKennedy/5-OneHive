@@ -9,7 +9,13 @@ const ProfilePage = () => {
   const [email, setEmail] = useState('');
   const [hiveCount, setHiveCount] = useState('');
   const [donationAmount, setDonationAmount] = useState('');
-  const [profilePic, setProfilePic] = useState('');
+  const [profilePic, setProfilePic] = useState(null); // Initialize with null
+  const [loading, setLoading] = useState(true); // Track loading state
+
+  const bufferToBase64 = (buffer) => {
+    const binary = Buffer.from(buffer).toString('base64');
+    return `data:image/jpeg;base64,${binary}`;
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,14 +26,19 @@ const ProfilePage = () => {
         setEmail(data[0].Email);
         setHiveCount(data[0].Hive_Count);
         setDonationAmount(data[0].Donation_Amount);
-        setProfilePic(data[0].Profile_Pic);
+        setProfilePic(bufferToBase64(data[0].ProfilePic.data)); // Convert buffer to base64
+        console.log(data);
         console.log(profilePic);
+        setLoading(false); // Set loading to false after fetching data
       } catch (error) {
         console.error('Error fetching profile data:', error);
+        setLoading(false); // Set loading to false in case of error
       }
     };
     fetchData();
-  }, []); 
+  }, [profilePic]); 
+
+  console.log(profilePic);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -37,8 +48,6 @@ const ProfilePage = () => {
     }
     reader.readAsDataURL(file);
   }
-
-  
 
   const handleUpload = async () => {
     try {
@@ -55,19 +64,25 @@ const ProfilePage = () => {
       console.log('Removing profile picture...');
       const update = await UpdateProfile(email, firstName, lastName, donationAmount, '');
       console.log(update);
-      setProfilePic('');
+      setProfilePic(null);
     } catch (error) {
       console.error('Error removing profile picture:', error);
     }
   }
 
+  // Conditional rendering based on loading state
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div style={{ maxWidth: '800px', margin: '20px auto', fontSize: '18px' }}>
       <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
-        {(
-          <img src={profilePic} alt="Profile" onChange={handleFileChange} style={{ width: '50px', height: '50px', borderRadius: '50%', marginRight: '10px' }} />
+        {profilePic ? (
+          <img src={profilePic} alt="Profile" style={{ width: '50px', height: '50px', borderRadius: '50%', marginRight: '10px' }} />
+        ) : (
+          <FontAwesomeIcon icon={faUser} style={{ fontSize: '50px', marginRight: '10px' }} />
         )}
-        {console.log(profilePic)}
         <div style={{ flex: 1 }}>
           <div style={{ fontSize: '24px', marginBottom: '10px' }}>{firstName} {lastName}</div>
           <input type="file" onChange={handleFileChange} accept="image/*" />

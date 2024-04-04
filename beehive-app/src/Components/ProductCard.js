@@ -9,29 +9,43 @@ import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({
   card: {
-    width: '600px', // Set a fixed width for the card
-    margin: '20px auto', // Add margin for spacing between cards
+    width: '900px',
+    margin: '20px auto',
     borderRadius: '10px',
     border: '1px solid #ddd',
     boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
-    display: 'flex', // Ensure cards are stacked vertically
-    flexDirection: 'column', // Align content vertically
   },
   media: {
-    height: '200px',
-    width: '100%', // Ensure image takes full width of the card
+    maxWidth: '100%',
+    maxHeight: '200px',
     borderTopLeftRadius: '10px',
     borderTopRightRadius: '10px',
-    objectFit: 'cover', // Maintain aspect ratio and cover the card
+    objectFit: 'contain',
+    marginTop: '20px',
   },
   content: {
     padding: '20px',
-    flex: 1, // Allow content to grow and fill the available space
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  title: {
+    fontSize: '1.5rem',
+    fontWeight: 'bold',
+    marginBottom: '10px',
+  },
+  price: {
+    fontSize: '1.3rem',
+    marginBottom: '10px',
+    padding: '10px'
+  },
+  description: {
+    marginBottom: '10px',
+    padding: '10px'
   },
   actions: {
     padding: '16px',
     paddingTop: 0,
-    borderTop: '1px solid #eee', // Add border on top of actions
+    borderTop: '1px solid #eee',
     justifyContent: 'center',
   },
   button: {
@@ -46,27 +60,33 @@ const useStyles = makeStyles({
 const ProductCard = ({ product, openModal }) => {
   const classes = useStyles();
 
+  const bufferToBase64 = (buffer) => {
+    const binary = Buffer.from(buffer).toString('base64');
+    return `data:image/jpeg;base64,${binary}`;
+  };
+
+  const imageUrl = bufferToBase64(product.Product_Image.data);
+
   return (
-    <Card className={classes.card}>
-      <div
-        className={classes.media}
-        style={{ backgroundImage: `url(${product.Product_Image})` }}
-      />
-      <CardContent className={classes.content}>
-        <Typography variant="h5" component="div">
-          {product.Product_Name}
-        </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          Price: ${product.Product_Price}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {product.Product_Description}
-        </Typography>
-      </CardContent>
-      <CardActions className={classes.actions}>
-        <Button size="small" className={classes.button} onClick={() => openModal(product)}>Buy Now</Button>
-      </CardActions>
-    </Card>
+    <div>
+      <Card className={classes.card}>
+        <img className={classes.media} src={imageUrl} alt="Product" />
+        <CardContent className={classes.content}>
+          <Typography className={classes.title} variant="h5" component="div">
+            {product.Product_Name}
+          </Typography>
+          <Typography className={classes.description} variant="body2" color="text.secondary">
+            {product.Product_Description}
+          </Typography>
+          <Typography className={classes.price} color="text.secondary">
+            Price: ${product.Product_Price}
+          </Typography>
+          <CardActions className={classes.actions}>
+            <Button size="small" className={classes.button} onClick={() => openModal(product)}>Buy Now</Button>
+          </CardActions>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 
