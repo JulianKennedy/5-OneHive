@@ -280,10 +280,10 @@ app.post('/purchase', async (req, res) => {
     const type = req.body.Type;
     console.log(req.body);
     const ret = await db.getProducts();
-    console.log(ret);
-    res.send(ret);
+        console.log(ret);
+        res.send(ret);
 });
-
+    
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',

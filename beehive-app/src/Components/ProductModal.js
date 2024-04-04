@@ -1,9 +1,11 @@
-// Modal.js
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
+import useLocalStorage from './useLocalStorage'; // Import the useLocalStorage hook
 
 const ProductModal = ({ product, quantity, setQuantity, closeModal }) => {
     const modalRef = useRef();
+    const [cartItems, setCartItems] = useState(0);
+    const [cartItemsCount, setCartItemsCount] = useLocalStorage('cartItems', 0); // Initialize cart items count from local storage
 
     const bufferToBase64 = (buffer) => {
         const binary = Buffer.from(buffer).toString('base64');
@@ -35,6 +37,28 @@ const ProductModal = ({ product, quantity, setQuantity, closeModal }) => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
+
+    // Function to add an item to the cart
+    const addToCart = (item, quantity) => {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const existingItemIndex = cart.findIndex(cartItem => cartItem.Product_ID === item.Product_ID);
+
+        if (existingItemIndex !== -1) {
+            // If the item already exists in the cart, update its quantity
+            cart[existingItemIndex].quantity += quantity;
+        } else {
+            // If the item is not in the cart, add it
+            cart.push({ ...item, quantity });
+        }
+
+        localStorage.setItem('cart', JSON.stringify(cart));
+
+        // Update the cart items count in local storage
+        const updatedCount = cartItemsCount + quantity;
+        setCartItemsCount(updatedCount);
+
+        close();
+    };
 
     return (
         <div style={{
@@ -69,7 +93,7 @@ const ProductModal = ({ product, quantity, setQuantity, closeModal }) => {
                 <div className="modal-buttons">
                     <button onClick={close} className="close-btn">Close</button>
                     {/* Assuming addToCart function is passed as a prop */}
-                    <button className="close-btn">Add to Cart</button>
+                    <button onClick={() => addToCart(product, quantity)} className="close-btn">Add to Cart</button>
                 </div>
             </div>
         </div>

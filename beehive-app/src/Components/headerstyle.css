@@ -69,6 +69,12 @@ link:visited {
   cursor: pointer;
 }
 
+.cart-icon {
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
+
 .cart-count {
   position: absolute;
   top: 25px;
@@ -82,10 +88,4 @@ link:visited {
   justify-content: center;
   align-items: center;
   font-size: 14px;
-}
-
-.cart-icon {
-  position: relative;
-  width: 20px;
-  height: 20px;
 }

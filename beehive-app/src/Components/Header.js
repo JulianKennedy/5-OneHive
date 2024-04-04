@@ -1,16 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./headerstyle.css";
 import { Link } from "react-router-dom";
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const Header = () => {
-    const [cartItems, setCartItems] = useState(0);
+//     const [cartItems, setCartItems] = useState(0);
 
-    // Function to increment cart items (example)
-    const addToCart = () => {
-        setCartItems(cartItems + 1);
-    };
+// useEffect (() => {
+//         const cart = JSON.parse(localStorage.getItem('cart')) || [];
+//         setCartItems(localStorage.getItem('cartItems', JSON.stringify(cart)));
+//         console.log(localStorage);
+//     }
+//     , []);
+
 
     return (
         <header className="header">
@@ -23,9 +26,9 @@ export const Header = () => {
             <div class="learn"><Link to="/learn" className="learn">Learn</Link></div>
             <div class="adopt"><Link to="/adopthome" className="adopt">Adopt</Link></div>
             <a href="https://buy.stripe.com/test_6oEbKE5QE3Sj7wQeUU" className="cart-link" >
-                <div className="cart-icon-container" onClick={addToCart}>
+                <div className="cart-icon-container">
                     <FontAwesomeIcon icon={faShoppingCart} className="cart-icon" />
-                    {cartItems > 0 && <div className="cart-count">{cartItems}</div>}
+                    {/* {cartItems > 0 && <div className="cart-count">{cartItems}</div>} */}
                 </div>
             </a>
             <div className="login-button"><a href="login" className="login-button" type="button" color="#e5bcff">LOGIN</a></div>

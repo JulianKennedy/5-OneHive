@@ -119,7 +119,6 @@ export async function GetProducts() {
         console.log(error);
         return error;
     }
-
 }
 
 
