@@ -65,6 +65,7 @@ const PaymentForm = () => {
             {error && <Typography variant="body2" color="error">{error}</Typography>}
             <Button type="submit" disabled={!stripe} variant="contained" color="secondary">
                 {loading ? 'Processing...' : 'Pay Now'}
+                {window.location.href = "/payment-confirmation"};
             </Button>
         </form>
     );

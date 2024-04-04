@@ -9,6 +9,7 @@ import { Footer } from './Footer';
 
 const OrderHistoryPage = () => {
   const [orders, setOrders] = useState([]);
+  const [orderModal, setOrderModal] = useState(null);
 
   useEffect(() => {
     // Fetch orders from an API or local storage
@@ -58,7 +59,7 @@ const OrderHistoryPage = () => {
   };
 
   return (
-    <div style={{ marginTop: '100px' }}>
+    <div style={{ marginTop: '100px' }} id="orderhist">
         <Header />
     <Grid container spacing={4} justifyContent="center" alignItems="center" style={{ height: '100vh' }}>
       <Grid item xs={12}>
@@ -72,7 +73,8 @@ const OrderHistoryPage = () => {
             <Typography variant="body1">Total: ${order.total}</Typography>
             <Typography variant="body1" style={{ color: getStatusColor(order.status) }}>Status: {order.status}</Typography>
             {/* Add more order details */}
-            <Button variant="outlined" color="primary">View Details</Button>
+            <Button variant="outlined" color="primary" onClick={() => setOrderModal(true)}>View Details</Button>
+            <OrderDetailsModal order={order}/>
           </Paper>
         ))}
       </Grid>

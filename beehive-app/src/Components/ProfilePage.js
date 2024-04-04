@@ -26,7 +26,7 @@ const ProfilePage = () => {
         setEmail(data[0].Email);
         setHiveCount(data[0].Hive_Count);
         setDonationAmount(data[0].Donation_Amount);
-        setProfilePic(bufferToBase64(data[0].ProfilePic.data)); // Convert buffer to base64
+        setProfilePic(data[0].Profile_Pic ? bufferToBase64(data[0].Profile_Pic.data) : null);
         console.log(data);
         console.log(profilePic);
         setLoading(false); // Set loading to false after fetching data
