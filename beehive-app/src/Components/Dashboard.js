@@ -4,7 +4,7 @@ import './dashboardstyle.css';
 import { getHives, getAllHivesOfUser, getUserHivesOrGetHiveData } from '../Service';
 import Header from './Header';
 import { useState } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import AddHive from './AddHive';
 import EditHive from './EditHive';
 import { Link } from "react-router-dom";
@@ -14,6 +14,8 @@ import FrequncyTrendModal from './FreqTrendModal';
 import WeightTrendModal from './WeightTrendModal';
 import { useNavigate } from "react-router-dom";
 import { Footer } from './Footer';
+import { Grid, Card, CardContent, Button } from '@mui/material';
+import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 
 
 let currHive = {};
@@ -25,6 +27,7 @@ const Dashboard = () => {
   const [weight, setWeight] = useState(0);
   const [frequency, setFrequency] = useState(0);
   const [hives, setHives] = useState([]);
+  const [hiveInfo, setHiveInfo] = useState([]);
   const [addHiveModal, setAddHiveModal] = useState(false);
   const [editHiveModal, setEditHiveModal] = useState(false);
   const [firstName, setFirstName] = useState("");
@@ -34,46 +37,77 @@ const Dashboard = () => {
   const [freqTrendModal, setFreqTrendModal] = useState(false);
   const [weighTrendModal, setWeighTrendModal] = useState(false);
   const [date, setDate] = useState("");
+  const [selectedTimeRange, setSelectedTimeRange] = useState("7 DAY"); // Default time constraint
   const navigate = useNavigate();
 
+  const timeRanges = [
+    { label: 'Day', value: '1 DAY'},
+    { label: 'Week', value: '7 DAY' },
+    { label: 'Month', value: '30 DAY' },
+    { label: 'Year', value: '1 YEAR' },
+  ];
+
   useEffect(() => {
-
-    // // user must be authenticated to view page!
-    // if (!localStorage.getItem('token')) {
-    //   navigate('/login');
-    //   return;
-    // }
-
     const fetchData = async () => {
       const userHivesData = await getUserHivesOrGetHiveData("getUserHives", "");
       setHives(userHivesData);
-      if (userHivesData.length > 0) {
+
+      const updatedHiveInfo = [];
+      for (let i = 0; i < userHivesData.length; i++) {
+        const data = await getUserHivesOrGetHiveData("getHiveData", userHivesData[i].Hive_Name);
+        if (data.length > 0) {
+          updatedHiveInfo.push({
+            Hive_Name: userHivesData[i].Hive_Name,
+            temperature: data[0].Temperature,
+            humidity: data[0].Humidity,
+            weight: data[0].Weight,
+            frequency: data[0].Frequency,
+          });
+        }
+        else {
+          updatedHiveInfo.push({
+            Hive_Name: userHivesData[i].Hive_Name,
+            temperature: 0,
+            humidity: 0,
+            weight: 0,
+            frequency: 0,
+          });
+
+        }
+      }
+      setHiveInfo(updatedHiveInfo);
+
+      if (userHivesData.length > 0 && hive_name === "") {
         setHiveName(userHivesData[0].Hive_Name);
         await fetchHiveData(userHivesData[0].Hive_Name);
       }
+
       const usernameData = await getUserHivesOrGetHiveData("getUsername", "");
-      console.log(usernameData);
       setFirstName(usernameData[0].FirstName);
       setLastName(usernameData[0].LastName);
     };
 
     fetchData();
-  }, [navigate]);
+  }, [navigate, selectedTimeRange]);
 
   const handleSubmit = async (name) => {
     setHiveName(name);
     await fetchHiveData(name);
   };
 
+  const handleTimeRangeChange = (e) => {
+    setSelectedTimeRange(e.target.value);
+  };
+
+
   const fetchHiveData = async (name) => {
     const data = await getUserHivesOrGetHiveData("getHiveData", name);
     if (data.length > 0) {
-      console.log(data);
       setTemperature(data[0].Temperature);
       setHumidity(data[0].Humidity);
       setWeight(data[0].Weight);
       setFrequency(data[0].Frequency);
-      //setDate(convertDate(new Date()).split("T")[0] + " " + convertDate(new Date()).split("T")[1].split(".")[0]);
+
       const dateOptions = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true };
       const formattedDate = new Date().toLocaleString('en-US', dateOptions);
       setDate(formattedDate);
@@ -82,15 +116,12 @@ const Dashboard = () => {
       document.documentElement.style.setProperty(`--hum`, `'${data[0].Humidity}'`)
       document.documentElement.style.setProperty(`--tempnum`, `${data[0].Temperature}%`)
       document.documentElement.style.setProperty(`--humnum`, `${data[0].Humidity}%`)
-
-      // weight and frequency! temp display and can be changed
       document.documentElement.style.setProperty(`--weight`, `'${data[0].Weight}'`);
       document.documentElement.style.setProperty(`--freq`, `'${data[0].Frequency}'`);
       document.documentElement.style.setProperty(`--weightnum`, `${data[0].Weight}%`);
       document.documentElement.style.setProperty(`--freqnum`, `${data[0].Frequency}%`);
 
-    }
-    else {
+    } else {
       setTemperature(0);
       setHumidity(0);
       setWeight(0);
@@ -100,8 +131,6 @@ const Dashboard = () => {
       document.documentElement.style.setProperty(`--hum`, `'0'`)
       document.documentElement.style.setProperty(`--tempnum`, `0%`)
       document.documentElement.style.setProperty(`--humnum`, `0%`)
-
-      // also temporary?? not sure how this should look.
       document.documentElement.style.setProperty(`--weight`, `'0'`)
       document.documentElement.style.setProperty(`--freq`, `'0'`)
       document.documentElement.style.setProperty(`--weightnum`, `0%`)
@@ -113,13 +142,9 @@ const Dashboard = () => {
     setAddHiveModal(true);
   };
 
-  // const convertDate = (d) => {
-  //   const z = n => ('0' + n).slice(-2);
-  //   let off = d.getTimezoneOffset();
-  //   const sign = off < 0 ? '+' : '-';
-  //   off = Math.abs(off);
-  //   return new Date(d.getTime() - (d.getTimezoneOffset() * 60000)).toISOString().slice(0, -1) + sign + z(off / 60 | 0) + ':' + z(off % 60);
-  // };
+  const handleSelectHive = (name) => {
+    setHiveName(name);
+  };
 
   const editHive = () => {
     setEditHiveModal(true);
@@ -141,177 +166,217 @@ const Dashboard = () => {
     setWeighTrendModal(true);
   }
 
-  // const navigateWithParameter = (url, parameter) => {
-  //   window.location.href =  url + "?" +(parameter)
-  // }
-
-
-  console.log(hives);
-
   return (
     <div className="MemberDashboardPage" id="dash" style={{ width: '100%', height: '100%', background: 'white' }}>
       <MemberHeader className="header-instance"></MemberHeader>
-      <div className="name" style={{
-        width: 600,
-        height: 131,
-        left: 75,
-        top: 216,
-        position: 'absolute',
-        textAlign: 'center',
-        color: 'black',
-        fontSize: 64,
-        border: '5px solid black',
-      }}>{firstName}'s Beehives</div>
-      <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', alignItems: 'flex-start', gap: '20px', paddingLeft: '75px', paddingTop: '420px', paddingBottom: '50px' }}>
-        {hives.map((hive, index) => (
-          <div key={index} style={{ width: '240px', height: '190px', position: 'relative', overflow: 'hidden' }}>
-            <button
-              className="login-button"
-              style={{
-                width: '100%',
-                height: '100%',
-                padding: '10px',
-                borderRadius: '20px',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                color: 'black',
-                textDecoration: 'none',
-                whiteSpace: 'nowrap', // Prevent text from wrapping
-                overflow: 'hidden', // Hide overflowing text
-                textOverflow: 'ellipsis', // Add ellipsis (...) when text overflows
-              }}
-              onClick={() => handleSubmit(hive.Hive_Name)}
-            >
-              <img
-                src={require('./img/beehive_animated.png')}
-                alt="Beehive"
-                style={{
-                  width: '120x',
-                  height: '120px',
-                  marginBottom: 'auto',
-                }}
-              />
-              {hive.Hive_Name}
-            </button>
-            <input
-              type="image"
-              src={require('./img/edit.png')}
-              alt="Edit"
-              className="edit-button"
-              style={{
-                width: '20px',
-                height: '20px',
-                position: 'absolute',
-                right: '9px',
-                top: '9px',
-                backgroundColor: 'white',
-                padding: '3px',
-                border: '2px solid black',
-              }}
-              onClick={() => editHive(currHive = hive)}
-            />
-          </div>
-
-        ))}
+      <div className="name" style={{ width: 600, height: 131, left: 75, top: 216, position: 'absolute', textAlign: 'center', color: 'black', fontSize: 64, border: '5px solid black' }}>
+        {firstName}'s Beehives
       </div>
-      <button
-        className="button-plus"
-        style={{
-          left: `${hives.length % 5 === 0 ? 260 * ((hives.length - 1) % 5) + 260 + 75 : 260 * (hives.length % 5) + 75}px`, // Adjust left position based on the number of hives displayed
-          top: `${hives.length % 5 === 0 ? 475 + 220 * Math.floor((hives.length - 1) / 5) : 475 + 220 * Math.floor(hives.length / 5)}px`, // Adjust top position based on the number of rows of hives
-          backgroundColor: 'white',
-          border: 'none',
-          display: 'flex',
-          color: 'black',
-          textDecoration: 'none',
-          position: 'absolute',
-          fontSize: '50px'
+      <Grid container spacing={3} justifyContent="center" alignItems="center" style={{ marginTop: '450px' }}>
+        {hives.map((hive, index) => (
+          <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
+            <div onClick={() => handleSelectHive(hive.Hive_Name)} style={{ cursor: 'pointer' }}>
+              <Card
+                variant={hive.Hive_Name === hive_name ? "outlined" : "elevation"}
+                sx={{
+                  maxWidth: 240,
+                  borderRadius: 10,
+                  margin: 'auto',
+                  marginBottom: '30px',
+                  textAlign: 'center',
+                  backgroundColor: hive.Hive_Name === hive_name ? '#ffccff' : '#e5bcff',
+                  position: 'relative'
+                }}
+              >
+                {/* Add icon or badge for errors */}
+                <div style={{
+                  position: 'absolute',
+                  top: 30, // Adjust the top position as needed
+                  right: 10, // Adjust the right position as needed
+                  transform: 'translate(-50%, -50%)', // Center the indicator
+                  backgroundColor: (hiveInfo[index]?.temperature < 34.5 || hiveInfo[index]?.temperature > 35.5 ||
+                    hiveInfo[index]?.humidity < 50 || hiveInfo[index]?.humidity > 60 ||
+                    hiveInfo[index]?.weight < 5 || hiveInfo[index]?.weight > 40 ||
+                    hiveInfo[index]?.frequency < 190 || hiveInfo[index]?.frequency > 250) ?
+                    'red' : 'transparent',
+                  color: 'white',
+                  borderRadius: '50%',
+                  width: 25,
+                  height: 25,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}>
+                  {(hiveInfo[index]?.temperature < 34.5 || hiveInfo[index]?.temperature > 35.5 ||
+                    hiveInfo[index]?.humidity < 50 || hiveInfo[index]?.humidity > 60 ||
+                    hiveInfo[index]?.weight < 5 || hiveInfo[index]?.weight > 40 ||
+                    hiveInfo[index]?.frequency < 190 || hiveInfo[index]?.frequency > 250) && (
+                      <span>!</span>
+                    )}
+                </div>
+                <CardContent>
+                  <div style={{ marginBottom: '15px' }}>
+                    <div style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '10px' }}>{hive.Hive_Name}</div>
+                    <div style={{ marginBottom: '10px' }}>
+                      <img src={require('./img/beehive_animated.png')} alt="Beehive" style={{ width: '100px', height: '100px', objectFit: 'contain' }} />
+                    </div>
+                  </div>
+                  <div className="hive-info-container" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <div className="info-column">
+                      <div>Temperature:</div>
+                      <div>{hiveInfo[index]?.temperature}℃</div>
+                      <div>Humidity:</div>
+                      <div>{hiveInfo[index]?.humidity}%</div>
+                    </div>
+                    <div className="info-column">
+                      <div>Weight:</div>
+                      <div>{hiveInfo[index]?.weight} kg</div>
+                      <div>Frequency:</div>
+                      <div>{hiveInfo[index]?.frequency} Hz</div>
+                    </div>
+                  </div>
+                  <Button
+                    variant="outlined"
+                    onClick={() => editHive(currHive = hive)}
+                    sx={{
+                      mt: 2,
+                      color: '#6c3483', // Text color
+                      borderColor: '#6c3483', // Border color
+                      '&:hover': {
+                        backgroundColor: '#6c3483', // Hover background color
+                        color: '#fff', // Hover text color
+                      },
+                    }}
+                  >
+                    Edit Hive
+                  </Button>
+
+                </CardContent>
+              </Card>
+
+
+
+
+            </div>
+          </Grid>
+        ))}
+      </Grid>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={addHiveClick}
+        sx={{
+          mt: 2,
+          bottom: '20px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          marginBottom: '30px',
+          marginTop: '30px',
+          backgroundColor: '#6c3483', // Background color
+          color: '#fff', // Text color
+          '&:hover': {
+            backgroundColor: '#4a235a', // Hover background color
+          }
         }}
-        onClick={() => addHiveClick()}>
-        +
-      </button>
+      >
+        Add Hive
+      </Button>
       <div className="Time" style={{ width: 'auto', height: 2, left: 75, position: 'absolute', textAlign: 'center', color: 'black', fontSize: 36, fontFamily: 'Newsreader', fontWeight: '700', wordWrap: 'break-word' }}>
         {hive_name} updated: {date}
       </div>
-      <a className="temp-trend-button" onClick={() => tempTrendClick()} >
-        <div className="progress-bar">
-        </div>
-        <div className="Temperature">
-          Temperature
-          {temperature < 34.5 || temperature > 35.5 ? (
-            date !== "Never" && (
-              <div className="danger-alert">
-                {temperature < 34.5 ? 'Low Temperature!' : 'High Temperature!'}
-              </div>
-            )
-          ) : null}
-        </div>
-      </a>
-      <a className="hum-trend-button" onClick={() => humTrendClick()} >
-        <div className="progress-bar2">
-        </div>
-        <div className="Humidity">
-          Humidity
-          {humidity < 50 || humidity > 60 ? (
-            date !== "Never" && (
-              <div className="danger-alert">
-                {humidity < 50 ? 'Low Humidity!' : 'High Humidity!'}
-              </div>
-            )
-          ) : null}
-        </div>
-      </a>
-      <a className="weigh-trend-button" onClick={() => weighTrendClick()} >
-        <div className="progress-bar3">
-        </div>
-        <div className="Weight">
-          Weight
-          {weight < 5 || weight > 40 ? (
-            date !== "Never" && (
-              <div className="danger-alert">
-                {weight < 5 ? 'Low Weight!' : 'High Weight!'}
-              </div>
-            )
-          ) : null}
-        </div>
-      </a>
-      <a className="freq-trend-button" onClick={() => freqTrendClick()} >
-        <div className="progress-bar4">
-        </div>
-        <div className="Frequency">
-          Frequency
-          {frequency < 190 || frequency > 250 ? (
-            date !== "Never" && (
-              <div className="danger-alert">
-                {frequency < 190 ? 'Low Frequency!' : 'High Frequency!'}
-              </div>
-            )
-          ) : null}
-        </div>
-      </a>
-      <div className="footer-instance" >
-      <Footer />
+      <div className="time-dropdown" style={{ position: 'relative', marginTop: '100px'}}>
+        <FormControl style={{width: '20%', left: '75%', right: '5%'}}>
+          <InputLabel id="time-constraint-label">Time Constraint</InputLabel>
+          <Select
+            labelId="time-constraint-label"
+            id="time-constraint"
+            value={selectedTimeRange}
+            onChange={handleTimeRangeChange}
+          >
+            {timeRanges.map((range) => (
+              <MenuItem key={range.value} value={range.value}>{range.label}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </div>
-      {/* <a className="freq-trend-button" onClick={() => freqTrendClick()} >
-        <div className="Frequency150Hz" style={{ width: 166, height: 170, left: 1006, top: 1326, position: 'absolute', textAlign: 'center' }}>Frequency<br />{frequency} Hz</div>
-        <img className="Image3" style={{ width: 208, height: 170, left: 1199, top: 1326, position: 'absolute' }} src="https://via.placeholder.com/208x170" />
-      </a>
-      <a className="weigh-trend-button" onClick={() => weighTrendClick()} >
-        <div className="Weight221kg" style={{ width: 166, height: 170, left: 1006, top: 1043, position: 'absolute', textAlign: 'center' }}>Weight<br />{weight}kg<br /></div>
-        <img className="Image2" style={{ width: 217, height: 238, left: 1190, top: 981, position: 'absolute' }} src="https://pnghq.com/wp-content/uploads/bee-hive-png-free-images-with-transparent-background-70545.png" />
-      </a> */}
+      <Grid container spacing={3} justifyContent="center" alignItems="center" style={{ marginTop: '60px' }}>
+        {/* Grid of Charts */}
+        <Grid item xs={12} sm={6} md={6} lg={6}>
+        <Card sx={{ boxShadow: 3 }}>
+            <CardContent>
+              <h3>Temperature Trend</h3>
+              <TempTrendModal showModal={tempTrendModal} setShowModal={setTempTrendModal} time={selectedTimeRange} hiveName={hive_name}/>
+            </CardContent>
+          </Card>
+        </Grid>
+
+        <Grid item xs={12} sm={6} md={6} lg={6}>
+        <Card sx={{ boxShadow: 3 }}>
+            <CardContent>
+              <h3>Humidity Trend</h3>
+              <HumidTrendModal showModal={humTrendModal} setShowModal={setHumTrendModal} time={selectedTimeRange} hiveName={hive_name} />
+            </CardContent>
+          </Card>
+        </Grid>
+
+        <Grid item xs={12} sm={6} md={6} lg={6}>
+        <Card sx={{ boxShadow: 3 }}>
+            <CardContent>
+              <h3>Frequency Trend</h3>
+              <FrequncyTrendModal showModal={freqTrendModal} setShowModal={setFreqTrendModal} time={selectedTimeRange} hiveName={hive_name} />
+            </CardContent>
+          </Card>
+        </Grid>
+
+        <Grid item xs={12} sm={6} md={6} lg={6}>
+        <Card sx={{ boxShadow: 3 }}>
+            <CardContent>
+              <h3>Weight Trend</h3>
+              <WeightTrendModal showModal={weighTrendModal} setShowModal={setWeighTrendModal} time={selectedTimeRange} hiveName={hive_name} />
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
+
 
       {addHiveModal && <AddHive onClose={async () => {
         setAddHiveModal(false);
         const userHivesData = await getUserHivesOrGetHiveData("getUserHives", "");
         setHives(userHivesData);
+
+        const updatedHiveInfo = [];
+        for (let i = 0; i < userHivesData.length; i++) {
+          const data = await getUserHivesOrGetHiveData("getHiveData", userHivesData[i].Hive_Name);
+          if (data.length > 0) {
+            updatedHiveInfo.push({
+              Hive_Name: userHivesData[i].Hive_Name,
+              temperature: data[0].Temperature,
+              humidity: data[0].Humidity,
+              weight: data[0].Weight,
+              frequency: data[0].Frequency,
+            });
+          }
+          else {
+            updatedHiveInfo.push({
+              Hive_Name: userHivesData[i].Hive_Name,
+              temperature: 0,
+              humidity: 0,
+              weight: 0,
+              frequency: 0,
+            });
+
+          }
+        }
+        setHiveInfo(updatedHiveInfo);
+
         if (userHivesData.length > 0) {
           setHiveName(userHivesData[0].Hive_Name);
           await fetchHiveData(userHivesData[0].Hive_Name);
         }
-      }} />}
-
+      }} style={{zIndex: 99999}}/>}
+      <div className="f" style={{ marginTop: '100px' }}>
+        <Footer />
+      </div>
       {editHiveModal && <EditHive onClose={async () => {
         setEditHiveModal(false);
         const data = await getUserHivesOrGetHiveData("getUserHives", "");
@@ -321,27 +386,7 @@ const Dashboard = () => {
           setHiveName(data[0].Hive_Name);
           await fetchHiveData(data[0].Hive_Name);
         }
-      }} oldHive={currHive} />}
-
-      {tempTrendModal && <TempTrendModal onClose={async () => {
-        setTempTrendModal(false);
-      }
-      } hiveName={hive_name} />}
-
-      {humTrendModal && <HumidTrendModal onClose={async () => {
-        setHumTrendModal(false);
-      }
-      } hiveName={hive_name} />}
-
-      {freqTrendModal && <FrequncyTrendModal onClose={async () => {
-        setFreqTrendModal(false);
-      }
-      } hiveName={hive_name} />}
-
-      {weighTrendModal && <WeightTrendModal onClose={async () => {
-        setWeighTrendModal(false);
-      }
-      } hiveName={hive_name} />}
+      }} oldHive={currHive} style={{zIndex: 99999}}/>}
     </div>
   );
 };

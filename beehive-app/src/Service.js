@@ -177,6 +177,86 @@ export async function GetTemperatures(hiveName) {
     }
 }
 
+export async function GetTemperaturesTime(hiveName, timeRange) {
+    try {
+        // const token = localStorage.getItem('token'); // Retrieve the stored token
+        const response = await fetch('http://localhost:3000/dashboard', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+                // 'Authorization': `Bearer ${token}` // Attach the token
+            },
+            body: JSON.stringify({ "Type": "temptrendtime", "User": localStorage.getItem('email'), "Hive": hiveName, "Timestamp": timeRange, "token": localStorage.getItem('token') })
+        });
+        const temperatures = await response.json();
+        console.log(temperatures);
+        return temperatures;
+    } catch (error) {
+        console.log(error);
+        return error;
+    }
+}
+
+export async function GetHumidityTime(hiveName, timeRange) {
+    try {
+        // const token = localStorage.getItem('token'); // Retrieve the stored token
+        const response = await fetch('http://localhost:3000/dashboard', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+                // 'Authorization': `Bearer ${token}` // Attach the token
+            },
+            body: JSON.stringify({ "Type": "humtrendtime", "User": localStorage.getItem('email'), "Hive": hiveName, "Timestamp": timeRange, "token": localStorage.getItem('token') })
+        });
+        const humidities = await response.json();
+        console.log(humidities);
+        return humidities;
+    } catch (error) {
+        console.log(error);
+        return error;
+    }
+}
+
+export async function GetFrequencyTime(hiveName, timeRange) {
+    try {
+        // const token = localStorage.getItem('token'); // Retrieve the stored token
+        const response = await fetch('http://localhost:3000/dashboard', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+                // 'Authorization': `Bearer ${token}` // Attach the token
+            },
+            body: JSON.stringify({ "Type": "freqtrendtime", "User": localStorage.getItem('email'), "Hive": hiveName, "Timestamp": timeRange, "token": localStorage.getItem('token') })
+        });
+        console.log(timeRange);
+        const frequencies = await response.json();
+        console.log(frequencies);
+        return frequencies;
+    } catch (error) {
+        console.log(error);
+        return error;
+    }
+}
+
+export async function GetWeightTime(hiveName, timeRange) {
+    try {
+        // const token = localStorage.getItem('token'); // Retrieve the stored token
+        const response = await fetch('http://localhost:3000/dashboard', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+                // 'Authorization': `Bearer ${token}` // Attach the token
+            },
+            body: JSON.stringify({ "Type": "weighttrendtime", "User": localStorage.getItem('email'), "Hive": hiveName, "Timestamp": timeRange, "token": localStorage.getItem('token') })
+        });
+        const weights = await response.json();
+        console.log(weights);
+        return weights;
+    } catch (error) {
+        console.log(error);
+        return error;
+    }
+}
 
 export async function getHumidity(hiveName) {
     try {

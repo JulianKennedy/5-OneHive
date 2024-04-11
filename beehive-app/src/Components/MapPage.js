@@ -7,6 +7,9 @@ import Header from './Header';
 import MemberHeader from './MemberHeader';
 import {Footer} from './Footer';
 import { MarkerClusterer } from '@react-google-maps/api';
+import { Grid, Card, CardContent, Typography, Button, Divider } from '@material-ui/core';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './mappagestyle.css';
 
 const MapPage = ({ google }) => {
@@ -105,7 +108,6 @@ const MapPage = ({ google }) => {
   };
 
   const isAuthenticated = localStorage.getItem("jwt") ? true : false;
-
   return (
     <div className="MapPage" style={{width: '100%'}}>
       {isAuthenticated ? <MemberHeader /> : <Header />}
@@ -139,29 +141,37 @@ const MapPage = ({ google }) => {
           visible={showingInfoWindow}
           onClose={onClose}
         >
-          <div>
+          <div style={{ width: '300px' }}>
             {selectedPlace && (
-              <div>
-                {selectedPlace.anonymous === 0 && <h3> {selectedPlace.hiveName} </h3>}
-                {selectedPlace.anonymous === 1 && <h3> Anonymous Beehive </h3>}
+              <Card>
+              <CardContent>
+                {selectedPlace.anonymous === 0 && <Typography variant="h5"> {selectedPlace.hiveName} </Typography>}
+                {selectedPlace.anonymous === 1 && <Typography variant="h5"> Anonymous Beehive </Typography>}
 
-                <h4>{selectedPlace.name}, {selectedPlace.province}</h4>
-                {selectedPlace.temperature && <p>Temperature: {selectedPlace.temperature} °C</p>}
-                {selectedPlace.humidity && <p>Humidity: {selectedPlace.humidity}%</p>}
-                {selectedPlace.weight && <p>Weight: {selectedPlace.weight} kg</p>}
-                {selectedPlace.frequency && <p>Frequency: {selectedPlace.frequency} Hz</p>}
-                {!selectedPlace.temperature && <p>Temperature: N/A</p>}
-                {!selectedPlace.humidity && <p>Humidity: N/A</p>}
-                {!selectedPlace.weight && <p>Weight: N/A</p>}
-                {!selectedPlace.frequency && <p>Frequency: N/A</p>}
-                {!selectedPlace.temperature && !selectedPlace.humidity && !selectedPlace.weight && !selectedPlace.frequency && <p>No data available for this beehive</p>}
+                <Typography variant="subtitle1">
+                  <span style={{ fontWeight: 'bold' }}>{selectedPlace.name}</span>, <span style={{ fontWeight: 'bold' }}>{selectedPlace.province}</span>
+                </Typography>
+                <Divider style={{ margin: '10px 0' }} />
+                {selectedPlace.temperature && <Typography>Temperature: {selectedPlace.temperature} °C</Typography>}
+                {selectedPlace.humidity && <Typography>Humidity: {selectedPlace.humidity}%</Typography>}
+                {selectedPlace.weight && <Typography>Weight: {selectedPlace.weight} kg</Typography>}
+                {selectedPlace.frequency && <Typography>Frequency: {selectedPlace.frequency} Hz</Typography>}
+                {!selectedPlace.temperature && <Typography>Temperature: N/A</Typography>}
+                {!selectedPlace.humidity && <Typography>Humidity: N/A</Typography>}
+                {!selectedPlace.weight && <Typography>Weight: N/A</Typography>}
+                {!selectedPlace.frequency && <Typography>Frequency: N/A</Typography>}
+                {!selectedPlace.temperature && !selectedPlace.humidity && !selectedPlace.weight && !selectedPlace.frequency && <Typography style={{ marginTop: '20px' }}>No data available for this beehive</Typography>}
+                {selectedPlace.temperature && !selectedPlace.humidity && !selectedPlace.weight && !selectedPlace.frequency && <div style={{ marginBottom: '10px' }} />}
                 {selectedPlace && !selectedPlace.anonymous && (
-                  <div className="contact-dropdown" style={{textAlign: 'center', paddingBottom: '5px'}}>
-                  <a className="contact" href={`mailto:${selectedPlace.email}`}>Contact {selectedPlace.owner}</a>
-                  </div>
+                  <div className="contact-dropdown" style={{ textAlign: 'center', marginTop: '20px' }}>
+<Button variant="contained" color="primary" href={`mailto:${selectedPlace.email}`}>
+  <FontAwesomeIcon icon={faEnvelope} style={{ marginRight: '5px' }} />
+  Contact {selectedPlace.owner}
+</Button>                  </div>
                 )}
-                {selectedPlace.anonymous === 1 && <p>User is anonymous. No contact information available.</p>}
-              </div>
+                {selectedPlace.anonymous === 1 && <Typography style={{ marginTop: '20px' }}>User is anonymous. No contact information available.</Typography>}
+              </CardContent>
+            </Card>
             )}
           </div>
         </InfoWindow>

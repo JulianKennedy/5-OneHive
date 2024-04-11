@@ -1,5 +1,4 @@
 .container .modalt {
-    z-index: 1;
     width: 1000px;
     height: 600px;
     background: white;
@@ -19,7 +18,7 @@
       font-size: 24px;
       font-weight: bold;
       text-align: center;
-      margin-top: 15px;
+      margin-top: 40px;
       margin-bottom: 50px;
     }
 
@@ -44,4 +43,10 @@
   .close-btn:hover {
       cursor: pointer;
       background-color: #e5e5;
+    }
+
+    .dropdown-container {
+      position: absolute;
+      top: 40px;
+      right: 30px;
     }

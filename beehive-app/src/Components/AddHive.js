@@ -1,10 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { InsertHive } from '../Service';
-import { Modal, Button } from 'react-bootstrap';
 import ReactDom from "react-dom";
 import './addhivestyle.css';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { TextField, Checkbox, Tooltip, Button } from '@material-ui/core';
 
 const AddHive = ({ onClose }) => {
 
@@ -98,59 +98,94 @@ const AddHive = ({ onClose }) => {
           <h2 className="modal-title">Add a Beehive</h2>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <div className="location-container">
-                <div className="location-title">
-                  <label htmlFor="name">Hive Name:  </label>
-                  <div className="info-container">
-                    <FontAwesomeIcon icon={faInfoCircle} className="info-icon" />
-                    <div className="info-popup">This is only visible to you. The beehive name may be changed at any time.</div>
-                  </div>
-                </div>
-                <input
-                  type="text"
+              <div className="label-input-container">
+                <span>Hive Name:</span>
+                <Tooltip
+                  title={
+                    <span>
+                      This is only visible to you. The beehive name may be changed at any time.
+                    </span>
+                  }
+                  arrow
+                >
+                  <FontAwesomeIcon icon={faInfoCircle} className="info-icon" />
+                </Tooltip>
+                <TextField
                   id="name"
+                  className="input-field"
+                  fullWidth
                   value={hiveName}
                   onChange={(event) => setHiveName(event.target.value)}
                 />
               </div>
-            </div>
-            <div>
-              <div>
+              <div className="label-input-container">
                 <label>Street Address:</label>
-                <input id="autocomplete" placeholder="Enter your address" type="text" onChange={(event) => setStreetAddress(event.target.value)} />
+                <TextField
+                  id="autocomplete"
+                  className="input-field"
+                  fullWidth
+                  value={streetAddress}
+                  onChange={(event) => setStreetAddress(event.target.value)}
+                />
               </div>
-              <div>
+              <div className="label-input-container">
                 <label>City:</label>
-                <input id="city" type="text" value={city} onChange={(event) => setCity(event.target.value)} />
+                <TextField
+                  id="city"
+                  className="input-field"
+                  fullWidth
+                  value={city}
+                  onChange={(event) => setCity(event.target.value)}
+                />
               </div>
-              <div>
+              <div className="label-input-container">
                 <label>Province:</label>
-                <input id="province" type="text" value={province} onChange={(event) => setProvince(event.target.value)} />
+                <TextField
+                  id="province"
+                  className="input-field"
+                  fullWidth
+                  value={province}
+                  onChange={(event) => setProvince(event.target.value)}
+                />
               </div>
-              <div>
+              <div className="label-input-container">
                 <label>Postal Code:</label>
-                <input id="postalCode" type="text" value={postalCode} onChange={(event) => setPostalCode(event.target.value)} />
+                <TextField
+                  id="postalCode"
+                  className="input-field"
+                  fullWidth
+                  value={postalCode}
+                  onChange={(event) => setPostalCode(event.target.value)}
+                />
               </div>
             </div>
             <div className="form-group">
               <div className="anonymous-container">
-                <label htmlFor="anonymous">Is Hive Anonymous: </label>
-                <div className="info-container">
+                <span>Is Hive Anonymous:</span>
+                <Tooltip
+                  title={
+                    <span>
+                      Contact information and exact location will be censored for anonymous beehives.
+                    </span>
+                  }
+                  arrow
+                >
                   <FontAwesomeIcon icon={faInfoCircle} className="info-icon" />
-                  <div className="info-popup">Contact information and exact location will be censored for anonymous beehives.</div>
-                </div>
-                <input
-                  type="checkbox"
-                  id="anonymous"
+                </Tooltip>
+                <Checkbox
                   checked={anonymous}
-                  onChange={(event) => setAnonymous(event.target.checked ? 1 : 0)}
+                  onChange={(event) => setAnonymous(event.target.checked)}
                 />
               </div>
             </div>
-            {validationError && <p style={{ color: 'red' }}>{validationError}</p>}
+            {validationError && (
+              <div className="error-container">
+                <p className="error-message">{validationError}</p>
+              </div>
+            )}
             <div className="modal-buttons">
-              <button type="button" onClick={onClose} className="close-btn">Close</button>
-              <button type="submit" className='submit-btn'>Submit</button>
+              <Button variant="outlined" onClick={onClose} style={{ color: '#e5bcff', borderColor: '#e5bcff' }}>Close</Button>
+              <Button variant="contained" type="submit" style={{ backgroundColor: '#e5bcff' }}>Submit</Button>
             </div>
           </form>
         </div>

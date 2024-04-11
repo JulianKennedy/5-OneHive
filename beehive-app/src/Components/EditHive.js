@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { UpdateHive, DeleteHive } from '../Service';
-import { Modal, Button } from 'react-bootstrap';
 import ReactDom from "react-dom";
+import { Button, TextField, Checkbox, FormControlLabel, Tooltip } from '@material-ui/core';
 import './edithivestyle.css';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -106,63 +106,94 @@ const EditHive = ({ onClose , oldHive}) => {
   return ReactDom.createPortal(
     <div className="container" ref={modalRef} onClick={closeModal}>
       <div className="mod">
-        <div className="modal-content">
+        <div className="modal-content wider-modal">
           <h2 className="modal-title">Edit Beehive</h2>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-            <div className="location-container">
-                <div className="location-title">
-                  <label htmlFor="name">Edit Hive Name:  </label>
-                  <div className="info-container">
-                    <FontAwesomeIcon icon={faInfoCircle} className="info-icon" />
-                    <div className="info-popup">This is only visible to you. The beehive name may be changed at any time.</div>
-                  </div>
-                </div>
-                <input
-                  type="text"
+              <div className="label-input-container">
+              <span>Edit Hive Name: </span>
+                <Tooltip
+                  title={
+                    <span>
+                      This is only visible to you. The beehive name may be changed at any time.
+                    </span>
+                  }
+                  arrow
+                >
+                  <FontAwesomeIcon icon={faInfoCircle} className="info-icon" />
+                </Tooltip>
+                <TextField
                   id="name"
+                  className="input-field"
+                  fullWidth
                   value={hiveName}
                   onChange={(event) => setHiveName(event.target.value)}
                 />
               </div>
-            </div>
-            <div>
-              <div>
+              <div className="label-input-container">
                 <label>Edit Street Address:</label>
-                <input id="autocomplete" value={streetAddress} type="text" onChange={(event) => setStreetAddress(event.target.value)}/>
+                <TextField
+                  id="autocomplete"
+                  className="input-field"
+                  fullWidth
+                  value={streetAddress}
+                  onChange={(event) => setStreetAddress(event.target.value)}
+                />
               </div>
-              <div>
+              <div className="label-input-container">
                 <label>Edit City:</label>
-                <input id="city" type="text" value={city} onChange={(event) => setCity(event.target.value)} />
+                <TextField
+                  id="city"
+                  className="input-field"
+                  fullWidth
+                  value={city}
+                  onChange={(event) => setCity(event.target.value)}
+                />
               </div>
-              <div>
+              <div className="label-input-container">
                 <label>Edit Province:</label>
-                <input id="province" type="text" value={province} onChange={(event) => setProvince(event.target.value)} />
+                <TextField
+                  id="province"
+                  className="input-field"
+                  fullWidth
+                  value={province}
+                  onChange={(event) => setProvince(event.target.value)}
+                />
               </div>
-              <div>
+              <div className="label-input-container">
                 <label>Edit Postal Code:</label>
-                <input id="postalCode" type="text" value={postalCode} onChange={(event) => setPostalCode(event.target.value)} />
+                <TextField
+                  id="postalCode"
+                  className="input-field"
+                  fullWidth
+                  value={postalCode}
+                  onChange={(event) => setPostalCode(event.target.value)}
+                />
               </div>
             </div>
             <div className="form-group">
             <div className="anonymous-container">
-                <label htmlFor="anonymous">Is Hive Anonymous: </label>
-                <div className="info-container">
+                <span>Is Hive Anonymous</span>
+                <Tooltip
+                  title={
+                    <span>
+                      Contact information and exact location will be censored for anonymous beehives.
+                    </span>
+                  }
+                  arrow
+                >
                   <FontAwesomeIcon icon={faInfoCircle} className="info-icon" />
-                  <div className="info-popup">Contact information and exact location will be censored for anonymous beehives.</div>
-                </div>
-                <input
-                  type="checkbox"
-                  id="anonymous"
-                  checked={anonymous}
-                  onChange={(event) => setAnonymous(event.target.checked ? 1 : 0)}
+                </Tooltip>
+                <FormControlLabel
+                  control={<Checkbox id="anonymous" checked={anonymous} onChange={(event) => setAnonymous(event.target.checked ? 1 : 0)} />}
+                  label=""
                 />
               </div>
             </div>
             <div className="modal-buttons">
-              <button type="button" onClick={onClose} className="close-btn">Close</button>
-              <button type="button" onClick={removeHive} className="remove-hive-btn">Remove Hive</button>
-              <button type="submit" className='submit-btn'>Submit</button>
+              <Button variant="outlined" style={{color: "#e5bcff", borderColor: '#e5bcff' }} onClick={onClose}>Close</Button>
+              <Button variant="outlined" style={{color: "#ff4081", borderColor: '#e5bcff' }} onClick={removeHive}>Remove Hive</Button>
+              <Button variant="contained" style={{backgroundColor: "#e5bcff"}} type="submit">Submit</Button>
             </div>
           </form>
         </div>
@@ -171,5 +202,6 @@ const EditHive = ({ onClose , oldHive}) => {
     document.getElementById("dash")
   );
 };
+
 
 export default EditHive;

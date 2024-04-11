@@ -289,6 +289,51 @@ sql.prototype.getProducts = function () {
     });
 }
 
+sql.prototype.getTemperaturesTime = function (hiveName, timeRange) {
+  var sql = "SELECT Temperature, Timestamp FROM HiveData WHERE Hive_ID=(SELECT Hive_ID FROM Hive WHERE Hive_Name='" + hiveName + "') AND Timestamp >= DATE_SUB(CURDATE(), INTERVAL " + timeRange + ") ORDER BY Timestamp";
+  return new Promise(
+    (resolve, reject) => {
+      con.query(sql, function (err, rows) {
+        if (err) reject(err);
+        resolve(rows.map(row => row));
+      });
+    });
+}
+
+sql.prototype.getHumiditiesTime = function (hiveName, timeRange) {
+  var sql = "SELECT Humidity, Timestamp FROM HiveData WHERE Hive_ID=(SELECT Hive_ID FROM Hive WHERE Hive_Name='" + hiveName + "') AND Timestamp >= DATE_SUB(CURDATE(), INTERVAL " + timeRange + ") ORDER BY Timestamp";
+  return new Promise(
+    (resolve, reject) => {
+      con.query(sql, function (err, rows) {
+        if (err) reject(err);
+        resolve(rows.map(row => row));
+      });
+    });
+}
+
+sql.prototype.getWeightsTime = function (hiveName, timeRange) {
+  var sql = "SELECT Weight, Timestamp FROM HiveData WHERE Hive_ID=(SELECT Hive_ID FROM Hive WHERE Hive_Name='" + hiveName + "') AND Timestamp >= DATE_SUB(CURDATE(), INTERVAL " + timeRange + ") ORDER BY Timestamp";
+  return new Promise(
+    (resolve, reject) => {
+      con.query(sql, function (err, rows) {
+        if (err) reject(err);
+        resolve(rows.map(row => row));
+      });
+    });
+}
+
+sql.prototype.getFrequenciesTime = function (hiveName, timeRange) {
+  var sql = "SELECT Frequency, Timestamp FROM HiveData WHERE Hive_ID=(SELECT Hive_ID FROM Hive WHERE Hive_Name='" + hiveName + "') AND Timestamp >= DATE_SUB(CURDATE(), INTERVAL " + timeRange + ") ORDER BY Timestamp";
+  return new Promise(
+    (resolve, reject) => {
+      con.query(sql, function (err, rows) {
+        if (err) reject(err);
+        resolve(rows.map(row => row));
+      });
+    });
+}
+
+
 
 //if the temperature is over 1 year old 
 // - keep the average value of all temperatures recorded that day

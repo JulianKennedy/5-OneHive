@@ -142,3 +142,31 @@
   position: relative;
   width: 100%;
 }
+
+/* dashboardstyle.css */
+
+/* Existing styles */
+
+/* dashboardstyle.css */
+
+/* Existing styles */
+
+/* dashboardstyle.css */
+
+/* Existing styles */
+
+.hive-info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5px;
+  font-size: 12px;
+  justify-items: center; /* Align items horizontally center */
+  align-items: center; /* Align items vertically center */
+}
+
+/* Additional styles for equally spaced columns */
+.hive-info > div {
+  display: flex;
+  flex-direction: column; /* Display measurements in a column */
+  justify-content: center; /* Align items vertically center */
+}

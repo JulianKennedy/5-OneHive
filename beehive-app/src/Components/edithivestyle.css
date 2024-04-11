@@ -1,69 +1,44 @@
-#dash .container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.7);
-  }
-  
-  .container .mod {
-    z-index: 1;
-    width: 550px;
-    height: 450px;
-    background: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 5px;
-    position: relative;
-    animation: animate 0.3s;
-  }
-  
-  .modal-content {
-    height: 100%;
-    width: 400px;
-  }
-    
-    .modal-title {
-      font-size: 24px;
-      font-weight: bold;
-      text-align: center;
-      margin-top: 15px;
-      margin-bottom: 50px;
-    }
-  
-    #streetAdress, #city, #postalCode, #province, #name, #anonymous {
-      margin-left: 5px;
-      margin-right: 5px;
-    }
+.custom-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 600px;
+}
 
-    .modal-buttons {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 20px;
-    }
-  
-    .close-btn, .submit-btn, .remove-hive-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        font-weight: bold;
-        padding: 8px;
-        position: relative;
-        font-family: "Newsreader-SemiBold";
-        background-color: #e5bcff;
-        border: none;
-        text-decoration: none;
-    }
-    
-    .close-btn:hover, .submit-btn:hover, .remove-hive-btn:hover {
-        cursor: pointer;
-        background-color: #e5e5;
-      }
+.modal-content {
+  background-color: white; /* Non-transparent background */
+  padding: 20px;
+  border-radius: 8px;
+  width: 600px; /* Adjust as needed */
+}
+
+.modal-title {
+  margin-bottom: 20px;
+}
+
+.form-fields {
+  display: grid;
+  gap: 10px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-evenly; /* Evenly distribute buttons */
+  margin-top: 20px;
+}
+
+/* Update the styles in your edithivestyle.css or global styles */
+
+/* Ensure labels and input fields are aligned */
+.label-input-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; /* Adjust spacing between label-input pairs */
+}
+
+/* Make input fields take up full width */
+.input-field {
+  flex: 1; /* Take up remaining space */
+  margin-left: 10px; /* Adjust spacing between label and input field */
+}
+

@@ -124,27 +124,28 @@ app.post('/dashboard',
             console.log(ret);
             res.send(ret);
         }
-        else if (type == "temptrend") {
+        else if (type == "temptrendtime") {
             const hive = req.body.Hive;
-            const ret = await db.getTemperatures(hive);
+            const time = req.body.Timestamp;
+            const ret = await db.getTemperaturesTime(hive, time);
             console.log(ret);
             res.send(ret);
         }
-        else if (type == "humtrend") {
+        else if (type == "humtrendtime") {
             const hive = req.body.Hive;
-            const ret = await db.getHumidities(hive);
+            const ret = await db.getHumiditiesTime(hive);
             console.log(ret);
             res.send(ret);
         }
-        else if (type == "weighttrend") {
+        else if (type == "weighttrendtime") {
             const hive = req.body.Hive;
-            const ret = await db.getWeights(hive);
+            const ret = await db.getWeightsTime(hive);
             console.log(ret);
             res.send(ret);
         }
-        else if (type == "frequencytrend") {
+        else if (type == "freqtrendtime") {
             const hive = req.body.Hive;
-            const ret = await db.getFrequencies(hive);
+            const ret = await db.getFrequenciesTime(hive);
             console.log(ret);
             res.send(ret);
         }

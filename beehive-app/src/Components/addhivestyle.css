@@ -14,7 +14,6 @@
 .container .moda {
   z-index: 1;
   width: 550px;
-  height: 470px;
   background: white;
   display: flex;
   align-items: center;
@@ -124,3 +123,15 @@
       justify-content: center;
     }
     
+    .error-message {
+      color: red;
+      margin-top: 5px;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .error-container {
+      margin-bottom: 10px; /* Adjust margin as needed */
+    }
