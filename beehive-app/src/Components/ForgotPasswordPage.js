@@ -47,7 +47,7 @@ const ForgotPasswordPage = () => {
   return (
     <Grid container justify="center" alignItems="center" className={classes.root}>
       <Grid item xs={12} sm={8} md={6} lg={4}>
-        <Typography variant="h4" align="center" gutterBottom style={{ color: '#e5e5' }}>
+        <Typography variant="h4" align="center" gutterBottom style={{ color: 'hotpink' }}>
           Forgot Password
         </Typography>
         <form className={classes.form} onSubmit={handleSubmit}>
@@ -81,7 +81,7 @@ const ForgotPasswordPage = () => {
           </Typography>
         )}
         <Typography variant="body1" align="center">
-          <Link href="/login" style={{ color: '#e5bcff' }}>
+          <Link href="/login" style={{ color: 'hotpink' }}>
             Back to Login
           </Link>
         </Typography>

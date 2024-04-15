@@ -1,10 +1,6 @@
 // ProductCard.js
 import React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import { Card, CardContent, CardActions, Button, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({
@@ -75,10 +71,10 @@ const ProductCard = ({ product, openModal }) => {
           <Typography className={classes.title} variant="h5" component="div">
             {product.Product_Name}
           </Typography>
-          <Typography className={classes.description} variant="body2" color="text.secondary">
+          <Typography className={classes.description} variant="body2" color="textSecondary">
             {product.Product_Description}
           </Typography>
-          <Typography className={classes.price} color="text.secondary">
+          <Typography className={classes.price} color="textSecondary">
             Price: ${product.Product_Price}
           </Typography>
           <CardActions className={classes.actions}>

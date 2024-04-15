@@ -42,6 +42,16 @@ const PaymentForm = () => {
         }
     };
 
+    const handleCheckout = () => {
+        // Implement logic to process checkout
+        // This will depend on the payment method API you are using
+        // Redirect to order confirmation page
+        window.location.href = '/paymentconfirmation';
+        //empty the cart
+        localStorage.removeItem('cart');
+    }
+
+
     return (
         <form onSubmit={handleSubmit}>
             <Box marginBottom="20px">
@@ -64,7 +74,7 @@ const PaymentForm = () => {
                 />
             </Box>
             {error && <Typography variant="body2" color="error">{error}</Typography>}
-            <Button type="submit" disabled={!stripe} variant="contained" color="secondary">
+            <Button type="submit" disabled={!stripe} variant="contained" color="secondary" onClick={() => handleCheckout()}>
                 {loading ? 'Processing...' : 'Pay Now'}
                 {loading && <CircularProgress size={24} style={{ position: 'absolute' }} />}
 
@@ -107,6 +117,15 @@ const CheckoutPage = () => {
     const tax = subtotal * TAX_RATE;
     const shipping = 10; // Sample shipping cost
     const total = subtotal + tax + shipping;
+
+    const handleCheckout = () => {
+        // Implement logic to process checkout
+        // This will depend on the payment method API you are using
+        window.location.href = '/paymentconfirmation'; // Redirect to order confirmation page
+        //empty the cart
+        localStorage.removeItem('cart');
+    }
+
 
     return (
         <Grid container spacing={1} justifyContent="center" alignItems="center" style={{ height: '100vh' }}>

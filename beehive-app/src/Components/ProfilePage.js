@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faEdit, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { Grid, Typography, Button, Input, Avatar, Paper, TextField, IconButton, createMuiTheme, ThemeProvider, CircularProgress } from '@material-ui/core';
+import { Grid, Typography, Button, Input, Avatar, Paper, TextField, IconButton, CircularProgress } from '@material-ui/core';
 import { GetProfile, UpdateProfile } from '../Service';
 import { Footer } from './Footer';
 import MemberHeader from './MemberHeader';
@@ -26,14 +26,19 @@ const ProfilePage = () => {
     const fetchData = async () => {
       try {
         const data = await GetProfile();
+        if (data[0].Donation_Amount == null) {
+          data[0].Donation_Amount = 0;
+        }
         const { FirstName, LastName, Email, Hive_Count, Donation_Amount } = data[0];
         setProfileData({ firstName: FirstName, lastName: LastName, email: Email, hiveCount: Hive_Count, donationAmount: Donation_Amount });
+        
         const storedProfilePic = localStorage.getItem('profilePic');
         if (storedProfilePic) {
           setProfilePic(storedProfilePic);
         } else {
           setProfilePic(data[0].Profile_Pic ? bufferToBase64(data[0].Profile_Pic.data) : null);
         }
+        
         setLoading(false);
       } catch (error) {
         console.error('Error fetching profile data:', error);
@@ -42,6 +47,7 @@ const ProfilePage = () => {
     };
     fetchData();
   }, []);
+  
 
   const bufferToBase64 = (buffer) => {
     const binary = Buffer.from(buffer).toString('base64');
@@ -54,7 +60,6 @@ const ProfilePage = () => {
     const reader = new FileReader();
     reader.onloadend = () => {
       setProfilePic(reader.result);
-      localStorage.setItem('profilePic', reader.result);
     };
     reader.readAsDataURL(file);
   };
@@ -65,6 +70,7 @@ const ProfilePage = () => {
       console.log('Uploading profile picture...');
       const update = await UpdateProfile(profileData.email, profileData.firstName, profileData.lastName, profileData.donationAmount, profilePic);
       console.log(update);
+      localStorage.setItem('profilePic', profilePic);
       setSelectedFile(null);
       setUploading(false);
     } catch (error) {
@@ -110,17 +116,9 @@ const ProfilePage = () => {
     return <div>Loading...</div>;
   }
 
-  const theme = createMuiTheme({
-    palette: {
-      primary: {
-        main: '#ff7bb0'
-      }
-    }
-  });
-
   return (
-    <ThemeProvider theme={theme}>
-      <MemberHeader style={{marginBottom:'200px'}} />
+    <>
+      <MemberHeader style={{ marginBottom: '200px' }} />
       <Grid container justify="center" alignItems="center" style={{ minHeight: '100vh' }}>
         <Grid item xs={12} sm={10} md={8} lg={6}>
           <Paper elevation={3} style={{ padding: '20px', textAlign: 'center' }}>
@@ -143,7 +141,7 @@ const ProfilePage = () => {
               ) : (
                 <>
                   <Typography variant="h5" gutterBottom>{profileData.firstName} {profileData.lastName}</Typography>
-                  <IconButton onClick={handleEditClick} color="primary">
+                  <IconButton onClick={handleEditClick} style={{ color: '#ff7bb0' }}>
                     <FontAwesomeIcon icon={faEdit} />
                   </IconButton>
                 </>
@@ -160,11 +158,11 @@ const ProfilePage = () => {
               id="contained-button-file"
             />
             <label htmlFor="contained-button-file">
-              <Button variant="contained" color="primary" component="span">
+              <Button variant="contained" style={{ backgroundColor: '#ff7bb0', color: "white" }} component="span">
                 {uploading ? <CircularProgress size={24} /> : (selectedFile ? selectedFile.name : 'Choose File')}
               </Button>
             </label>
-            <Button variant="contained" color="primary" onClick={handleUpload} disabled={!selectedFile || uploading}>
+            <Button variant="contained" style={{ backgroundColor: selectedFile ? '#ff7bb0' : 'inherit',  color: selectedFile ? "white": 'grey'}} onClick={handleUpload} disabled={!selectedFile || uploading}>
               Upload
             </Button>
             <Button variant="contained" color="secondary" onClick={handleRemove} style={{ backgroundColor: '#ff7bb0' }}>
@@ -176,10 +174,11 @@ const ProfilePage = () => {
           <Paper elevation={3} style={{ padding: '20px', marginTop: '20px', textAlign: 'center' }}>
             <Typography variant="h5" gutterBottom style={{ textAlign: 'center' }}>Personal Information</Typography>
             <TextField
+              name="email"
               label="Email Address"
               value={profileData.email}
-              onChange={handleInputChange}
-              disabled={!editing}
+              disabled
+              type="email"
               fullWidth
               style={{ marginBottom: '10px' }}
             />
@@ -198,7 +197,7 @@ const ProfilePage = () => {
               style={{ marginBottom: '10px' }}
             />
             {editing && (
-              <Button variant="contained" color="primary" onClick={handleSave}>
+              <Button variant="contained" color="primary" type="submit" onClick={handleSave} style={{ backgroundColor: '#ff7bb0' }}>
                 <FontAwesomeIcon icon={faSave} style={{ marginRight: '5px' }} />
                 Save
               </Button>
@@ -207,7 +206,7 @@ const ProfilePage = () => {
         </Grid>
       </Grid>
       <Footer />
-    </ThemeProvider>
+    </>
   );
 };
 

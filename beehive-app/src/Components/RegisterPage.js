@@ -66,7 +66,7 @@ function RegisterPage() {
     return (
         <Grid container justify="center" alignItems="center" style={{ minHeight: "100vh" }}>
             <Grid item xs={12} sm={8} md={6} lg={4}>
-                <Typography variant="h4" align="center" gutterBottom style={{ color: "#e5e5" }}>
+                <Typography variant="h4" align="center" gutterBottom style={{ color: "hotpink" }}>
                     Sign Up
                 </Typography>
                 <form onSubmit={handleSubmit}>
@@ -77,6 +77,7 @@ function RegisterPage() {
                         value={firstName}
                         onChange={handleFirstNameChange}
                         margin="normal"
+                        required
                     />
                     <TextField
                         label="Last Name"
@@ -94,6 +95,7 @@ function RegisterPage() {
                         value={email}
                         onChange={handleEmailChange}
                         margin="normal"
+                        required
                     />
                     <TextField
                         label="Password"
@@ -103,6 +105,7 @@ function RegisterPage() {
                         value={password}
                         onChange={handlePasswordChange}
                         margin="normal"
+                        required
                     />
                     <TextField
                         label="Confirm Password"
@@ -114,6 +117,7 @@ function RegisterPage() {
                         margin="normal"
                         error={passwordError}
                         helperText={passwordError && "Passwords do not match"}
+                        required
                     />
                     {emailExistsError && (
                         <Typography variant="body1" color="error" align="center">
@@ -132,7 +136,7 @@ function RegisterPage() {
                 </form>
                 <Typography variant="body1" align="center" style={{ marginTop: 20 }}>
                     Already have an account?{" "}
-                    <Link href="login" style={{ color: "#e5bcff" }}>
+                    <Link href="login" style={{ color: "hotpink" }}>
                         Log In
                     </Link>
                 </Typography>

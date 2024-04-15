@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import OrderDetailsModal from './OrderDetailsModal';
 import Header from './Header';
 import { Footer } from './Footer';
+import MemberHeader from './MemberHeader';
 
 const OrderHistoryPage = () => {
   const [orders, setOrders] = useState([]);
@@ -60,7 +61,7 @@ const OrderHistoryPage = () => {
 
   return (
     <div style={{ marginTop: '100px' }} id="orderhist">
-        <Header />
+        <MemberHeader />
     <Grid container spacing={4} justifyContent="center" alignItems="center" style={{ height: '100vh' }}>
       <Grid item xs={12}>
         <Typography variant="h4" gutterBottom align="center">Order History</Typography>

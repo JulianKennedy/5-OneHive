@@ -21,7 +21,16 @@ const WeightTrendModal = (hiveName, time) => {
     const fetchData = async () => {
       console.log("fetching data");
       console.log(hiveName)
-      const data = await GetWeightTime(hiveName.hiveName, hiveName.time);
+      if(hiveName.time.includes('ALL')) {
+        const data1 = await getWeight(hiveName.hiveName);
+        //format the date in the data again
+        data1.forEach(item => item.Timestamp = formatDate(item.Timestamp));
+        setWeightData(data1);
+        return;
+      }
+      else {
+        const data = await GetWeightTime(hiveName.hiveName, hiveName.time);
+      
       if (data.length === 0) {
         // No data to display so return start date and end date with no data to still have the chart displayed
         // time is a string with the number of days and the word days
@@ -70,6 +79,7 @@ const WeightTrendModal = (hiveName, time) => {
 
         setWeightData(formattedData2);
       }
+    }
     };
     fetchData();
   }, [hiveName.hiveName, hiveName.time]);

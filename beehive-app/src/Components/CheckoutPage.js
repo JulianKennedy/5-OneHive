@@ -36,12 +36,6 @@ function CheckoutPage() {
     setCartItems(storedCartItems);
   }, []);
 
-  // Function to handle checkout
-  const handleCheckout = () => {
-    // Implement logic to process checkout (e.g., send payment data to payment API)
-    // This will depend on the payment method API you are using
-  };
-
   return (
     <div className={classes.page}>
       <div className={classes.container}>

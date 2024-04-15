@@ -1,10 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
-import Button from '@mui/material/Button';
+import { Button, Modal, Typography, TextField, Box, Grid } from '@mui/material'; // Added Grid component for layout
 import useLocalStorage from './useLocalStorage'; // Import the useLocalStorage hook
 
 const ProductModal = ({ product, quantity, setQuantity, closeModal }) => {
     const modalRef = useRef();
-    const [cartItems, setCartItems] = useState(0);
     const [cartItemsCount, setCartItemsCount] = useLocalStorage('cartItems', 0); // Initialize cart items count from local storage
 
     const bufferToBase64 = (buffer) => {
@@ -61,42 +60,35 @@ const ProductModal = ({ product, quantity, setQuantity, closeModal }) => {
     };
 
     return (
-        <div style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            zIndex: 9999,
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
-        }}>
-            <div ref={modalRef} style={{
+        <Modal open={true} onClose={close}>
+            <div style={{
                 backgroundColor: '#fff',
                 padding: '20px',
                 borderRadius: '5px',
-                width: '300px'
-            }}>
+                width: '300px',
+                margin: 'auto',
+                marginTop: '100px'
+            }} ref={modalRef}>
                 <img src={imageUrl} alt="Product" style={{ maxWidth: '100%', height: 'auto' }} />
-                <h2>{product.Product_Name}</h2>
-                <p>Price: ${totalPrice}</p>
-                <label>Quantity: </label>
-                <input
-                    type="number"
-                    value={quantity}
-                    min={1}
-                    onChange={(e) => setQuantity(parseInt(e.target.value))}
-                />
-                <br />
-                <div className="modal-buttons">
-                    <button onClick={close} className="close-btn">Close</button>
-                    {/* Assuming addToCart function is passed as a prop */}
-                    <button onClick={() => addToCart(product, quantity)} className="close-btn">Add to Cart</button>
+                <Typography variant="h5">{product.Product_Name}</Typography>
+                <Typography variant="body1">Price: ${totalPrice}</Typography>
+                <Grid container spacing={2} alignItems="center" marginBottom="10px">
+                    <Grid item><Typography variant="body1">Quantity:</Typography></Grid>
+                    <Grid item>
+                        <TextField
+                            type="number"
+                            value={quantity}
+                            onChange={(e) => setQuantity(parseInt(e.target.value))}
+                            inputProps={{ min: 1 }}
+                        />
+                    </Grid>
+                </Grid>
+                <div style={{ marginTop: '20px' }}>
+                    <Button variant="outlined" style={{ color: '#e5e5', borderColor: '#e5e5' }} onClick={close}>Close</Button>
+                    <Button variant="contained" onClick={() => addToCart(product, quantity)} style={{ marginLeft: '10px', backgroundColor: '#e5e5' }}>Add to Cart</Button>
                 </div>
             </div>
-        </div>
+        </Modal>
     );
 };
 

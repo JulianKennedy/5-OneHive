@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Chart from 'chart.js/auto';
-import { GetTemperaturesTime } from '../Service';
+import { GetTemperaturesTime, GetTemperatures } from '../Service';
 import './temptrendpagestyle.css';
 
 const TempTrendModal = ({ hiveName, time }) => {
@@ -18,7 +18,16 @@ const TempTrendModal = ({ hiveName, time }) => {
       console.log("fetching data");
       console.log(hiveName)
       console.log(time)
-      const data = await GetTemperaturesTime(hiveName, time)
+      if(time.includes('ALL')) {
+        const data1 = await GetTemperatures(hiveName);
+        //format the date in the data again
+        data1.forEach(item => item.Timestamp = formatDate(item.Timestamp));
+        setTemperatureData(data1);
+        return;
+      }
+      else {
+        const data = await GetTemperaturesTime(hiveName, time);
+
       console.log(data);
       if (data.length === 0) {
         // No data to display so return start date and end date with no data to still have the chart displayed
@@ -49,8 +58,8 @@ const TempTrendModal = ({ hiveName, time }) => {
         else if (time.includes('YEAR')) {
           endDate.setFullYear(startDate.getFullYear() - days);
         }
-        //format the date in the data again
-        data.forEach(item => item.Timestamp = formatDate(item.Timestamp));
+                //format the date in the data again
+                data.forEach(item => item.Timestamp = formatDate(item.Timestamp));
         // add the start and end date to the data if they are not already in the data
         if (!data.some(item => item.Timestamp === formatDate(startDate))) {
           data.push({ Timestamp: formatDate(startDate) });
@@ -59,15 +68,21 @@ const TempTrendModal = ({ hiveName, time }) => {
           data.push({ Timestamp: formatDate(endDate) });
         }
         //sort the data by date again
-        data.sort((a, b) => new Date(a.Timestamp) - new Date(b.Timestamp));
+        data.sort((a, b) => new Date(a.Timestamp) - new Date(b.Timestamp));        
         //removes dates from data that are after today
         const today = new Date();
         const formattedData = data.filter(item => new Date(item.Timestamp) <= today);
 
         setTemperatureData(formattedData);
       }
+    }
     };
     fetchData();
+
+    const intervalId = setInterval(fetchData, 0.5 * 60 * 1000); // 5 minutes interval
+
+    // Clean up interval on component unmount
+    return () => clearInterval(intervalId);
   }, [hiveName, time]);
 
   useEffect(() => {

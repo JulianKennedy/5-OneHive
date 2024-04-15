@@ -16,6 +16,8 @@ import { useNavigate } from "react-router-dom";
 import { Footer } from './Footer';
 import { Grid, Card, CardContent, Button } from '@mui/material';
 import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
 
 let currHive = {};
@@ -37,14 +39,15 @@ const Dashboard = () => {
   const [freqTrendModal, setFreqTrendModal] = useState(false);
   const [weighTrendModal, setWeighTrendModal] = useState(false);
   const [date, setDate] = useState("");
-  const [selectedTimeRange, setSelectedTimeRange] = useState("7 DAY"); // Default time constraint
+  const [selectedTimeRange, setSelectedTimeRange] = useState("1 DAY"); // Default time constraint
   const navigate = useNavigate();
 
   const timeRanges = [
-    { label: 'Day', value: '1 DAY'},
+    { label: 'Day', value: '1 DAY' },
     { label: 'Week', value: '7 DAY' },
     { label: 'Month', value: '30 DAY' },
     { label: 'Year', value: '1 YEAR' },
+    { label: 'All Time', value: 'ALL' }
   ];
 
   useEffect(() => {
@@ -58,10 +61,10 @@ const Dashboard = () => {
         if (data.length > 0) {
           updatedHiveInfo.push({
             Hive_Name: userHivesData[i].Hive_Name,
-            temperature: data[0].Temperature,
-            humidity: data[0].Humidity,
-            weight: data[0].Weight,
-            frequency: data[0].Frequency,
+            temperature: data[data.length - 1].Temperature,
+            humidity: data[data.length - 1].Humidity,
+            weight: data[data.length - 1].Weight,
+            frequency: data[data.length - 1].Frequency,
           });
         }
         else {
@@ -77,8 +80,12 @@ const Dashboard = () => {
       }
       setHiveInfo(updatedHiveInfo);
 
-      if (userHivesData.length > 0 && hive_name === "") {
-        setHiveName(userHivesData[0].Hive_Name);
+      if (userHivesData.length > 0) {
+        setHiveName(updatedHiveInfo[0].Hive_Name);
+        setTemperature(updatedHiveInfo[0].temperature);
+        setHumidity(updatedHiveInfo[0].humidity);
+        setWeight(updatedHiveInfo[0].weight);
+        setFrequency(updatedHiveInfo[0].frequency);
         await fetchHiveData(userHivesData[0].Hive_Name);
       }
 
@@ -88,7 +95,13 @@ const Dashboard = () => {
     };
 
     fetchData();
-  }, [navigate, selectedTimeRange]);
+  }, [navigate]);
+
+  //   const intervalId = setInterval(fetchData, 0.1 * 60 * 1000); // 5 minutes interval
+
+  //   // Clean up interval on component unmount
+  //   return () => clearInterval(intervalId);
+  // }, [navigate]);
 
   const handleSubmit = async (name) => {
     setHiveName(name);
@@ -103,10 +116,15 @@ const Dashboard = () => {
   const fetchHiveData = async (name) => {
     const data = await getUserHivesOrGetHiveData("getHiveData", name);
     if (data.length > 0) {
-      setTemperature(data[0].Temperature);
-      setHumidity(data[0].Humidity);
-      setWeight(data[0].Weight);
-      setFrequency(data[0].Frequency);
+      hiveInfo.map((hive, index) => {
+        if (hive.Hive_Name === name) {
+          setTemperature(hive.temperature);
+          setHumidity(hive.humidity);
+          setWeight(hive.weight);
+          setFrequency(hive.frequency);
+        }
+      }
+      );
 
       const dateOptions = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true };
       const formattedDate = new Date().toLocaleString('en-US', dateOptions);
@@ -142,36 +160,47 @@ const Dashboard = () => {
     setAddHiveModal(true);
   };
 
-  const handleSelectHive = (name) => {
+  const handleSelectHive = async (name) => {
     setHiveName(name);
+    await fetchHiveData(name);
   };
 
   const editHive = () => {
     setEditHiveModal(true);
   }
 
-  const tempTrendClick = () => {
-    setTempTrendModal(true);
-  }
-
-  const humTrendClick = () => {
-    setHumTrendModal(true);
-  }
-
-  const freqTrendClick = () => {
-    setFreqTrendModal(true);
-  }
-
-  const weighTrendClick = () => {
-    setWeighTrendModal(true);
-  }
+  console.log(localStorage.getItem('profilePic'))
 
   return (
     <div className="MemberDashboardPage" id="dash" style={{ width: '100%', height: '100%', background: 'white' }}>
       <MemberHeader className="header-instance"></MemberHeader>
-      <div className="name" style={{ width: 600, height: 131, left: 75, top: 216, position: 'absolute', textAlign: 'center', color: 'black', fontSize: 64, border: '5px solid black' }}>
-        {firstName}'s Beehives
-      </div>
+      <Card
+            sx={{
+              maxWidth: 600,
+              marginTop: '200px',
+              //center the card horizontally without marhin auto
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              padding: '20px',
+              textAlign: 'center',
+              backgroundColor: '#e5bcff',
+              borderRadius: 10,
+              boxShadow: 3,
+              marginBottom: '30px',
+              border: '5px solid #6c3483',
+              maxHeight: 131,
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0
+            }}
+          >
+            <CardContent>
+              <div style={{ color: 'black', fontSize: 64, fontWeight: 'bold' }}>
+                {firstName}'s Beehives
+              </div>
+            </CardContent>
+          </Card>
       <Grid container spacing={3} justifyContent="center" alignItems="center" style={{ marginTop: '450px' }}>
         {hives.map((hive, index) => (
           <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
@@ -253,10 +282,6 @@ const Dashboard = () => {
 
                 </CardContent>
               </Card>
-
-
-
-
             </div>
           </Grid>
         ))}
@@ -281,14 +306,49 @@ const Dashboard = () => {
       >
         Add Hive
       </Button>
-      <div className="Time" style={{ width: 'auto', height: 2, left: 75, position: 'absolute', textAlign: 'center', color: 'black', fontSize: 36, fontFamily: 'Newsreader', fontWeight: '700', wordWrap: 'break-word' }}>
-        {hive_name} updated: {date}
+      {(hiveInfo.length>0) &&
+      <div className="dashboard-info" style={{ textAlign: "center" }}>
+        <h2 style={{ textAlign: 'center', color: 'black', fontSize: 36, fontFamily: 'Newsreader', fontWeight: '700', wordWrap: 'break-word' }}>{hive_name} Beehive Information</h2>
+        <div className="measurement">
+          <p><span style={{ fontWeight: 'bold' }}>Temperature:</span> {temperature}℃
+            {temperature < 34.5 || temperature > 35.5 ? (
+              <span style={{ color: 'red', marginLeft: '5px' }}>
+                <FontAwesomeIcon icon={faExclamationTriangle} />
+              </span>
+            ) : null}
+          </p>
+          <p><span style={{ fontWeight: 'bold' }}>Humidity:</span> {humidity}%
+            {humidity < 50 || humidity > 60 ? (
+              <span style={{ color: 'red', marginLeft: '5px' }}>
+                <FontAwesomeIcon icon={faExclamationTriangle} />
+              </span>
+            ) : null}
+          </p>
+          <p><span style={{ fontWeight: 'bold' }}>Weight:</span> {weight} kg
+            {weight < 5 || weight > 40 ? (
+              <span style={{ color: 'red', marginLeft: '5px' }}>
+                <FontAwesomeIcon icon={faExclamationTriangle} />
+              </span>
+            ) : null}
+          </p>
+          <p><span style={{ fontWeight: 'bold' }}>Frequency:</span> {frequency} Hz
+            {frequency < 190 || frequency > 250 ? (
+              <span style={{ color: 'red', marginLeft: '5px' }}>
+                <FontAwesomeIcon icon={faExclamationTriangle} />
+              </span>
+            ) : null}
+          </p>
+        </div>
+        <p>Last Updated: {date}</p>
       </div>
-      <div className="time-dropdown" style={{ position: 'relative', marginTop: '100px'}}>
-        <FormControl style={{width: '20%', left: '75%', right: '5%'}}>
+}
+
+
+      <div className="time-dropdown" style={{ position: 'relative', marginTop: '100px' }}>
+        <FormControl style={{ width: '20%', left: '75%', right: '5%' }}>
           <InputLabel id="time-constraint-label">Time Constraint</InputLabel>
           <Select
-            labelId="time-constraint-label"
+            labelId='time-constraint-label'
             id="time-constraint"
             value={selectedTimeRange}
             onChange={handleTimeRangeChange}
@@ -302,36 +362,32 @@ const Dashboard = () => {
       <Grid container spacing={3} justifyContent="center" alignItems="center" style={{ marginTop: '60px' }}>
         {/* Grid of Charts */}
         <Grid item xs={12} sm={6} md={6} lg={6}>
-        <Card sx={{ boxShadow: 3 }}>
+          <Card sx={{ boxShadow: 3 }}>
             <CardContent>
-              <h3>Temperature Trend</h3>
-              <TempTrendModal showModal={tempTrendModal} setShowModal={setTempTrendModal} time={selectedTimeRange} hiveName={hive_name}/>
+              <TempTrendModal showModal={tempTrendModal} setShowModal={setTempTrendModal} time={selectedTimeRange} hiveName={hive_name} />
             </CardContent>
           </Card>
         </Grid>
 
         <Grid item xs={12} sm={6} md={6} lg={6}>
-        <Card sx={{ boxShadow: 3 }}>
+          <Card sx={{ boxShadow: 3 }}>
             <CardContent>
-              <h3>Humidity Trend</h3>
               <HumidTrendModal showModal={humTrendModal} setShowModal={setHumTrendModal} time={selectedTimeRange} hiveName={hive_name} />
             </CardContent>
           </Card>
         </Grid>
 
         <Grid item xs={12} sm={6} md={6} lg={6}>
-        <Card sx={{ boxShadow: 3 }}>
+          <Card sx={{ boxShadow: 3 }}>
             <CardContent>
-              <h3>Frequency Trend</h3>
               <FrequncyTrendModal showModal={freqTrendModal} setShowModal={setFreqTrendModal} time={selectedTimeRange} hiveName={hive_name} />
             </CardContent>
           </Card>
         </Grid>
 
         <Grid item xs={12} sm={6} md={6} lg={6}>
-        <Card sx={{ boxShadow: 3 }}>
+          <Card sx={{ boxShadow: 3 }}>
             <CardContent>
-              <h3>Weight Trend</h3>
               <WeightTrendModal showModal={weighTrendModal} setShowModal={setWeighTrendModal} time={selectedTimeRange} hiveName={hive_name} />
             </CardContent>
           </Card>
@@ -373,20 +429,48 @@ const Dashboard = () => {
           setHiveName(userHivesData[0].Hive_Name);
           await fetchHiveData(userHivesData[0].Hive_Name);
         }
-      }} style={{zIndex: 99999}}/>}
+      }} style={{ zIndex: 99999 }} />}
       <div className="f" style={{ marginTop: '100px' }}>
         <Footer />
       </div>
       {editHiveModal && <EditHive onClose={async () => {
         setEditHiveModal(false);
-        const data = await getUserHivesOrGetHiveData("getUserHives", "");
-        console.log(data);
-        setHives(data);
-        if (data.length > 0) {
-          setHiveName(data[0].Hive_Name);
-          await fetchHiveData(data[0].Hive_Name);
+        const userHivesData = await getUserHivesOrGetHiveData("getUserHives", "");
+        console.log(userHivesData);
+        setHives(userHivesData);
+        
+        const updatedHiveInfo = [];
+        for (let i = 0; i < userHivesData.length; i++) {
+          const data = await getUserHivesOrGetHiveData("getHiveData", userHivesData[i].Hive_Name);
+          if (data.length > 0) {
+            updatedHiveInfo.push({
+              Hive_Name: userHivesData[i].Hive_Name,
+              temperature: data[0].Temperature,
+              humidity: data[0].Humidity,
+              weight: data[0].Weight,
+              frequency: data[0].Frequency,
+            });
+          }
+          else {
+            updatedHiveInfo.push({
+              Hive_Name: userHivesData[i].Hive_Name,
+              temperature: 0,
+              humidity: 0,
+              weight: 0,
+              frequency: 0,
+            });
+
+          }
         }
-      }} oldHive={currHive} style={{zIndex: 99999}}/>}
+        setHiveInfo(updatedHiveInfo);
+
+        if (userHivesData.length > 0) {
+          setHiveName(userHivesData[0].Hive_Name);
+          await fetchHiveData(userHivesData[0].Hive_Name);
+        }
+
+
+      }} oldHive={currHive} style={{ zIndex: 99999 }} />}
     </div>
   );
 };

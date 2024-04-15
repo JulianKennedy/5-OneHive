@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import Chart from 'chart.js/auto'
 import { GetHumidityTime, getHumidity } from '../Service';
 import './humidtrendpagestyle.css';
-import { formatMs } from '@material-ui/core';
+import { duration, formatMs } from '@material-ui/core';
+import { faLessThanEqual } from '@fortawesome/free-solid-svg-icons';
 
 
 const HumidTrendModal = ( hiveName, time ) => {
@@ -23,7 +24,15 @@ const HumidTrendModal = ( hiveName, time ) => {
     const fetchData = async () => {
       console.log("fetching data");
       console.log(hiveName)
-      const data = await GetHumidityTime(hiveName.hiveName, hiveName.time);
+      if(hiveName.time.includes('ALL')) {
+        const data1 = await getHumidity(hiveName.hiveName);
+        //format the date in the data again
+        data1.forEach(item => item.Timestamp = formatDate(item.Timestamp));
+        setHumidityData(data1);
+        return;
+      }
+      else {
+        const data = await GetHumidityTime(hiveName.hiveName, hiveName.time);
       if (data.length === 0) {
         // No data to display so return start date and end date with no data to still have the chart displayed
         // time is a string with the number of days and the word days
@@ -72,7 +81,13 @@ const HumidTrendModal = ( hiveName, time ) => {
 
 
         setHumidityData(formattedData2);
+
+        const intervalId = setInterval(fetchData, 0.5 * 60 * 1000); // 5 minutes interval
+
+        // Clean up interval on component unmount
+        return () => clearInterval(intervalId);
       }
+    }
     };
     fetchData();
   }, [hiveName.hiveName, hiveName.time]);
@@ -100,6 +115,7 @@ const HumidTrendModal = ( hiveName, time ) => {
               display: false
             }
           },
+          
           scales: {
             x: {
               title: {

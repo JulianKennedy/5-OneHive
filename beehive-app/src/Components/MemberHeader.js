@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from "react";
+import { Avatar } from "@material-ui/core";
 
 export const MemberHeader = () => {
     const navigate = useNavigate();
@@ -28,7 +29,7 @@ export const MemberHeader = () => {
             <div className="profile-dropdown">
                 <div className="profile-circle">
                     <Link to="/profile" className="profile">
-                        <FontAwesomeIcon id="profpic" icon={faUser} />
+                        <Avatar id="profpic" src={localStorage.getItem('profilePic')} style={{ width: "60px", height: "60px" }} />
                     </Link>
                 </div>
                 <div className="dropdown-content">

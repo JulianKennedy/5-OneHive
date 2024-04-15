@@ -9,11 +9,18 @@
   border: 3px solid grey;
 }
 
-  
-  #profpic {
-    height: 30px;
-    border-radius: 50%;
+
+
+  .profile-circle:hover {
+    cursor: pointer;
   }
+
+  .profile-dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+
 
   .profile-circle:hover {
     cursor: pointer;

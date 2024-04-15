@@ -41,7 +41,7 @@ export const ProductPage2 = () => {
                     <li>Integrated educational resources for novice and experienced beekeepers alike.</li>
                 </ul>
             </div>
-            <img className="beehive-image" src={require('./img/beehive.png')} alt="Rectangle" />
+            <img className="beehive-image" src={require('./img/beehive.jpeg')} alt="Rectangle" />
             <div className="text-wrapper-7">How It Works</div>
             <img className="beehive-infographic" src={require('./img/beehive-infographic.png')} alt="Rectangle" />
             <p className="text-wrapper-8">
