@@ -5,7 +5,7 @@ import { MemberHeader } from "./MemberHeader";
 import "./homepagestyle.css";
 
 export const HomePage = () => {
-  const isAuthenticated = localStorage.getItem("jwt") ? true : false;
+  const isAuthenticated = localStorage.getItem("token") ? true : false;
 
   return (
     <div className="home-page-desktop" id="home">

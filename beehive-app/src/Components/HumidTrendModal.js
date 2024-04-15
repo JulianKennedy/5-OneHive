@@ -62,6 +62,7 @@ const HumidTrendModal = ( hiveName, time ) => {
         else if (hiveName.time.includes('YEAR')) {
           endDate.setFullYear(startDate.getFullYear() - days);
         }
+        if(data.length > 0) {
                 //format the date in the data again
                 data.forEach(item => item.Timestamp = formatDate(item.Timestamp));
 
@@ -81,6 +82,7 @@ const HumidTrendModal = ( hiveName, time ) => {
 
 
         setHumidityData(formattedData2);
+      }
 
         const intervalId = setInterval(fetchData, 0.5 * 60 * 1000); // 5 minutes interval
 

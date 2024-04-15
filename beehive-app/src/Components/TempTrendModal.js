@@ -18,7 +18,7 @@ const TempTrendModal = ({ hiveName, time }) => {
       console.log("fetching data");
       console.log(hiveName)
       console.log(time)
-      if(time.includes('ALL')) {
+      if (time.includes('ALL')) {
         const data1 = await GetTemperatures(hiveName);
         //format the date in the data again
         data1.forEach(item => item.Timestamp = formatDate(item.Timestamp));
@@ -28,54 +28,57 @@ const TempTrendModal = ({ hiveName, time }) => {
       else {
         const data = await GetTemperaturesTime(hiveName, time);
 
-      console.log(data);
-      if (data.length === 0) {
-        // No data to display so return start date and end date with no data to still have the chart displayed
-        // time is a string with the number of days and the word days
-        const startDate = new Date();
-        //parse until the space to get the number of days
-        const days = parseInt(time.substring(0, time.indexOf(' ')));
-        const endDate = new Date();
-        //determine if it is days or years
-        if (time.includes('DAY')) {
-          endDate.setDate(startDate.getDate() - days);
+        console.log(data);
+        if (data.length === 0) {
+          // No data to display so return start date and end date with no data to still have the chart displayed
+          // time is a string with the number of days and the word days
+          const startDate = new Date();
+          //parse until the space to get the number of days
+          const days = parseInt(time.substring(0, time.indexOf(' ')));
+          const endDate = new Date();
+          //determine if it is days or years
+          if (time.includes('DAY')) {
+            endDate.setDate(startDate.getDate() - days);
+          }
+          else if (time.includes('YEAR')) {
+            endDate.setFullYear(startDate.getFullYear() - days);
+          }
+          const formattedData = [{ Timestamp: formatDate(endDate) }, { Timestamp: formatDate(startDate) }];
+          setTemperatureData(formattedData);
         }
-        else if (time.includes('YEAR')) {
-          endDate.setFullYear(startDate.getFullYear() - days);
-        }
-        const formattedData = [{ Timestamp: formatDate(endDate) }, { Timestamp: formatDate(startDate) }];
-        setTemperatureData(formattedData);
-      }
-      else {
-        const startDate = new Date();
-        //parse until the space to get the number of days
-        const days = parseInt(time.substring(0, time.indexOf(' ')));
-        const endDate = new Date();
-        //determine if it is days or years
-        if (time.includes('DAY')) {
-          endDate.setDate(startDate.getDate() - days);
-        }
-        else if (time.includes('YEAR')) {
-          endDate.setFullYear(startDate.getFullYear() - days);
-        }
-                //format the date in the data again
-                data.forEach(item => item.Timestamp = formatDate(item.Timestamp));
-        // add the start and end date to the data if they are not already in the data
-        if (!data.some(item => item.Timestamp === formatDate(startDate))) {
-          data.push({ Timestamp: formatDate(startDate) });
-        }
-        if (!data.some(item => item.Timestamp === formatDate(endDate))) {
-          data.push({ Timestamp: formatDate(endDate) });
-        }
-        //sort the data by date again
-        data.sort((a, b) => new Date(a.Timestamp) - new Date(b.Timestamp));        
-        //removes dates from data that are after today
-        const today = new Date();
-        const formattedData = data.filter(item => new Date(item.Timestamp) <= today);
+        else {
+          const startDate = new Date();
+          //parse until the space to get the number of days
+          const days = parseInt(time.substring(0, time.indexOf(' ')));
+          const endDate = new Date();
+          //determine if it is days or years
+          if (time.includes('DAY')) {
+            endDate.setDate(startDate.getDate() - days);
+          }
+          else if (time.includes('YEAR')) {
+            endDate.setFullYear(startDate.getFullYear() - days);
+          }
+          if (data.length > 0) {
+            //format the date in the data again
+            data.forEach(item => item.Timestamp = formatDate(item.Timestamp));
+          
+          // add the start and end date to the data if they are not already in the data
+          if (!data.some(item => item.Timestamp === formatDate(startDate))) {
+            data.push({ Timestamp: formatDate(startDate) });
+          }
+          if (!data.some(item => item.Timestamp === formatDate(endDate))) {
+            data.push({ Timestamp: formatDate(endDate) });
+          }
+          //sort the data by date again
+          data.sort((a, b) => new Date(a.Timestamp) - new Date(b.Timestamp));
+          //removes dates from data that are after today
+          const today = new Date();
+          const formattedData = data.filter(item => new Date(item.Timestamp) <= today);
 
-        setTemperatureData(formattedData);
+          setTemperatureData(formattedData);
+        }
+        }
       }
-    }
     };
     fetchData();
 

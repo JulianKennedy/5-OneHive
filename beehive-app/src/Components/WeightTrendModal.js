@@ -60,6 +60,7 @@ const WeightTrendModal = (hiveName, time) => {
         else if (hiveName.time.includes('YEAR')) {
           endDate.setFullYear(startDate.getFullYear() - days);
         }
+        if(data.length > 0) {
                 //format the date in the data again
                 data.forEach(item => item.Timestamp = formatDate(item.Timestamp));
 
@@ -78,6 +79,7 @@ const WeightTrendModal = (hiveName, time) => {
         formattedData2.sort((a, b) => new Date(a.Timestamp) - new Date(b.Timestamp));
 
         setWeightData(formattedData2);
+      }
       }
     }
     };

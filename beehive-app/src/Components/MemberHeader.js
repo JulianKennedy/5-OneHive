@@ -11,7 +11,7 @@ export const MemberHeader = () => {
 
     // clera token and nagvigat to login page!
     const handleLogout = () => {
-        localStorage.setItem("jwt", "");
+        localStorage.removeItem("token");
         navigate("/login");
     };
 

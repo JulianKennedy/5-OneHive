@@ -11,6 +11,7 @@ import { Grid, Card, CardContent, Typography, Button, Divider } from '@material-
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './mappagestyle.css';
+import { useNavigate } from "react-router-dom";
 
 const MapPage = ({ google }) => {
   const [cities, setCities] = useState([]);
@@ -19,9 +20,15 @@ const MapPage = ({ google }) => {
   const [showingInfoWindow, setShowingInfoWindow] = useState(false);
   const mapRef = useRef(null);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
+        if (!localStorage.getItem('token')) {
+          navigate('/login');
+          return;
+        }
         // Fetch city data from your database API
         const response = await GetLocations("location");
         console.log(response);
@@ -107,10 +114,10 @@ const MapPage = ({ google }) => {
     setActiveMarker(null);
   };
 
-  const isAuthenticated = localStorage.getItem("jwt") ? true : false;
+  const isAuthenticated = localStorage.getItem("token") ? true : false;
   return (
     <div className="MapPage" style={{width: '100%'}}>
-      {isAuthenticated ? <MemberHeader /> : <Header />}
+      <MemberHeader />
       <p className="map-title" style={{textAlign: 'center', position: 'relative', marginTop: '175px', fontWeight: 'bold', fontSize: '24px'}}>Map of all FEC Customer Beehives</p>
       <Map
         google={google}

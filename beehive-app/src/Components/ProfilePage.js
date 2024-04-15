@@ -5,6 +5,7 @@ import { Grid, Typography, Button, Input, Avatar, Paper, TextField, IconButton, 
 import { GetProfile, UpdateProfile } from '../Service';
 import { Footer } from './Footer';
 import MemberHeader from './MemberHeader';
+import { useNavigate } from "react-router-dom";
 
 const ProfilePage = () => {
   const [profileData, setProfileData] = useState({
@@ -22,9 +23,15 @@ const ProfilePage = () => {
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
+        if (!localStorage.getItem('token')) {
+          navigate('/login');
+          return;
+        }
         const data = await GetProfile();
         if (data[0].Donation_Amount == null) {
           data[0].Donation_Amount = 0;

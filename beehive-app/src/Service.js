@@ -11,6 +11,7 @@ export async function checkLogin(email, password) {
         console.log(yes);
         if (yes.status) {
             localStorage.setItem('email', email);
+            localStorage.setItem('token', yes.token);
         }
         return yes;
     } catch (error) {
@@ -22,13 +23,13 @@ export async function checkLogin(email, password) {
 
 export async function getUserHivesOrGetHiveData(type, hive) {
     try {
-        // const token = localStorage.getItem('token'); // Retrieve the stored token
+        const token = localStorage.getItem('token'); // Retrieve the stored token
         //const token = 'thisIsAFakeTokenMwahHaHa';
         const response = await fetch('http://localhost:3000/dashboard/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-                // ,                'Authorization': `Bearer ${token}` // Attach the token
+                ,                'Authorization': `Bearer ${token}` // Attach the token
             },
             body: JSON.stringify({ "Type": type, "User": localStorage.getItem('email'), "Hive": hive, "token": localStorage.getItem('token') })
         });
@@ -48,7 +49,7 @@ export async function InsertHive(hive_name, streetAddress, city, province, posta
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
-                // ,            'Authorization': `Bearer ${token}` // Attach the token
+                ,            'Authorization': `Bearer ${token}` // Attach the token
             },
             body: JSON.stringify({ "Hive_Name": hive_name, "StreetAddress": streetAddress, "City": city, "Province": province, "PostalCode": postalCode, "Anonymous": anonymous, "Email": localStorage.getItem('email') })
         })
@@ -68,7 +69,7 @@ export async function UpdateHive(old_hive_name, hive_name, streetAddress, city, 
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
-                // 'Authorization': `Bearer ${token}` // Attach the token
+                ,'Authorization': `Bearer ${token}` // Attach the token
             },
             body: JSON.stringify({ "Old_Hive_Name": old_hive_name, "Hive_Name": hive_name, "StreetAddress": streetAddress, "City": city, "Province": province, "PostalCode": postalCode, "Anonymous": anonymous, "Email": localStorage.getItem('email') })
         })
@@ -89,7 +90,7 @@ export async function DeleteHive(hive_name) {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
-                // 'Authorization': `Bearer ${token}` // Attach the token
+                ,'Authorization': `Bearer ${token}` // Attach the token
             },
             body: JSON.stringify({
                 "Hive_Name": hive_name,
@@ -158,12 +159,12 @@ export async function RegisterUser(email, password, firstName, lastName) {
 export async function GetTemperatures(hiveName) {
     console.log("hi");
     try {
-        // const token = localStorage.getItem('token'); // Retrieve the stored token
+        const token = localStorage.getItem('token'); // Retrieve the stored token
         const response = await fetch('http://localhost:3000/dashboard', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-                // 'Authorization': `Bearer ${token}` // Attach the token
+                ,'Authorization': `Bearer ${token}` // Attach the token
             },
             body: JSON.stringify({ "Type": "temptrend", "User": localStorage.getItem('email'), "Hive": hiveName, "token": localStorage.getItem('token') })
         });
@@ -179,12 +180,12 @@ export async function GetTemperatures(hiveName) {
 
 export async function GetTemperaturesTime(hiveName, timeRange) {
     try {
-        // const token = localStorage.getItem('token'); // Retrieve the stored token
+        const token = localStorage.getItem('token'); // Retrieve the stored token
         const response = await fetch('http://localhost:3000/dashboard', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-                // 'Authorization': `Bearer ${token}` // Attach the token
+                ,'Authorization': `Bearer ${token}` // Attach the token
             },
             body: JSON.stringify({ "Type": "temptrendtime", "User": localStorage.getItem('email'), "Hive": hiveName, "Timestamp": timeRange, "token": localStorage.getItem('token') })
         });
@@ -199,12 +200,12 @@ export async function GetTemperaturesTime(hiveName, timeRange) {
 
 export async function GetHumidityTime(hiveName, timeRange) {
     try {
-        // const token = localStorage.getItem('token'); // Retrieve the stored token
+        const token = localStorage.getItem('token'); // Retrieve the stored token
         const response = await fetch('http://localhost:3000/dashboard', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-                // 'Authorization': `Bearer ${token}` // Attach the token
+                ,'Authorization': `Bearer ${token}` // Attach the token
             },
             body: JSON.stringify({ "Type": "humtrendtime", "User": localStorage.getItem('email'), "Hive": hiveName, "Timestamp": timeRange, "token": localStorage.getItem('token') })
         });
@@ -219,12 +220,12 @@ export async function GetHumidityTime(hiveName, timeRange) {
 
 export async function GetFrequencyTime(hiveName, timeRange) {
     try {
-        // const token = localStorage.getItem('token'); // Retrieve the stored token
+        const token = localStorage.getItem('token'); // Retrieve the stored token
         const response = await fetch('http://localhost:3000/dashboard', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-                // 'Authorization': `Bearer ${token}` // Attach the token
+                ,'Authorization': `Bearer ${token}` // Attach the token
             },
             body: JSON.stringify({ "Type": "freqtrendtime", "User": localStorage.getItem('email'), "Hive": hiveName, "Timestamp": timeRange, "token": localStorage.getItem('token') })
         });
@@ -240,12 +241,12 @@ export async function GetFrequencyTime(hiveName, timeRange) {
 
 export async function GetWeightTime(hiveName, timeRange) {
     try {
-        // const token = localStorage.getItem('token'); // Retrieve the stored token
+        const token = localStorage.getItem('token'); // Retrieve the stored token
         const response = await fetch('http://localhost:3000/dashboard', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-                // 'Authorization': `Bearer ${token}` // Attach the token
+                ,'Authorization': `Bearer ${token}` // Attach the token
             },
             body: JSON.stringify({ "Type": "weighttrendtime", "User": localStorage.getItem('email'), "Hive": hiveName, "Timestamp": timeRange, "token": localStorage.getItem('token') })
         });
@@ -260,12 +261,12 @@ export async function GetWeightTime(hiveName, timeRange) {
 
 export async function getHumidity(hiveName) {
     try {
-        // const token = localStorage.getItem('token');
+        const token = localStorage.getItem('token');
         const response = await fetch('http://localhost:3000/dashboard', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-                // 'Authorization': `Bearer ${token}`
+                ,'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({ "Type": "humtrend", "User": localStorage.getItem('email'), "Hive": hiveName, "token": localStorage.getItem('token') })
         });
@@ -281,12 +282,12 @@ export async function getHumidity(hiveName) {
 
 export async function getWeight(hiveName) {
     try {
-        // const token = localStorage.getItem('token');
+        const token = localStorage.getItem('token');
         const response = await fetch('http://localhost:3000/dashboard', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-                // 'Authorization': `Bearer ${token}`
+                ,'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({ "Type": "weighttrend", "User": localStorage.getItem('email'), "Hive": hiveName, "token": localStorage.getItem('token') })
         });

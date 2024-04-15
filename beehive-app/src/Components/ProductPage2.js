@@ -6,11 +6,13 @@ const { Footer } = require("./Footer");
 
 
 export const ProductPage2 = () => {
+    const isAuthenticated = localStorage.getItem("token") ? true : false;
+
     return (
         <div class="product-page-2" id="product2"> 
             <div class="div">
                 <Header className="header-instance" />
-                {/* {isAuthenticated ? <MemberHeader /> : <Header />} */}
+                {isAuthenticated ? <MemberHeader /> : <Header />}
                 <div className="overlap">
                     <img className="product-home-image" src={require('./img/product.png')} alt="Rectangle" />
                     <div className="group">

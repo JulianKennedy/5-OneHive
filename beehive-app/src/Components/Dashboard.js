@@ -42,6 +42,8 @@ const Dashboard = () => {
   const [selectedTimeRange, setSelectedTimeRange] = useState("1 DAY"); // Default time constraint
   const navigate = useNavigate();
 
+  const isAuthenticated = localStorage.getItem("token") ? true : false;
+
   const timeRanges = [
     { label: 'Day', value: '1 DAY' },
     { label: 'Week', value: '7 DAY' },
@@ -51,6 +53,11 @@ const Dashboard = () => {
   ];
 
   useEffect(() => {
+    if (!localStorage.getItem('token')) {
+      navigate('/login');
+      return;
+    }
+    console.log(localStorage.getItem('token'));
     const fetchData = async () => {
       const userHivesData = await getUserHivesOrGetHiveData("getUserHives", "");
       setHives(userHivesData);
@@ -173,7 +180,7 @@ const Dashboard = () => {
 
   return (
     <div className="MemberDashboardPage" id="dash" style={{ width: '100%', height: '100%', background: 'white' }}>
-      <MemberHeader className="header-instance"></MemberHeader>
+      <MemberHeader />
       <Card
             sx={{
               maxWidth: 600,

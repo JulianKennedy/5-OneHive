@@ -62,8 +62,10 @@ const FrequncyTrendModal = (hiveName, time) => {
           else if (hiveName.time.includes('YEAR')) {
             endDate.setFullYear(startDate.getFullYear() - days);
           }
+          if (data.length > 0) {
           //format the date in the data again
           data.forEach(item => item.Timestamp = formatDate(item.Timestamp));
+          
 
           //only include data between the start and end date
           const formattedData = data.filter(item => new Date(item.Timestamp) <= startDate);
@@ -80,6 +82,7 @@ const FrequncyTrendModal = (hiveName, time) => {
           formattedData2.sort((a, b) => new Date(a.Timestamp) - new Date(b.Timestamp));
 
           setFrequencyData(formattedData2);
+        }
         }
       }
     };

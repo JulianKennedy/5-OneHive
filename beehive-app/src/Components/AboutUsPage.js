@@ -7,7 +7,7 @@ import { Footer } from "./Footer";
 
 export const AboutUsPage = () => {
 
-  const isAuthenticated = localStorage.getItem("jwt") ? true : false;
+  const isAuthenticated = localStorage.getItem("token") ? true : false;
 
   return (
     <div className="about-us-page" id="about">

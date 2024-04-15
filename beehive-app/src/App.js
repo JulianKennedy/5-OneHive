@@ -35,7 +35,7 @@ function App() {
       <Route path="/adopt" element={<AdoptPage/>} />
       <Route path="/adopthome" element={<AdoptHomePage/>} />
       <Route path="/howtoadopt" element={<HowToAdoptPage/>} />
-      <Route path="/product" element={<ProductPage/>} />
+      <Route path="/product" element={<ProductPage2/>} />
       <Route path="/product2" element={<ProductPage2/>} />
       <Route path="/orderhistory" element={<OrderHistoryPage/>} />
       <Route path="/about" element={<AboutUsPage/>} />

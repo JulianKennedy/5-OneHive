@@ -21,7 +21,8 @@ function LoginPage() {
 
         const loginResult = await checkLogin(email, password);
         if (loginResult.status) {
-            localStorage.setItem('jwt', loginResult.token);
+            console.log(loginResult.token); // This is the JWT token that you can use to authenticate requests to the server (e.g. in the Authorization header
+            // localStorage.setItem('jwt', loginResult.token);
             window.location.href = "/dashboard";
         } else {
             setShowError(true);
