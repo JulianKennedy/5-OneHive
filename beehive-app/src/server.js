@@ -7,6 +7,8 @@ const { WebSocketServer } = require('ws');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 const app = express();
+const crypto = require('crypto'); // Node.js built-in crypto module for generating random tokens
+
 
 // token import
 const jwt = require('jsonwebtoken');
@@ -80,6 +82,8 @@ app.post('/login', async (req, res) => {
                 { expiresIn: '30m' } // token expiration
             );
 
+            //store in cookies
+
             res.send({
                 status: true
                 , token : token
@@ -90,6 +94,9 @@ app.post('/login', async (req, res) => {
     }
     res.send({ status: false });
 });
+
+//create refresh token
+
 
 
 // // verify token 
@@ -351,15 +358,21 @@ app.post('/purchase', async (req, res) => {
 
 // Route for handling forgot password request
 app.post('/forgotpassword', async (req, res) => {
-    const { email } = req.body;
+    const email  = req.body.Email;
   
     // Check if email exists in your database
     // Assuming you have a function to check the existence of the email
-    const userExists = true; // Replace with your actual check logic
+    const userExists = await db.getUsersWithEmail(email);
+// 
+    // console.log("User: "+ userExists);
+
   
     if (userExists) {
       // Generate a temporary password reset token (optional)
-      const resetToken = 'generate-your-reset-token-here';
+      const resetToken = crypto.randomBytes(20).toString('hex');
+
+      //add reset token to user
+        await db.addResetToken("julian.m.kennedy@gmail.com", resetToken);
   
       // Send reset email
       try {
@@ -377,7 +390,7 @@ app.post('/forgotpassword', async (req, res) => {
           from: 'cpen491f1@gmail.com',
           to: 'julian.m.kennedy@gmail.com',
           subject: 'Password Reset Request',
-          text: `Hello! You requested a password reset. Here is your reset token: ${resetToken}`
+          text: `Hello! You requested a password reset. Here is your reset token: http://localhost:3003/resetpassword/${resetToken}`,
         };
   
         await transporter.sendMail(mailOptions);
@@ -391,6 +404,38 @@ app.post('/forgotpassword', async (req, res) => {
       res.status(404).json({ error: 'User not found.' });
     }
   });
+
+    // Route for handling reset password request
+app.post('/resetpassword/:resetToken', async (req, res) => {
+    console.log(req);
+    const newPassword = req.body.Password;
+    const resetToken = req.params.resetToken;
+
+    console.log(resetToken);
+    console.log("NEw password: "+newPassword);
+
+  
+    // Check if reset token exists in your database
+    // Assuming you have a function to check the existence of the reset token
+    const user = await db.getUserByResetToken(resetToken);
+  
+    if (user.length > 0 && user[0].Forgot_Password_Token === resetToken) {
+        console.log("user found");
+      // Reset the user's password
+      // Assuming you have a function to update the user's password
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      await db.updatePassword(user[0].Email, hashedPassword);
+  
+      // Remove the reset token from the database
+      // Assuming you have a function to delete the reset token
+      await db.deleteResetToken(user[0].Email);
+  
+      res.status(200).json({ message: 'Password reset successfully!' });
+    } else {
+      res.status(404).json({ error: 'Invalid or expired reset token.' });
+    }
+  }
+    );
 
 
   
@@ -449,4 +494,4 @@ async function insertUsers() {
 // addTables();
 // db.deleteOldData();
 
-db.deleteHiveData("Andi", "2024-04-11");
+// db.deleteHiveData("Andi", "2024-04-11");

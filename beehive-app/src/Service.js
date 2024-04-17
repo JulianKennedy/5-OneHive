@@ -5,7 +5,7 @@ export async function checkLogin(email, password) {
         const response = await fetch('http://localhost:3000/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ "Email": email, "Password": password })
+            body: JSON.stringify({ "Email": email, "Password": password }),
         })
         const yes = await response.json();
         console.log(yes);
@@ -29,7 +29,7 @@ export async function getUserHivesOrGetHiveData(type, hive) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-                ,                'Authorization': `Bearer ${token}` // Attach the token
+                , 'Authorization': `Bearer ${token}` // Attach the token
             },
             body: JSON.stringify({ "Type": type, "User": localStorage.getItem('email'), "Hive": hive, "token": localStorage.getItem('token') })
         });
@@ -49,7 +49,7 @@ export async function InsertHive(hive_name, streetAddress, city, province, posta
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
-                ,            'Authorization': `Bearer ${token}` // Attach the token
+                , 'Authorization': `Bearer ${token}` // Attach the token
             },
             body: JSON.stringify({ "Hive_Name": hive_name, "StreetAddress": streetAddress, "City": city, "Province": province, "PostalCode": postalCode, "Anonymous": anonymous, "Email": localStorage.getItem('email') })
         })
@@ -69,7 +69,7 @@ export async function UpdateHive(old_hive_name, hive_name, streetAddress, city, 
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
-                ,'Authorization': `Bearer ${token}` // Attach the token
+                , 'Authorization': `Bearer ${token}` // Attach the token
             },
             body: JSON.stringify({ "Old_Hive_Name": old_hive_name, "Hive_Name": hive_name, "StreetAddress": streetAddress, "City": city, "Province": province, "PostalCode": postalCode, "Anonymous": anonymous, "Email": localStorage.getItem('email') })
         })
@@ -90,7 +90,7 @@ export async function DeleteHive(hive_name) {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
-                ,'Authorization': `Bearer ${token}` // Attach the token
+                , 'Authorization': `Bearer ${token}` // Attach the token
             },
             body: JSON.stringify({
                 "Hive_Name": hive_name,
@@ -111,7 +111,7 @@ export async function GetProducts() {
         const response = await fetch('http://localhost:3000/purchase', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ "Type": "products"})
+            body: JSON.stringify({ "Type": "products" })
         })
         const products = await response.json();
         console.log(products);
@@ -164,7 +164,7 @@ export async function GetTemperatures(hiveName) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-                ,'Authorization': `Bearer ${token}` // Attach the token
+                , 'Authorization': `Bearer ${token}` // Attach the token
             },
             body: JSON.stringify({ "Type": "temptrend", "User": localStorage.getItem('email'), "Hive": hiveName, "token": localStorage.getItem('token') })
         });
@@ -185,7 +185,7 @@ export async function GetTemperaturesTime(hiveName, timeRange) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-                ,'Authorization': `Bearer ${token}` // Attach the token
+                , 'Authorization': `Bearer ${token}` // Attach the token
             },
             body: JSON.stringify({ "Type": "temptrendtime", "User": localStorage.getItem('email'), "Hive": hiveName, "Timestamp": timeRange, "token": localStorage.getItem('token') })
         });
@@ -205,7 +205,7 @@ export async function GetHumidityTime(hiveName, timeRange) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-                ,'Authorization': `Bearer ${token}` // Attach the token
+                , 'Authorization': `Bearer ${token}` // Attach the token
             },
             body: JSON.stringify({ "Type": "humtrendtime", "User": localStorage.getItem('email'), "Hive": hiveName, "Timestamp": timeRange, "token": localStorage.getItem('token') })
         });
@@ -225,7 +225,7 @@ export async function GetFrequencyTime(hiveName, timeRange) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-                ,'Authorization': `Bearer ${token}` // Attach the token
+                , 'Authorization': `Bearer ${token}` // Attach the token
             },
             body: JSON.stringify({ "Type": "freqtrendtime", "User": localStorage.getItem('email'), "Hive": hiveName, "Timestamp": timeRange, "token": localStorage.getItem('token') })
         });
@@ -246,7 +246,7 @@ export async function GetWeightTime(hiveName, timeRange) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-                ,'Authorization': `Bearer ${token}` // Attach the token
+                , 'Authorization': `Bearer ${token}` // Attach the token
             },
             body: JSON.stringify({ "Type": "weighttrendtime", "User": localStorage.getItem('email'), "Hive": hiveName, "Timestamp": timeRange, "token": localStorage.getItem('token') })
         });
@@ -266,7 +266,7 @@ export async function getHumidity(hiveName) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-                ,'Authorization': `Bearer ${token}`
+                , 'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({ "Type": "humtrend", "User": localStorage.getItem('email'), "Hive": hiveName, "token": localStorage.getItem('token') })
         });
@@ -287,7 +287,7 @@ export async function getWeight(hiveName) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-                ,'Authorization': `Bearer ${token}`
+                , 'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({ "Type": "weighttrend", "User": localStorage.getItem('email'), "Hive": hiveName, "token": localStorage.getItem('token') })
         });
@@ -303,12 +303,12 @@ export async function getWeight(hiveName) {
 
 export async function getFrequency(hiveName) {
     try {
-        // const token = localStorage.getItem('token');
+        const token = localStorage.getItem('token');
         const response = await fetch('http://localhost:3000/dashboard', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-                // 'Authorization': `Bearer ${token}`
+                , 'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({ "Type": "frequencytrend", "User": localStorage.getItem('email'), "Hive": hiveName, "token": localStorage.getItem('token') })
         })
@@ -324,9 +324,14 @@ export async function getFrequency(hiveName) {
 
 export async function GetLocations(type) {
     try {
+        const token = localStorage.getItem('token');
         const response = await fetch('http://localhost:3000/map', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+
             body: JSON.stringify({ "Type": type })
         })
         const locations = await response.json();
@@ -341,9 +346,13 @@ export async function GetLocations(type) {
 
 export async function UpdateUser(email, password, username, location) {
     try {
+        const token = localStorage.getItem('token');
         const response = await fetch('http://localhost:3000/profile', {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
             body: JSON.stringify({ "Email": email, "Password": password, "Username": username, "Location": location })
         })
         const hives = await response.json();
@@ -357,9 +366,13 @@ export async function UpdateUser(email, password, username, location) {
 
 export async function DeleteUser(email) {
     try {
+        const token = localStorage.getItem('token');
         const response = await fetch('http://localhost:3000/profile', {
             method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
             body: JSON.stringify({ "Email": email })
         })
         const hives = await response.json();
@@ -373,9 +386,13 @@ export async function DeleteUser(email) {
 
 export async function getHives(type) {
     try {
+        const token = localStorage.getItem('token');
         const response = await fetch('http://localhost:3000/map', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
             body: JSON.stringify({ "Type": type })
 
         })
@@ -391,11 +408,13 @@ export async function getHives(type) {
 
 export async function resetPassword(email) {
     try {
+        const token = localStorage.getItem('token');
         // Assuming you have a backend API to handle sending email
         const response = await fetch('http://localhost:3000/forgotpassword', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({ "Email": email }),
         });
@@ -414,11 +433,45 @@ export async function resetPassword(email) {
     }
 }
 
+export async function updatePassword(password, resetToken) {
+    try {
+        const token = localStorage.getItem('token');
+        //each url endpoint has  unique token that we wantto pass to the backend
+        const response = await fetch('http://localhost:3000/resetpassword/' + resetToken, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ "Password": password }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            console.log(data.message);
+        }
+        else {
+            console.log(data.error);
+        }
+        return data;
+    }
+    catch (error) {
+        console.log('An error occurred while sending the reset email.');
+        console.error('Error sending reset email:', error);
+    }
+}
+
+
+
 export async function GetProfile() {
     try {
+        const token = localStorage.getItem('token');
         const response = await fetch('http://localhost:3000/profile', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
             body: JSON.stringify({ "Email": localStorage.getItem('email') })
         })
         const user = await response.json();
@@ -432,9 +485,13 @@ export async function GetProfile() {
 
 export async function UpdateProfile(email, firstName, lastName, donationAmount, profilePic) {
     try {
+        const token = localStorage.getItem('token');
         const response = await fetch('http://localhost:3000/profile', {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json'
+                , 'Authorization': `Bearer ${token}`
+            },
             body: JSON.stringify({ "Email": email, "FirstName": firstName, "LastName": lastName, "Donation_Amount": donationAmount, "ProfilePic": profilePic })
         })
         const user = await response.json();

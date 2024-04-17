@@ -172,6 +172,46 @@ sql.prototype.addUser = function (firstName, lastName, email, password) {
   });
 }
 
+//add reset token to user
+sql.prototype.addResetToken = function (email, token) {
+  var sql = "UPDATE User SET Forgot_Password_Token='" + token + "' WHERE Email='" + email + "'";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+  });
+}
+
+//delete reset token from user
+sql.prototype.deleteResetToken = function (email) {
+  var sql = "UPDATE User SET Forgot_Password_Token=NULL WHERE Email='" + email + "'";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+  });
+}
+
+//update password of user
+sql.prototype.updatePassword = function (email, password) {
+  var sql = "UPDATE User SET Password='" + password + "' WHERE Email='" + email + "'";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+  });
+}
+
+//get user by reset token
+sql.prototype.getUserByResetToken = function (token) {
+  console.log(token);
+  var sql = "SELECT * FROM User WHERE Forgot_Password_Token='" + token + "'";
+  return new Promise(
+    (resolve, reject) => {
+      con.query(sql, function (err, rows) {
+        console.log(rows);
+        if (err) reject(err);
+        resolve(rows.map(row => row));
+      });
+    });
+}
+
+
+
 sql.prototype.getUserName = function (email) {
   var sql = "SELECT FirstName, LastName FROM User WHERE Email='" + email + "'";
   return new Promise(
