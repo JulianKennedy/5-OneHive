@@ -145,6 +145,8 @@
   .product-page-desktop .adopt-now-button a:hover{
     cursor: pointer;
     background-color: #e5e5;
+    text-decoration: none;
+    color: black;
   }
 
   .foo {

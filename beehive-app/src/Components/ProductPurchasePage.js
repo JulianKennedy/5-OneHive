@@ -5,11 +5,14 @@ import ProductModal from './ProductModal'; // Import your Modal component
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { GetProducts } from '../Service';
+import MemberHeader from './MemberHeader';
 
 const ProductPurchasePage = () => {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [quantity, setQuantity] = useState(1);
     const [prods, setProducts] = useState([]);
+
+    const isAuthenticated = localStorage.getItem("token") ? true : false;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -36,7 +39,7 @@ const ProductPurchasePage = () => {
     return (
         <div>
             <div style={{ paddingTop: '100px', textAlign: 'center' }}>
-                <Header />
+                {isAuthenticated ? <MemberHeader /> : <Header />}
                 <h1>Product Page</h1>
                 {prods.map(product => (
                     <div key={product.Product_ID}>

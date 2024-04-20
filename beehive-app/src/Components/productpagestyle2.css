@@ -50,6 +50,7 @@
     text-align: center;
     top: 0;
     width: 620px;
+    text-decoration: none;
   }
 
   .product-page-2 .one-hive {
@@ -107,6 +108,8 @@
     position: absolute;
     top: 1070px;
     width: 220px;
+    text-decoration: none;
+    color: black;
   }
 
   .product-page-2 .text-wrapper-5 {
@@ -305,6 +308,8 @@
     padding: 10px;
     position: relative;
     width: 240px;
+    text-decoration: none;
+    color: #000;
   }
   
   .product-page-2 .text-wrapper-12 {

@@ -17,7 +17,7 @@ export const ProductPage = () => {
         </div>
         <div class="rectangle"></div>
         {isAuthenticated ? <MemberHeader /> : <Header />}
-        <img class="img" src={require('./img/beehive.jpeg')} />
+        <img class="img" src={require('./img/beehive.jpg')} />
         <div class="one-hive">
           <div class="one-hive-2">
             <div class="heading">OneHive+</div>

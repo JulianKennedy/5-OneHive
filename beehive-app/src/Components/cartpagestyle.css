@@ -67,3 +67,8 @@ input[type='number'] {
 .payment-methods button img {
   width: 80px;
 }
+
+.footfoot {
+  height: 100%;
+  display: flex;
+}

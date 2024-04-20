@@ -20,14 +20,9 @@ export const AdoptHomePage = () => {
                             </p>
                         </div>
                     </div>
-                    <div className="frame-5">
                         <div className="div-wrapper">
-                            <div className="text-wrapper-6"><a type="button" href="adoptionform">Adoption Form</a></div>
+                        <div class="text-wrapper-3"><a type="button" href="howtoadopt">Learn More</a></div>
                         </div>
-                        <button className="div-wrapper">
-                            <div className="text-wrapper-6"><a type="button" href="howtoadopt">Learn More</a></div>
-                        </button>
-                    </div>
                 </div>
 
                 <div className="contribute">

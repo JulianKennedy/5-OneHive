@@ -172,17 +172,34 @@ sql.prototype.addUser = function (firstName, lastName, email, password) {
   });
 }
 
-//add reset token to user
-sql.prototype.addResetToken = function (email, token) {
-  var sql = "UPDATE User SET Forgot_Password_Token='" + token + "' WHERE Email='" + email + "'";
+//create reset token table
+sql.prototype.createResetTokenTable = function () {
+  var sql = "CREATE TABLE IF NOT EXISTS ResetToken (Token_ID INT NOT NULL AUTO_INCREMENT, User_ID INT NOT NULL, Token VARCHAR(255), Expiry_Date DATETIME, PRIMARY KEY (Token_ID), FOREIGN KEY (User_ID) REFERENCES User(User_ID) ON DELETE CASCADE)";
   con.query(sql, function (err, result) {
     if (err) throw err;
   });
 }
 
-//delete reset token from user
-sql.prototype.deleteResetToken = function (email) {
-  var sql = "UPDATE User SET Forgot_Password_Token=NULL WHERE Email='" + email + "'";
+//insert reset token for a user
+sql.prototype.addResetToken = function (email, token) {
+  var sql = "INSERT INTO ResetToken (User_ID, Token, Expiry_Date) VALUES ((SELECT User_ID FROM User WHERE Email='" + email + "'), '" + token + "', DATE_ADD(NOW(), INTERVAL 1 HOUR))";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+  });
+}
+
+
+//delete all reset tokens that are expired
+sql.prototype.deleteExpiredResetTokens = function () {
+  var sql = "DELETE FROM ResetToken WHERE Expiry_Date < NOW()";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+  });
+}
+
+//delete all reset tokens for a specific user
+sql.prototype.deleteUserResetTokens = function (email) {
+  var sql = "DELETE FROM ResetToken WHERE User_ID=(SELECT User_ID FROM User WHERE Email='" + email + "')";
   con.query(sql, function (err, result) {
     if (err) throw err;
   });
@@ -196,21 +213,57 @@ sql.prototype.updatePassword = function (email, password) {
   });
 }
 
-//get user by reset token
-sql.prototype.getUserByResetToken = function (token) {
-  console.log(token);
-  var sql = "SELECT * FROM User WHERE Forgot_Password_Token='" + token + "'";
+//add order to the database
+//            body: JSON.stringify({ "FullName": contactInfo.fullName, "Email": contactInfo.email, "Phone": contactInfo.phone, "AddressLine1": shippingAddress.addressLine1, "AddressLine2": shippingAddress.addressLine2, "City": shippingAddress.city, "State": shippingAddress.state, "PostalCode": shippingAddress.postalCode, "Country": shippingAddress.country, "Subtotal": subtotal.toFixed(2), "Tax": tax.toFixed(2), "Shipping": shipping.toFixed(2), "Total": total.toFixed(2) })
+sql.prototype.addOrder = function (fullName, email, phone, addressLine1, addressLine2, city, state, postalCode, country, subtotal, tax, shipping, total, date, cart) {
+  var sql = "INSERT INTO Orders (User_ID, Email, Full_Name, Phone, Address_Line_1, Address_Line_2, City, State, Postal_Code, Country, Subtotal, Tax, Shipping, Total, Date, Cart) VALUES (0, '" + email + "', '" + fullName + "', '" + phone + "', '" + addressLine1 + "', '" + addressLine2 + "', '" + city + "', '" + state + "', '" + postalCode + "', '" + country + "', " + subtotal + ", " + tax + ", " + shipping + ", " + total + ", '" + date + "', '" + cart + "')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+  });
+}
+
+//get all orders
+sql.prototype.getOrders = function () {
+  var sql = "SELECT * FROM Orders";
   return new Promise(
     (resolve, reject) => {
       con.query(sql, function (err, rows) {
-        console.log(rows);
-        if (err) reject(err);
+        if (err) {
+          reject(err);
+        }
         resolve(rows.map(row => row));
       });
     });
 }
 
+// get order from order id
+sql.prototype.getOrder = function (order_id) {
+  var sql = "SELECT * FROM Orders WHERE Order_ID=" + order_id;
+  return new Promise(
+    (resolve, reject) => {
+      con.query(sql, function (err, rows) {
+        if (err) {
+          reject(err);
+        }
+        resolve(rows.map(row => row));
+      });
+    });
+}
 
+//get user by reset token
+sql.prototype.getUserByResetToken = function (token) {
+  console.log(token);
+  var sql = "SELECT * FROM User WHERE User_ID=(SELECT User_ID FROM ResetToken WHERE Token='" + token + "' AND Expiry_Date > NOW())";
+  return new Promise(
+    (resolve, reject) => {
+      con.query(sql, function (err, rows) {
+        if (err) {
+          reject(err);
+        }
+        resolve(rows.map(row => row));
+      });
+    });
+}
 
 sql.prototype.getUserName = function (email) {
   var sql = "SELECT FirstName, LastName FROM User WHERE Email='" + email + "'";

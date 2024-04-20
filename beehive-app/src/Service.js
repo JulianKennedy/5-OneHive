@@ -460,6 +460,47 @@ export async function updatePassword(password, resetToken) {
         console.error('Error sending reset email:', error);
     }
 }
+//contactInfo.fullName, contactInfo.email, contactInfo.phone, shippingAddress.addressLine1, shippingAddress.addressLine2, shippingAddress.city, shippingAddress.state, shippingAddress.postalCode, shippingAddress.country, subtotal.toFixed(2), tax.toFixed(2), shipping.toFixed(2), total.toFixed(2));
+export async function updateOrders(cartItems, contactInfo, shippingAddress, subtotal, tax, shipping, total) {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await fetch('http://localhost:3000/checkout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({"Cart": cartItems, "FullName": contactInfo.fullName, "Email": contactInfo.email, "Phone": contactInfo.phone, "AddressLine1": shippingAddress.addressLine1, "AddressLine2": shippingAddress.addressLine2, "City": shippingAddress.city, "State": shippingAddress.state, "PostalCode": shippingAddress.postalCode, "Country": shippingAddress.country, "Subtotal": subtotal.toFixed(2), "Tax": tax.toFixed(2), "Shipping": shipping.toFixed(2), "Total": total.toFixed(2) })
+        });
+
+        const data = await response.json();
+        console.log(data);
+        return data;
+    }
+    catch (error) {
+        console.log('An error occurred while sending the reset email.');
+        console.error('Error sending reset email:', error);
+    }
+}
+
+export async function fetchOrder(orderNumber) {
+    try {
+        const response = await fetch('http://localhost:3000/paymentconfirmation', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ "OrderNumber": orderNumber }),
+        });
+
+        const data = await response.json();
+        console.log(data);
+        return data;
+    } catch (error) {
+        console.log('An error occurred while fetching the order.');
+        console.error('Error fetching order:', error);
+    }
+}
 
 
 

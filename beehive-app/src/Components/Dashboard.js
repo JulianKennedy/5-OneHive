@@ -18,6 +18,8 @@ import { Grid, Card, CardContent, Button } from '@mui/material';
 import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import Tooltip from '@mui/material/Tooltip';
+
 
 
 let currHive = {};
@@ -182,33 +184,28 @@ const Dashboard = () => {
     <div className="MemberDashboardPage" id="dash" style={{ width: '100%', height: '100%', background: 'white' }}>
       <MemberHeader />
       <Card
-            sx={{
-              maxWidth: 600,
-              marginTop: '200px',
-              //center the card horizontally without marhin auto
-              marginLeft: 'auto',
-              marginRight: 'auto',
-              padding: '20px',
-              textAlign: 'center',
-              backgroundColor: '#e5bcff',
-              borderRadius: 10,
-              boxShadow: 3,
-              marginBottom: '30px',
-              border: '5px solid #6c3483',
-              maxHeight: 131,
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0
-            }}
-          >
-            <CardContent>
-              <div style={{ color: 'black', fontSize: 64, fontWeight: 'bold' }}>
-                {firstName}'s Beehives
-              </div>
-            </CardContent>
-          </Card>
-      <Grid container spacing={3} justifyContent="center" alignItems="center" style={{ marginTop: '450px' }}>
+        sx={{
+          maxWidth: 600,
+          margin: 'auto',
+          marginTop: '200px',
+          padding: '20px',
+          textAlign: 'center',
+          backgroundColor: '#e5bcff',
+          borderRadius: 10,
+          boxShadow: 3,
+          marginBottom: '30px',
+          border: '5px solid #6c3483',
+          maxHeight: 'none', // Allow the card height to expand as needed
+          position: 'relative', // Change to relative positioning
+        }}
+      >
+        <CardContent>
+          <div style={{ color: 'black', fontSize: 32, fontWeight: 'bold' }}>
+            {firstName}'s Beehives
+          </div>
+        </CardContent>
+      </Card>
+      <Grid container spacing={3} justifyContent="center" alignItems="center" style={{ marginTop: '20px' }}>
         {hives.map((hive, index) => (
           <Grid item key={index} xs={12} sm={6} md={4} lg={3}>
             <div onClick={() => handleSelectHive(hive.Hive_Name)} style={{ cursor: 'pointer' }}>
@@ -313,42 +310,58 @@ const Dashboard = () => {
       >
         Add Hive
       </Button>
-      {(hiveInfo.length>0) &&
-      <div className="dashboard-info" style={{ textAlign: "center" }}>
-        <h2 style={{ textAlign: 'center', color: 'black', fontSize: 36, fontFamily: 'Newsreader', fontWeight: '700', wordWrap: 'break-word' }}>{hive_name} Beehive Information</h2>
-        <div className="measurement">
-          <p><span style={{ fontWeight: 'bold' }}>Temperature:</span> {temperature}℃
-            {temperature < 34.5 || temperature > 35.5 ? (
-              <span style={{ color: 'red', marginLeft: '5px' }}>
-                <FontAwesomeIcon icon={faExclamationTriangle} />
-              </span>
-            ) : null}
-          </p>
-          <p><span style={{ fontWeight: 'bold' }}>Humidity:</span> {humidity}%
-            {humidity < 50 || humidity > 60 ? (
-              <span style={{ color: 'red', marginLeft: '5px' }}>
-                <FontAwesomeIcon icon={faExclamationTriangle} />
-              </span>
-            ) : null}
-          </p>
-          <p><span style={{ fontWeight: 'bold' }}>Weight:</span> {weight} kg
-            {weight < 5 || weight > 40 ? (
-              <span style={{ color: 'red', marginLeft: '5px' }}>
-                <FontAwesomeIcon icon={faExclamationTriangle} />
-              </span>
-            ) : null}
-          </p>
-          <p><span style={{ fontWeight: 'bold' }}>Frequency:</span> {frequency} Hz
-            {frequency < 190 || frequency > 250 ? (
-              <span style={{ color: 'red', marginLeft: '5px' }}>
-                <FontAwesomeIcon icon={faExclamationTriangle} />
-              </span>
-            ) : null}
-          </p>
+      {(hiveInfo.length > 0) &&
+        <div className="dashboard-info" style={{ textAlign: "center" }}>
+          <h2 style={{ textAlign: 'center', color: 'black', fontSize: 36, fontFamily: 'Newsreader', fontWeight: '700', wordWrap: 'break-word' }}>{hive_name} Beehive Information</h2>
+          <div className="measurement">
+            <Tooltip title={temperature < 34.5 ? "Temperature is too low. Move hive to a warmer location." : "Temperature is too high. Move hive to a cooler location."} arrow>
+              <p>
+                <span style={{ fontWeight: 'bold' }}>Temperature:</span> {temperature}℃
+                {temperature < 34.5 || temperature > 35.5 ? (
+                  <span style={{ color: 'red', marginLeft: '5px' }}>
+                    <FontAwesomeIcon icon={faExclamationTriangle} />
+                  </span>
+                ) : null}
+              </p>
+            </Tooltip>
+
+            <Tooltip title={humidity < 50 ? "Humidity is too low. Add water source near the hive." : "Humidity is too high. Improve hive ventilation."} arrow>
+              <p>
+                <span style={{ fontWeight: 'bold' }}>Humidity:</span> {humidity}%
+                {humidity < 50 || humidity > 60 ? (
+                  <span style={{ color: 'red', marginLeft: '5px' }}>
+                    <FontAwesomeIcon icon={faExclamationTriangle} />
+                  </span>
+                ) : null}
+              </p>
+            </Tooltip>
+
+            <Tooltip title={weight < 5 ? "Hive is too light. Check for honey production." : "Hive is too heavy. Harvest honey."} arrow>
+              <p>
+                <span style={{ fontWeight: 'bold' }}>Weight:</span> {weight} kg
+                {weight < 5 || weight > 40 ? (
+                  <span style={{ color: 'red', marginLeft: '5px' }}>
+                    <FontAwesomeIcon icon={faExclamationTriangle} />
+                  </span>
+                ) : null}
+              </p>
+            </Tooltip>
+
+            <Tooltip title={frequency < 190 ? "Frequency is too low. Check hive activity." : "Frequency is too high. Evaluate hive health."} arrow>
+              <p>
+                <span style={{ fontWeight: 'bold' }}>Frequency:</span> {frequency} Hz
+                {frequency < 190 || frequency > 250 ? (
+                  <span style={{ color: 'red', marginLeft: '5px' }}>
+                    <FontAwesomeIcon icon={faExclamationTriangle} />
+                  </span>
+                ) : null}
+              </p>
+            </Tooltip>
+
+          </div>
+          <p>Last Updated: {date}</p>
         </div>
-        <p>Last Updated: {date}</p>
-      </div>
-}
+      }
 
 
       <div className="time-dropdown" style={{ position: 'relative', marginTop: '100px' }}>
@@ -445,7 +458,7 @@ const Dashboard = () => {
         const userHivesData = await getUserHivesOrGetHiveData("getUserHives", "");
         console.log(userHivesData);
         setHives(userHivesData);
-        
+
         const updatedHiveInfo = [];
         for (let i = 0; i < userHivesData.length; i++) {
           const data = await getUserHivesOrGetHiveData("getHiveData", userHivesData[i].Hive_Name);

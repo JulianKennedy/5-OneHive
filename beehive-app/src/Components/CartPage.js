@@ -14,10 +14,14 @@ import Box from '@mui/material/Box';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Footer } from './Footer';
 import Header from './Header';
+import MemberHeader from './MemberHeader';
 
 const useStyles = makeStyles({
   page: {
-    paddingTop: '100px',
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh',
+    marginTop: '100px',
   },
   container: {
     maxWidth: '800px',
@@ -39,7 +43,6 @@ const useStyles = makeStyles({
     placeItems: 'center',
   },
   footer: {
-    marginTop: '50px',
     textAlign: 'center',
     width: '100%', // Make the footer span the full width
   },
@@ -89,6 +92,18 @@ const useStyles = makeStyles({
   tableHeader: {
     backgroundColor: '#e5e5',
   },
+  emptyCartMessage: {
+    position: 'absolute',
+    left: '50%',
+    transform: 'translate(-50%, -50%)', // Center horizontally and vertically
+    textAlign: 'center',
+  },
+  checkoutBtn: {
+    backgroundColor: '#4caf50', // Placeholder green color
+    '&:hover': {
+      backgroundColor: '#388e3c', // Darker green on hover
+    },
+  }
 });
 
 function CartPage() {
@@ -127,12 +142,14 @@ function CartPage() {
     return `data:image/jpeg;base64,${binary}`;
   };
 
+  const isAuthenticated = localStorage.getItem("token") ? true : false;
+
   return (
     <div className={classes.page}>
-      <Header />
+      {isAuthenticated ? <MemberHeader /> : <Header />}
       <div className={classes.container}>
         <div className={classes.header}>
-          <Button variant="outlined" color="primary" startIcon={<ArrowBackIcon />} href="/purchase">Back</Button>
+          <Button variant="outlined" style={{color: "hotpink", borderColor: "hotpink" }} startIcon={<ArrowBackIcon />} href="/purchase">Back</Button>
           <div></div> {/* Spacer */}
         </div>
         {cartItems.length > 0 ? (
@@ -170,7 +187,7 @@ function CartPage() {
                       </TableCell>
                       <TableCell>${item.Product_Price * item.quantity}</TableCell>
                       <TableCell>
-                        <Button variant="contained" color="secondary" onClick={() => removeItem(item.Product_ID)}>Remove</Button>
+                        <Button style={{backgroundColor: "hotpink"}} variant="contained" onClick={() => removeItem(item.Product_ID)}>Remove</Button>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -182,16 +199,14 @@ function CartPage() {
               <Typography variant="body1" className={classes.taxesText}>Taxes and shipping calculated at checkout</Typography>
             </Box>
             <div className={classes.paymentMethods}>
-              <Button className={classes.checkoutBtn} variant="contained" color="primary" href="/checkout">CHECK OUT</Button>
+              <Button className={classes.checkoutBtn} style={{backgroundColor: "hotpink"}} variant="contained" href="/checkout">CHECK OUT</Button>
             </div>
           </>
         ) : (
-          <Typography variant="body1">Your cart is empty</Typography>
+          <Typography variant="body1" className={classes.emptyCartMessage}>Your cart is empty</Typography>
         )}
       </div>
-      <div className={classes.footer}>
-          <Footer />
-        </div>
+      <Footer className={classes.footer} />
     </div>
   );
 }

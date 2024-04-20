@@ -10,14 +10,17 @@ import Divider from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import CircularProgress from '@mui/material/CircularProgress';
+import { updateOrders } from '../Service';
+import { useNavigate } from 'react-router-dom';
 
 const TAX_RATE = 0.08; // Sample tax rate
 
-const PaymentForm = () => {
+const PaymentForm = (cartItems, contactInfo, shippingAddress, subtotal, tax, shipping, total) => {
     const stripe = useStripe();
     const elements = useElements();
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -42,13 +45,42 @@ const PaymentForm = () => {
         }
     };
 
-    const handleCheckout = () => {
+    const handleCheckout = async () => {
         // Implement logic to process checkout
         // This will depend on the payment method API you are using
         // Redirect to order confirmation page
-        window.location.href = '/paymentconfirmation';
+
+        const cartItemsToSend = cartItems.cartItems.map((item) => ({
+            name: item.Product_Name,
+            product_id: item.Product_ID,
+            quantity: item.quantity,
+            price: item.Product_Price
+        }));
+
+        console.log('Cart Items:', cartItems.cartItems);
+        console.log('Contact Info:', cartItems.contactInfo);
+        console.log('Shipping Address:', cartItems.shippingAddress);
+        console.log('Subtotal:', cartItems.subtotal);
+        console.log('Tax:', cartItems.tax);
+        console.log('Shipping:', cartItems.shipping);
+        console.log('Total:', cartItems.total);
+
+        const result = await updateOrders(cartItemsToSend, cartItems.contactInfo, cartItems.shippingAddress, cartItems.subtotal, cartItems.tax, cartItems.shipping, cartItems.total);
+
+        if (!result) {
+            setError('An error occurred while processing the order. Please try again later.');
+            return;
+        }
+
+        const orderNumber = result[result.length - 1].Order_ID;
+
+        console.log('Order Summary:', orderNumber);
+
+
         //empty the cart
         localStorage.removeItem('cart');
+
+        navigate(`/paymentconfirmation?orderNumber=${encodeURIComponent(orderNumber)}`);
     }
 
 
@@ -118,12 +150,14 @@ const CheckoutPage = () => {
     const shipping = 10; // Sample shipping cost
     const total = subtotal + tax + shipping;
 
-    const handleCheckout = () => {
+    const handleCheckout = async () => {
         // Implement logic to process checkout
         // This will depend on the payment method API you are using
         window.location.href = '/paymentconfirmation'; // Redirect to order confirmation page
-        //empty the cart
+
+
         localStorage.removeItem('cart');
+            // add user info to the order summary database
     }
 
 
@@ -256,7 +290,7 @@ const CheckoutPage = () => {
             <Grid item xs={10}>
                 <Paper elevation={3} style={{ padding: '20px', marginBottom: '50px' }}>
                     <Typography variant="h5" gutterBottom align="center">Payment Information</Typography>
-                    <PaymentForm />
+                    <PaymentForm cartItems={cartItems} contactInfo={contactInfo} shippingAddress={shippingAddress} subtotal={subtotal} tax={tax} shipping={shipping} total={total} />
                 </Paper>
             </Grid>
         </Grid>

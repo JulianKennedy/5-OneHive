@@ -1,307 +1,83 @@
+/* Updated styles for HowToAdoptPage */
+
+/* General styles */
 .how-to-adopt-page {
   background-color: #ffffff;
   width: 100%;
+  padding-bottom: 50px; /* Add space at the bottom */
 }
-  
-  .how-to-adopt-page .div-2 {
-    background-color: #ffffff;
-    position: relative;
-    width: 100%;
-  }
 
-  .how-to-adopt-page .overlap {
-    height: 636px;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-  }
+.how-to-adopt-page .div {
+  background-color: #ffffff;
+  position: relative;
+  width: 100%;
+}
 
-  .how-to-adopt-page .howtoadopt-home-image {
-    height: 550px;
-    left: 0;
-    position: absolute;
-    top: 86px;
-    width: 100%;
-  }
+/* Overlap styles */
+.how-to-adopt-page .overlap {
+  position: relative;
+  width: 100%;
+}
 
-  .how-to-adopt-page .p {
-    color: #ffffff;
-    font-family: "Newsreader-SemiBold";
-    font-size: 70px;
-    font-weight: 600;
-    height: 72px;
-    left: 732px;
-    letter-spacing: 0;
-    line-height: 85px;
-    position: absolute;
-    text-align: right;
-    top: 288px;
-    white-space: nowrap;
-    width: 578px;
-  }
+.how-to-adopt-page .howtoadopt-home-image {
+  width: 100%;
+  max-height: 550px;
+}
 
-  .how-to-adopt-page .overlap-2 {
-    height: 321px;
-    left: 196px;
-    position: absolute;
-    top: 1853px;
-    width: 1048px;
-  }
-  
-  .how-to-adopt-page .subsection {
-    align-items: flex-start;
-    display: flex;
-    flex-direction: column;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 1048px;
-  }
-  
-  .how-to-adopt-page .heading {
-    color: #000000;
-    font-family: "Newsreader-SemiBold";
-    font-size: 42px;
-    font-weight: 600;
-    letter-spacing: 0;
-    line-height: normal;
-    margin-top: 0;
-    margin-bottom: 10px;
-    position: relative;
-    text-align: center;
-    width: 1048px;
-  }
-  
-  .how-to-adopt-page .body {
-    color: var(--collection-1-dark-grey);
-    font-family: "Newsreader-Regular";
-    font-size: 25px;
-    font-weight: 400;
-    letter-spacing: 0;
-    line-height: 35px;
-    position: relative;
-    text-align: center;
-    width: 1046px;
-  }
-  
-  .how-to-adopt-page .learn-more-button {
-    align-items: center;
-    background-color: #e5bcff;
-    border-radius: 4px;
-    display: flex;
-    gap: 10px;
-    height: 72px;
-    justify-content: center;
-    left: 386px;
-    padding: 10px;
-    position: absolute;
-    top: 249px;
-    width: 275px;
-  }
-  
-  .how-to-adopt-page .texter {
-    color: #000000;
-    font-family: "Newsreader-SemiBold";
-    font-size: 26px;
-    font-weight: 600;
-    letter-spacing: 0;
-    line-height: normal;
-    position: relative;
-    text-align: center;
-    white-space: nowrap;
-    width: fit-content;
-  }
+/* Main content styles */
+.how-to-adopt-page .content-wrapper {
+  text-align: center;
+  padding: 30px; /* Add padding */
+}
 
-  .how-to-adopt-page .overlap-3 {
-    height: 524px;
-    left: 196px;
-    position: absolute;
-    top: 734px;
-    width: 1048px;
-  }
-  
-  .how-to-adopt-page .heading-2 {
-    color: #000000;
-    font-family: "Newsreader-SemiBold";
-    font-size: 42px;
-    font-weight: 600;
-    letter-spacing: 0;
-    line-height: normal;
-    margin-top: -1px;
-    position: relative;
-    width: 1048px;
-  }
-  
-  .how-to-adopt-page .body-2 {
-    color: var(--collection-1-dark-grey);
-    font-family: "Newsreader-Regular";
-    font-size: 25px;
-    font-weight: 400;
-    letter-spacing: 0;
-    line-height: 35px;
-    position: relative;
-    width: 1046px;
-  }
-  
-  .how-to-adopt-page .subsection-2 {
-    align-items: flex-start;
-    display: flex;
-    flex-direction: column;
-    left: 0;
-    position: absolute;
-    top: 258px;
-    width: 1048px;
-  }
-  
-  .how-to-adopt-page .heading-3 {
-    color: #000000;
-    font-family: "Newsreader-SemiBold";
-    font-size: 30px;
-    font-weight: 600;
-    letter-spacing: 0;
-    line-height: normal;
-    margin-top: 0;
-    margin-bottom: 20px;
-    position: relative;
-    width: 1048px;
-  }
-  
-  .how-to-adopt-page .body-3 {
-    color: var(--collection-1-dark-grey);
-    font-family: "Newsreader-Regular";
-    font-size: 25px;
-    font-weight: 400;
-    letter-spacing: 0;
-    line-height: 35px;
-    margin-top: 0;
-    position: relative;
-    width: 1046px;
-  }
-  
-  .how-to-adopt-page .span {
-    color: #3b3b3b;
-  }
-  
-  .how-to-adopt-page .text-wrapper-5 {
-    color: #0047ff;
-    text-decoration: underline;
-  }
-  
-  .how-to-adopt-page .subsection-3 {
-    align-items: flex-start;
-    display: flex;
-    flex-direction: column;
-    left: 196px;
-    position: absolute;
-    top: 1600px;
-    width: 1048px;
-  }
+.how-to-adopt-page .heading {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #6c3483; /* Purple color */
+}
 
-  .how-to-adopt-page .overlap-4 {
-    height: 251px;
-    left: 196px;
-    position: absolute;
-    top: 1274px;
-    width: 1048px;
-  }
-  
-  .how-to-adopt-page .subsection-4 {
-    align-items: flex-start;
-    display: inline-flex;
-    flex-direction: column;
-    height: 180px;
-    left: 0;
-    position: absolute;
-    top: 0;
-  }
+.how-to-adopt-page .body {
+  font-size: 18px;
+  margin-bottom: 30px;
+  color: #555; /* Dark gray color */
+}
 
+/* Button styles */
+.how-to-adopt-page .div-wrapper,
+.how-to-adopt-page .div-wrapper-2 {
+  display: flex;
+  width: 250px;
+  height: 72px;
+  align-items: center;
+  justify-content: center;
+  background-color: #e5bcff; /* Light purple */
+  margin: 20px auto; /* Center horizontally with vertical margin */
+  border-radius: 8px; /* Rounded corners */
+  text-decoration: none;
+  color: #000;
+}
 
-  .how-to-adopt-page .div-wrapper {
-    display: flex;
-    width: 250px;
-    height: 72px;
-    align-items: center;
-    justify-content: center;
-    background-color: #e5bcff;
-    margin-top: 100px;
-    margin: 0 auto;
-    left: 413px;
-    position: absolute;
-    top: 160px;
-  }
+.how-to-adopt-page .div-wrapper a,
+.how-to-adopt-page .div-wrapper-2 a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 72px; /* Center text vertically */
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: none;
+  color: black;
+}
 
-  .how-to-adopt-page .div-wrapper a {
-    display: flex;
-    width: 250px;
-    height: 72px;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    background-color: #e5bcff;
-    border: none;
-    font-size: 25px;
-    font-weight: bold;
-    text-decoration: none;
-    color:black;
-    }
-  
-   
-  .how-to-adopt-page .div-wrapper a:hover {
-    cursor: pointer;
-    background-color: #e5e5;
-  }
+.how-to-adopt-page .div-wrapper a:hover,
+.how-to-adopt-page .div-wrapper-2 a:hover {
+  background-color: #e5e5e5; /* Light gray on hover */
+}
 
-  .how-to-adopt-page .div-wrapper {
-    display: flex;
-    width: 250px;
-    height: 72px;
-    align-items: center;
-    justify-content: center;
-    background-color: #e5bcff;
-    margin-top: 100px;
-    margin: 0 auto;
-    left: 413px;
-    position: absolute;
-    top: 160px;
-  }
-
-  .how-to-adopt-page .div-wrapper-2 {
-    display: flex;
-    width: 250px;
-    height: 72px;
-    align-items: center;
-    justify-content: center;
-    background-color: #e5bcff;
-    margin-top: 100px;
-    margin: 0 auto;
-    left: 413px;
-    position: absolute;
-    top: 230px;
-  }
-
-  .how-to-adopt-page .div-wrapper-2 a {
-    display: flex;
-    width: 250px;
-    height: 72px;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    background-color: #e5bcff;
-    border: none;
-    font-size: 25px;
-    font-weight: bold;
-    text-decoration: none;
-    color:black;
-    }
-  
-   
-  .how-to-adopt-page .div-wrapper-2 a:hover {
-    cursor: pointer;
-    background-color: #e5e5;
-  }
-
-  .how-to-adopt-page .footerr {
-    margin-top: 2400px;
-    width: 100%;
-  }
+/* Footer styles */
+.how-to-adopt-page .footerr {
+  margin-top: 50px; /* Adjust margin top */
+  width: 100%;
+}

@@ -11,7 +11,6 @@ export const ProductPage2 = () => {
     return (
         <div class="product-page-2" id="product2"> 
             <div class="div">
-                <Header className="header-instance" />
                 {isAuthenticated ? <MemberHeader /> : <Header />}
                 <div className="overlap">
                     <img className="product-home-image" src={require('./img/product.png')} alt="Rectangle" />
@@ -43,7 +42,7 @@ export const ProductPage2 = () => {
                     <li>Integrated educational resources for novice and experienced beekeepers alike.</li>
                 </ul>
             </div>
-            <img className="beehive-image" src={require('./img/beehive.jpeg')} alt="Rectangle" />
+            <img className="beehive-image" src={require('./img/beehive.jpg')} alt="Rectangle" />
             <div className="text-wrapper-7">How It Works</div>
             <img className="beehive-infographic" src={require('./img/beehive-infographic.png')} alt="Rectangle" />
             <p className="text-wrapper-8">
