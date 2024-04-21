@@ -84,10 +84,10 @@ const HumidTrendModal = ( hiveName, time ) => {
         setHumidityData(formattedData2);
       }
 
-        const intervalId = setInterval(fetchData, 0.5 * 60 * 1000); // 5 minutes interval
+        // const intervalId = setInterval(fetchData, 0.5 * 60 * 1000); // 5 minutes interval
 
-        // Clean up interval on component unmount
-        return () => clearInterval(intervalId);
+        // // Clean up interval on component unmount
+        // return () => clearInterval(intervalId);
       }
     }
     };

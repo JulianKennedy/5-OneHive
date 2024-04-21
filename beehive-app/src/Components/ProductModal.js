@@ -1,10 +1,10 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { Button, Modal, Typography, TextField, Box, Grid } from '@mui/material'; // Added Grid component for layout
+import React, { useRef, useEffect } from 'react';
+import { Button, Modal, Typography, TextField, Box, Grid } from '@mui/material'; // Import the necessary components
 import useLocalStorage from './useLocalStorage'; // Import the useLocalStorage hook
 
 const ProductModal = ({ product, quantity, setQuantity, closeModal }) => {
     const modalRef = useRef();
-    const [cartItemsCount, setCartItemsCount] = useLocalStorage('cartItems', 0); // Initialize cart items count from local storage
+    const [cartItemsCount, setCartItemsCount] = useLocalStorage('cartItems', 0);
 
     const bufferToBase64 = (buffer) => {
         const binary = Buffer.from(buffer).toString('base64');
@@ -13,7 +13,6 @@ const ProductModal = ({ product, quantity, setQuantity, closeModal }) => {
 
     const imageUrl = bufferToBase64(product.Product_Image.data);
 
-    // Calculate total price based on product price and quantity
     const totalPrice = product.Product_Price * quantity;
 
     const close = () => {
@@ -21,7 +20,6 @@ const ProductModal = ({ product, quantity, setQuantity, closeModal }) => {
         setQuantity(1);
     };
 
-    // Close modal if clicked outside of modal content
     const handleClickOutside = (event) => {
         if (modalRef.current && !modalRef.current.contains(event.target)) {
             close();
@@ -29,30 +27,24 @@ const ProductModal = ({ product, quantity, setQuantity, closeModal }) => {
     };
 
     useEffect(() => {
-        // Add event listener when component mounts
         document.addEventListener('mousedown', handleClickOutside);
-        // Remove event listener when component unmounts
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
 
-    // Function to add an item to the cart
     const addToCart = (item, quantity) => {
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
         const existingItemIndex = cart.findIndex(cartItem => cartItem.Product_ID === item.Product_ID);
 
         if (existingItemIndex !== -1) {
-            // If the item already exists in the cart, update its quantity
             cart[existingItemIndex].quantity += quantity;
         } else {
-            // If the item is not in the cart, add it
             cart.push({ ...item, quantity });
         }
 
         localStorage.setItem('cart', JSON.stringify(cart));
 
-        // Update the cart items count in local storage
         const updatedCount = cartItemsCount + quantity;
         setCartItemsCount(updatedCount);
 
@@ -67,7 +59,10 @@ const ProductModal = ({ product, quantity, setQuantity, closeModal }) => {
                 borderRadius: '5px',
                 width: '300px',
                 margin: 'auto',
-                marginTop: '100px'
+                marginTop: '100px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
             }} ref={modalRef}>
                 <img src={imageUrl} alt="Product" style={{ maxWidth: '100%', height: 'auto' }} />
                 <Typography variant="h5">{product.Product_Name}</Typography>
@@ -83,10 +78,10 @@ const ProductModal = ({ product, quantity, setQuantity, closeModal }) => {
                         />
                     </Grid>
                 </Grid>
-                <div style={{ marginTop: '20px' }}>
-                    <Button variant="outlined" style={{ color: '#e5e5', borderColor: '#e5e5' }} onClick={close}>Close</Button>
-                    <Button variant="contained" onClick={() => addToCart(product, quantity)} style={{ marginLeft: '10px', backgroundColor: '#e5e5' }}>Add to Cart</Button>
-                </div>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                    <Button variant="contained" sx={{ backgroundColor: '#FF69B4', color: '#fff' }} onClick={close}>Close</Button>
+                    <Button variant="contained" sx={{ backgroundColor: '#FF69B4', color: '#fff' }} onClick={() => addToCart(product, quantity)}>Add to Cart</Button>
+                </Box>
             </div>
         </Modal>
     );

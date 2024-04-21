@@ -752,13 +752,13 @@ function insertHiveData() {
     // (db.addHiveData("Hive1",70, 55, 12, 150, "File1", toISOLocal(new Date()).slice(0, 19).replace('T', ' ')));
     // (db.addHiveData("Hive1",60, 50, 11, 100, "File2", '2023-08-02'));
     // (db.addHiveData("Hive2",50, 45, 10, 50, "File3", '2023-08-03'));
-    // insert a bunch of data into "Julian" using a random number between 34 and 36, then between 40 and 70, then between 0 and 40, then between 0 and 300, and the date should be everyday over the last year
-    for (let i = 0; i < 365; i++) {
-        db.addHiveData("Julian", Math.floor(Math.random() * (36 - 34 + 1) + 34), Math.floor(Math.random() * (70 - 40 + 1) + 40), Math.floor(Math.random() * (40 - 0 + 1) + 0), Math.floor(Math.random() * (300 - 0 + 1) + 0), "File1", toISOLocal(new Date(new Date().setDate(new Date().getDate() - i - 1))).slice(0, 19).replace('T', ' '));
-    }
+    //insert a bunch of data into "Julian" using a random number between 34 and 36, then between 40 and 70, then between 0 and 40, then between 0 and 300, and the date should be everyday over the last year
+    // for (let i = 0; i < 365; i++) {
+    //     db.addHiveData("Andi", Math.floor(Math.random() * (36 - 34 + 1) + 34), Math.floor(Math.random() * (70 - 40 + 1) + 40), Math.floor(Math.random() * (40 - 0 + 1) + 0), Math.floor(Math.random() * (300 - 0 + 1) + 0), "File1", toISOLocal(new Date(new Date().setDate(new Date().getDate() - i - 1))).slice(0, 19).replace('T', ' '));
+    // }
 
     //delete HiveData from Andi where the date is 2024-04-11 or later
-    db.deleteHiveData("Andi", "2024-04-11");
+    // db.deleteHiveData("Andi", "2024-04-11");
 
 }
 
@@ -777,3 +777,5 @@ async function insertUsers() {
 // db.deleteOldData();
 
 // db.deleteHiveData("Andi", "2024-04-11");
+
+insertHiveData();

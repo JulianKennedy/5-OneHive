@@ -180,6 +180,11 @@ const Dashboard = () => {
 
   console.log(localStorage.getItem('profilePic'))
 
+  const showTooltipFreq = frequency < 200 || frequency > 300;
+  const showTooltipTemp = temperature < 32 || temperature > 37;
+  const showTooltipHum = humidity < 50 || humidity > 60;
+  const showTooltipWeight = weight < 5 || weight > 40;
+
   return (
     <div className="MemberDashboardPage" id="dash" style={{ width: '100%', height: '100%', background: 'white' }}>
       <MemberHeader />
@@ -314,49 +319,70 @@ const Dashboard = () => {
         <div className="dashboard-info" style={{ textAlign: "center" }}>
           <h2 style={{ textAlign: 'center', color: 'black', fontSize: 36, fontFamily: 'Newsreader', fontWeight: '700', wordWrap: 'break-word' }}>{hive_name} Beehive Information</h2>
           <div className="measurement">
-            <Tooltip title={temperature < 34.5 ? "Temperature is too low. Move hive to a warmer location." : "Temperature is too high. Move hive to a cooler location."} arrow>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Temperature:</span> {temperature}℃
-                {temperature < 34.5 || temperature > 35.5 ? (
-                  <span style={{ color: 'red', marginLeft: '5px' }}>
-                    <FontAwesomeIcon icon={faExclamationTriangle} />
-                  </span>
-                ) : null}
-              </p>
-            </Tooltip>
 
-            <Tooltip title={humidity < 50 ? "Humidity is too low. Add water source near the hive." : "Humidity is too high. Improve hive ventilation."} arrow>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Humidity:</span> {humidity}%
-                {humidity < 50 || humidity > 60 ? (
-                  <span style={{ color: 'red', marginLeft: '5px' }}>
-                    <FontAwesomeIcon icon={faExclamationTriangle} />
-                  </span>
-                ) : null}
-              </p>
-            </Tooltip>
 
-            <Tooltip title={weight < 5 ? "Hive is too light. Check for honey production." : "Hive is too heavy. Harvest honey."} arrow>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Weight:</span> {weight} kg
-                {weight < 5 || weight > 40 ? (
-                  <span style={{ color: 'red', marginLeft: '5px' }}>
-                    <FontAwesomeIcon icon={faExclamationTriangle} />
-                  </span>
-                ) : null}
-              </p>
-            </Tooltip>
+            <p>
+              <span style={{ fontWeight: 'bold' }}>Temperature:</span> {temperature}℃
+              {showTooltipTemp && (
+                <Tooltip
+                  title={
+                    temperature < 32
+                      ? "Temperature is too low. Move hive to a warmer location." : "Temperature is too high. Move hive to a cooler location."} arrow>
 
-            <Tooltip title={frequency < 190 ? "Frequency is too low. Check hive activity." : "Frequency is too high. Evaluate hive health."} arrow>
-              <p>
-                <span style={{ fontWeight: 'bold' }}>Frequency:</span> {frequency} Hz
-                {frequency < 190 || frequency > 250 ? (
                   <span style={{ color: 'red', marginLeft: '5px' }}>
                     <FontAwesomeIcon icon={faExclamationTriangle} />
                   </span>
-                ) : null}
-              </p>
-            </Tooltip>
+                </Tooltip>
+              )}
+            </p>
+
+            <p>
+              <span style={{ fontWeight: 'bold' }}>Humidity:</span> {humidity} %
+              {showTooltipHum && (
+                <Tooltip
+                  title={
+                    humidity < 50
+                      ? "Humidity is too low. Add water source near the hive." : "Humidity is too high. Improve hive ventilation."} arrow>
+
+                  <span style={{ color: 'red', marginLeft: '5px' }}>
+                    <FontAwesomeIcon icon={faExclamationTriangle} />
+                  </span>
+                </Tooltip>
+              )}
+            </p>
+
+
+            <p>
+              <span style={{ fontWeight: 'bold' }}>Weight:</span> {weight} kg
+              {showTooltipWeight && (
+                <Tooltip
+                  title={
+                    weight < 5
+                      ? "Hive is too light. Check for honey production." : "Hive is too heavy. Harvest honey."} arrow>
+                  <span style={{ color: 'red', marginLeft: '5px' }}>
+                    <FontAwesomeIcon icon={faExclamationTriangle} />
+                  </span>
+                </Tooltip>
+              )}
+            </p>
+
+            <p>
+              <span style={{ fontWeight: 'bold' }}>Frequency:</span> {frequency} Hz{' '}
+              {showTooltipFreq && ( // Assuming `showTooltipFreq` is your condition for showing the tooltip
+                <Tooltip
+                  title={
+                    frequency < 200
+                      ? 'Frequency is too low. Check hive activity.'
+                      : 'Frequency is too high. Evaluate hive health.'
+                  }
+                  arrow
+                >
+                  <span style={{ color: 'red' }}>
+                    <FontAwesomeIcon icon={faExclamationTriangle} />
+                  </span>
+                </Tooltip>
+              )}
+            </p>
 
           </div>
           <p>Last Updated: {date}</p>
