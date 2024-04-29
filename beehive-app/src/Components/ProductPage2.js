@@ -32,7 +32,7 @@ export const ProductPage2 = () => {
                 </div>
             </div>
             <div className="adopt-now-button">
-                <div className="text-wrapper-5"><a href="/purchase">Pay By Donation</a></div>
+                <div className="text-wrapper-12"><a href="/purchase">Pay By Donation</a></div>
             </div>
             <div className="frame-4">
                 <div className="text-wrapper-6">Features</div>

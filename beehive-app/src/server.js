@@ -401,7 +401,7 @@ app.post('/forgotpassword', async (req, res) => {
                 to: email,
                 subject: '5-OneHive+ Password Reset Request',
                 // Include the reset token in the email and the link to the reset password page and that the token will expire in 1 hour
-                text: `Hello! You have requested a password reset. Please click on the following link to reset your password: http://localhost:3003/resetpassword/${resetToken}. This link will expire in 1 hour.`,
+                text: `Hello! You have requested a password reset. Please click on the following link to reset your password: http://localhost:3001/resetpassword/${resetToken}. This link will expire in 1 hour.`,
             };
 
             await transporter.sendMail(mailOptions);

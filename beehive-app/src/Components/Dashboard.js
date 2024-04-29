@@ -104,7 +104,11 @@ const Dashboard = () => {
     };
 
     fetchData();
-  }, [navigate]);
+    const intervalId = setInterval(fetchData, 0.5 * 10 * 1000); // 5 minutes interval
+
+    // Clean up interval on component unmount
+    return () => clearInterval(intervalId);
+  }, [navigate, FrequncyTrendModal]);
 
   //   const intervalId = setInterval(fetchData, 0.1 * 60 * 1000); // 5 minutes interval
 

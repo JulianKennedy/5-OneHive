@@ -125,6 +125,29 @@
     width: fit-content;
   }
 
+  .product-page-2 .div-wrapper {
+    display: flex;
+    width: 250px;
+    height: 72px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: #e5bcff;
+  }
+  
+  .product-page-2 .text-wrapper-3 {
+    position: relative;
+    width: fitContent;
+    font-family: "Newsreader-SemiBold", Helvetica;
+    font-weight: 600;
+    color: #000000;
+    font-size: 26px;
+    text-align: center;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+  }
+
   .product-page-2 .frame-4 {
     align-items: flex-start;
     display: flex;
@@ -326,6 +349,7 @@
     white-space: nowrap;
     width: fit-content;
     text-decoration: none;
+    color: #000;
   }
 
   .how-to-adopt-page .div-wrapper {
